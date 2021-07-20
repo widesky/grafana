@@ -47,9 +47,9 @@
       "id": 4,
       "links": [],
       "options": {
-        "feedUrl": "https://grafana.com/blog/news.xml"
+        "feedUrl": "https://operations.on.widesky.cloud/catalogue/widesky-news.xml"
       },
-      "title": "Latest from the blog",
+      "title": "Latest from the WideSky blog",
       "type": "news"
     }
   ],
