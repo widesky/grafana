@@ -17,9 +17,9 @@ export const AlertManagerPicker: FC<Props> = ({ onChange, current, disabled = fa
   const options: Array<SelectableValue<string>> = useMemo(() => {
     return [
       {
-        label: 'Grafana',
+        label: 'WideSky',
         value: GRAFANA_RULES_SOURCE_NAME,
-        imgUrl: 'public/img/grafana_icon.svg',
+        imgUrl: 'public/img/widesky_icon.svg',
         meta: {},
       },
       ...getAllDataSources()

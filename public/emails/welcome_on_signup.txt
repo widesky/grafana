@@ -1,14 +1,14 @@
-{{Subject .Subject "Welcome to Grafana"}}
+{{Subject .Subject "Welcome to WideSky"}}
 
 Hi {{.Name}},
 
 Welcome! Ready to start building some beautiful metric and analytic dashboards?
 
-If you are new to Grafana, refer to the Getting started with Grafana guide on
+If you are new to WideSky, refer to the Getting started guide on
 https://grafana.com/docs/grafana/latest/getting-started/getting-started/.
 
 Thank you for joining our community.
 
-The Grafana team
+The WideSky team
 
-Sent by Grafana v{{.BuildVersion}} (c) 2022 Grafana Labs
+Sent by WideSky v{{.BuildVersion}} (c) 2021 WideSky.Cloud
