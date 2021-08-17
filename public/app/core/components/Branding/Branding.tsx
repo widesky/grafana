@@ -58,8 +58,8 @@ export class Branding {
   static LoginBackground = LoginBackground;
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
-  static AppTitle = 'Widesky';
-  static LoginTitle = 'Welcome to Widesky';
+  static AppTitle = 'WideSky';
+  static LoginTitle = 'Welcome to WideSky';
   static GetLoginSubTitle = (): null | string => {
     return null;
   };
