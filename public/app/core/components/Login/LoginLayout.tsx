@@ -49,7 +49,8 @@ to{
 }`;
 
 export const getLoginStyles = (theme: GrafanaTheme2) => {
-  const bgColor = theme.isDark ? '#000' : theme.colors.background.canvas;
+  /// const bgColor = theme.isDark ? '#000' : theme.colors.background.canvas;
+  const bgColor = 'transparent';
 
   return {
     container: css({
