@@ -23,7 +23,8 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
       right: 0;
       bottom: 0;
       top: 0;
-      background: url(public/img/g8_login_${theme.isDark ? 'dark' : 'light'}.svg);
+      /// background: url(public/img/g8_login_${theme.isDark ? 'dark' : 'light'}.svg);
+      background: url(public/img/WideskyHeroBackground.svg);
       background-position: top center;
       background-size: auto;
       background-repeat: no-repeat;

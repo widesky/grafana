@@ -36,6 +36,7 @@ const getStyles = stylesFactory((theme: GrafanaTheme) => {
     container: css`
       display: flex;
       /// background: url(public/img/g8_home_v2.svg) no-repeat;
+      background: url(public/img/WideskyHeroBackground.svg) no-repeat;
       background-size: cover;
       height: 100%;
       align-items: center;
