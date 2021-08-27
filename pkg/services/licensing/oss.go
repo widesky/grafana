@@ -56,12 +56,12 @@ func ProvideService(cfg *setting.Cfg, hooksService *hooks.HooksService) *OSSLice
 	l.HooksService.AddIndexDataHook(func(indexData *dtos.IndexViewData, req *models.ReqContext) {
 		for _, node := range indexData.NavTree {
 			if node.Id == "admin" {
-				node.Children = append(node.Children, &dtos.NavLink{
-					Text: "Stats and license",
-					Id:   "upgrading",
-					Url:  l.LicenseURL(req.IsGrafanaAdmin),
-					Icon: "unlock",
-				})
+				// node.Children = append(node.Children, &dtos.NavLink{
+				// 	Text: "Upgrade",
+				// 	Id:   "upgrading",
+				// 	Url:  l.LicenseURL(req.SignedInUser),
+				// 	Icon: "unlock",
+				// })
 			}
 		}
 	})
