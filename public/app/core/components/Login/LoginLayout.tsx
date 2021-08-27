@@ -54,8 +54,9 @@ export const getLoginStyles = (theme: GrafanaTheme2) => {
 
   return {
     container: css({
-      minHeight: '100%',
-      backgroundPosition: 'center',
+      minHeight: '100vh',
+      background: `transparent radial-gradient(closest-side at 50% 50%,#0073bc 0%,#003052 100%) 0% 0% no-repeat padding-box`,
+      backgroundPosition: 'bottom',
       backgroundRepeat: 'no-repeat',
       backgroundColor: bgColor,
       minWidth: '100%',
