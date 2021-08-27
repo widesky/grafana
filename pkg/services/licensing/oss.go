@@ -37,7 +37,7 @@ func (l *OSSLicensingService) LicenseURL(showAdminLicensingPage bool) string {
 		return l.Cfg.AppSubURL + "/admin/upgrading"
 	}
 
-	return "https://grafana.com/oss/grafana?utm_source=grafana_footer"
+	return "https://github.com/widesky/grafana"
 }
 
 func (*OSSLicensingService) EnabledFeatures() map[string]bool {
