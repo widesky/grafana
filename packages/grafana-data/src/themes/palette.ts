@@ -24,7 +24,7 @@ export const palette = {
   // from figma
   lightBorder1: '#E4E7E7',
 
-  blueDarkMain: '#3D71D9', // '#4165F5',
+  blueDarkMain: '#0073BC', // '#4165F5',
   blueDarkText: '#6E9FFF', // '#58a6ff', //'#33a2e5', // '#5790FF',
   redDarkMain: '#D10E5C',
   redDarkText: '#FF5286',
