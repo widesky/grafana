@@ -1,3 +1,23 @@
+.icon-margin-right {
+  margin-right: 0.25em;
+
+  @media only screen and (max-width: 1320px) {
+    margin-right: 0;
+  }
+}
+
+.icon-brand-gradient {
+  color: linear-gradient(180deg, rgb(78, 158, 215) 30%, rgb(0, 115, 188) 100%);
+}
+
+.icon-margin-left {
+  margin-left: 0.25em;
+
+  @media only screen and (max-width: 1320px) {
+    margin-left: 0;
+  }
+}
+
 .explore-active-button {
   box-shadow: $btn-active-box-shadow;
   border: 1px solid $orange-dark !important;

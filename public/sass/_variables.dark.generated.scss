@@ -19,8 +19,8 @@ $colors-action-selected: rgba(204, 204, 220, 0.12);
 // New Colors
 // -------------------------
 $blue-light: #6E9FFF;
-$blue-base: #3D71D9;
-$blue-shade: rgb(90, 134, 222);
+$blue-base: #0073BC;
+$blue-shade: rgb(38, 136, 198);
 $red-base: #D10E5C;
 $red-shade: rgb(215, 50, 116);
 $green-base: #1A7F4B;
@@ -112,8 +112,8 @@ $text-shadow-faint: 1px 1px 4px rgb(45, 45, 45);
 $textShadow: none;
 
 // gradients
-$brand-gradient-horizontal: linear-gradient(to right, #f05a28 30%, #fbca0a 99%);
-$brand-gradient-vertical: linear-gradient(#f05a28 30%, #fbca0a 99%);
+$brand-gradient-horizontal: linear-gradient(to right, rgb(78, 158, 215) 30%, rgb(0, 115, 188) 99%);
+$brand-gradient-vertical: linear-gradient(rgb(78, 158, 215) 30%, rgb(0, 115, 188) 99%);
 
 // Links
 // -------------------------
