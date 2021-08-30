@@ -18,7 +18,7 @@ $colors-action-selected: rgba(204, 204, 220, 0.12);
 
 // New Colors
 // -------------------------
-$blue-light: #6E9FFF;
+$blue-light: #4e9ed7;
 $blue-base: #0073BC;
 $blue-shade: rgb(38, 136, 198);
 $red-base: #D10E5C;
@@ -76,7 +76,7 @@ $red: $red-base;
 $yellow: #ecbb13;
 $orange: #eb7b18;
 $purple: #9933cc;
-$variable: #6E9FFF;
+$variable: #4e9ed7;
 
 $brand-primary: #eb7b18;
 $brand-success: #1A7F4B;
@@ -104,9 +104,9 @@ $text-color-strong: #FFFFFF;
 $text-color: rgb(204, 204, 220);
 $text-color-semi-weak: rgba(204, 204, 220, 0.65);
 $text-color-weak: rgba(204, 204, 220, 0.65);
-$text-color-faint: rgba(204, 204, 220, 0.6);
-$text-color-emphasis: #FFFFFF;
-$text-blue: #6E9FFF;
+$text-color-faint: rgba(204, 204, 220, 0.40);
+$text-color-emphasis: #fff;
+$text-blue: #4e9ed7;
 
 $text-shadow-faint: 1px 1px 4px rgb(45, 45, 45);
 $textShadow: none;
@@ -118,9 +118,9 @@ $brand-gradient-vertical: linear-gradient(rgb(78, 158, 215) 30%, rgb(0, 115, 188
 // Links
 // -------------------------
 $link-color: rgb(204, 204, 220);
-$link-color-disabled: rgba(204, 204, 220, 0.6);
-$link-hover-color: #FFFFFF;
-$external-link-color: #6E9FFF;
+$link-color-disabled: rgba(204, 204, 220, 0.40);
+$link-hover-color: #fff;
+$external-link-color: #4e9ed7;
 
 // Typography
 // -------------------------
@@ -217,9 +217,9 @@ $input-bg-disabled: rgba(204, 204, 220, 0.04);
 $input-color: rgb(204, 204, 220);
 $input-border-color: rgba(204, 204, 220, 0.15);
 $input-box-shadow: none;
-$input-border-focus: #6E9FFF;
-$input-box-shadow-focus: #6E9FFF !default;
-$input-color-placeholder: rgba(204, 204, 220, 0.6);
+$input-border-focus: #4e9ed7;
+$input-box-shadow-focus: #4e9ed7 !default;
+$input-color-placeholder: rgba(204, 204, 220, 0.40);
 $input-label-bg: #22252b;
 $input-color-select-arrow: $white;
 
