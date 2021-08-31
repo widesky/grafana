@@ -123,7 +123,7 @@ export class GrafanaBootConfig implements GrafanaConfig {
 
     const defaults = {
       datasources: {},
-      windowTitlePrefix: 'Grafana - ',
+      windowTitlePrefix: 'Widesky - ',
       panels: {},
       newPanelTitle: 'Panel Title',
       playlist_timespan: '1m',
@@ -138,6 +138,7 @@ export class GrafanaBootConfig implements GrafanaConfig {
       viewersCanEdit: false,
       editorsCanAdmin: false,
       disableSanitizeHtml: false,
+      hideVersion: true,
     };
 
     merge(this, defaults, options);
