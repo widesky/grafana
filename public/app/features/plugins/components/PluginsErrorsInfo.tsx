@@ -23,7 +23,7 @@ export function PluginsErrorsInfo(): React.ReactElement | null {
     >
       <div>
         <p>
-          Unsigned plugins were found during plugin initialization. Grafana Labs cannot guarantee the integrity of these
+          Unsigned plugins were found during plugin initialization. WideSky cannot guarantee the integrity of these
           plugins. We recommend only using signed plugins.
         </p>
         The following plugins are disabled and not shown in the list below:
