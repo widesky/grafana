@@ -46,7 +46,7 @@ const HttpAccessHelp = () => (
     <p>
       All requests will be made from the browser to Grafana backend/server which in turn will forward the requests to
       the data source and by that circumvent possible Cross-Origin Resource Sharing (CORS) requirements. The URL needs
-      to be accessible from the grafana backend/server if you select this access mode.
+      to be accessible from the WideSky backend/server if you select this access mode.
     </p>
     <div className="alert-title">Browser access mode:</div>
     <p>
