@@ -16,11 +16,7 @@ export const WelcomeBanner: FC = () => {
         <div className={styles.helpLinks}>
           {helpOptions.map((option, index) => {
             return (
-              <a
-                key={`${option.label}-${index}`}
-                className={styles.helpLink}
-                href={`${option.href}?utm_source=grafana_gettingstarted`}
-              >
+              <a key={`${option.label}-${index}`} className={styles.helpLink} href={`${option.href}`}>
                 {option.label}
               </a>
             );
@@ -36,7 +32,6 @@ const getStyles = stylesFactory((theme: GrafanaTheme) => {
     container: css`
       display: flex;
       /// background: url(public/img/g8_home_v2.svg) no-repeat;
-      background: url(public/img/WideskyHeroBackground.svg) no-repeat;
       background-size: cover;
       height: 100%;
       align-items: center;
