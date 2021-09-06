@@ -46,7 +46,7 @@ const (
 	Dev              = "development"
 	Prod             = "production"
 	Test             = "test"
-	ApplicationName  = "Grafana"
+	ApplicationName  = "WideSky"
 )
 
 // This constant corresponds to the default value for ldap_sync_ttl in .ini files
@@ -880,8 +880,6 @@ func (cfg *Cfg) Load(args CommandLineArgs) error {
 	cfg.Packaging = Packaging
 
 	cfg.ErrTemplateName = "error"
-
-	ApplicationName = "WideSky"
 
 	Env = valueAsString(iniFile.Section(""), "app_mode", "development")
 	cfg.Env = Env
