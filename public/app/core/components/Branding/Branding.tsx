@@ -33,7 +33,7 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
       transition: opacity 3s ease-in-out;
 
       @media ${styleMixins.mediaUp(theme.v1.breakpoints.md)} {
-        background-position: center;
+        background-position: bottom;
         background-size: cover;
       }
     }
