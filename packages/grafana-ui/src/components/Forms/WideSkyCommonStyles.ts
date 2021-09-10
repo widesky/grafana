@@ -1,17 +1,23 @@
 import { css } from '@emotion/css';
-import { GrafanaTheme, GrafanaTheme2 } from '@grafana/data';
-import { focusCss } from '../../themes/mixins';
+import { GrafanaTheme2 } from '@grafana/data';
 import { ComponentSize } from '../../types/size';
 
-export const getFocusStyle = (theme: GrafanaTheme) => css`
+export const focusCss = () => `
+  outline: 2px dotted transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 0.7px #04275f, 0 0 0px 0.7px $04275f;
+  transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+`;
+
+export const getFocusStyle = () => css`
   &:focus {
-    ${focusCss(theme)}
+    ${focusCss()}
   }
 `;
 
 export const sharedInputStyle = (theme: GrafanaTheme2, invalid = false) => {
   const borderColor = invalid ? theme.colors.error.border : '#04275F';
-  const borderColorHover = invalid ? theme.colors.error.shade : theme.components.input.borderHover;
+  const borderColorHover = invalid ? theme.colors.error.shade : '#04275f';
   const background = '#fff';
   const textColor = '#04275f';
 
@@ -37,18 +43,13 @@ export const sharedInputStyle = (theme: GrafanaTheme2, invalid = false) => {
 
     &:-webkit-autofill:focus {
       /* Welcome to 2005. This is a HACK to get rid od Chromes default autofill styling */
-      box-shadow: 0 0 0 2px ${autoFillBorder}, 0 0 0px 4px ${autoFillBorder},
-       /* box-shadow: 0 0 0 2px ${theme.colors.background.primary}, 0 0 0px 4px ${theme.colors.primary.main}, */
-        inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px ${background}!important;
+      box-shadow: 0 0 0 1px ${autoFillBorder}, 0 0 0px 1px ${autoFillBorder}, inset 0 0 0 0.7px rgba(255, 255, 255, 0),
+        inset 0 0 0 100px ${background}!important;
       -webkit-text-fill-color: ${textColor} !important;
     }
 
     &:hover {
       border-color: ${borderColorHover};
-    }
-
-    &:focus {
-      outline: none;
     }
 
     &:disabled {

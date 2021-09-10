@@ -1,5 +1,6 @@
 export { Icon } from './Icon/Icon';
 export { IconButton, IconButtonVariant } from './IconButton/IconButton';
+export { WideSkyIconButton, WideSkyIconButtonVariant } from './IconButton/WideSkyIconButton';
 export { ConfirmButton } from './ConfirmButton/ConfirmButton';
 export { DeleteButton } from './ConfirmButton/DeleteButton';
 export { Tooltip } from './Tooltip/Tooltip';

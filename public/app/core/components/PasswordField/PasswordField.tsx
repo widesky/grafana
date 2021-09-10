@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { selectors } from '@grafana/e2e-selectors';
 
-import { Input, IconButton } from '@grafana/ui';
+import { WideSkyInput, WideSkyIconButton } from '@grafana/ui';
 
 export interface Props {
   autoFocus?: boolean;
@@ -15,7 +15,7 @@ export const PasswordField: FC<Props> = React.forwardRef<HTMLInputElement, Props
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-      <Input
+      <WideSkyInput
         id={id}
         autoFocus={autoFocus}
         autoComplete={autoComplete}
@@ -25,7 +25,7 @@ export const PasswordField: FC<Props> = React.forwardRef<HTMLInputElement, Props
         aria-label={selectors.pages.Login.password}
         ref={ref}
         suffix={
-          <IconButton
+          <WideSkyIconButton
             name={showPassword ? 'eye-slash' : 'eye'}
             type="button"
             aria-controls={id}

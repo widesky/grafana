@@ -1,7 +1,8 @@
 import React, { HTMLProps, ReactNode } from 'react';
 import { GrafanaTheme2 } from '@grafana/data';
 import { css, cx } from '@emotion/css';
-import { getFocusStyle, sharedInputStyle } from '../Forms/WideSkyCommonStyles';
+import { sharedInputStyle } from '../Forms/WideSkyCommonStyles';
+//import { getFocusStyle, sharedInputStyle } from '../Forms/WideSkyCommonStyles';
 import { stylesFactory, useTheme2 } from '../../themes';
 import { Spinner } from '../Spinner/Spinner';
 import { useClientRect } from '../../utils/useClientRect';
@@ -130,7 +131,6 @@ export const getInputStyles = stylesFactory(({ theme, invalid = false, width }: 
     `,
 
     input: cx(
-      getFocusStyle(theme.v1),
       sharedInputStyle(theme, invalid),
       css`
         label: input-input;
