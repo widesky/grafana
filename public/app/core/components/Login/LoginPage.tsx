@@ -16,6 +16,7 @@ import config from 'app/core/config';
 const forgottenPasswordStyles = css`
   padding: 0;
   margin-top: 4px;
+  color: #04275f;
 `;
 
 export const LoginPage: FC = () => {

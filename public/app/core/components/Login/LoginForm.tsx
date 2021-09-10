@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 import { selectors } from '@grafana/e2e-selectors';
 
 import { FormModel } from './LoginCtrl';
-import { Button, Form, Input, Field } from '@grafana/ui';
+import { Button, Form, WideSkyInput, WideSkyField } from '@grafana/ui';
 import { css } from '@emotion/css';
 import { PasswordField } from '../PasswordField/PasswordField';
 
@@ -30,23 +30,23 @@ export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, password
       <Form onSubmit={onSubmit} validateOn="onChange">
         {({ register, errors }) => (
           <>
-            <Field label="Email or username" invalid={!!errors.user} error={errors.user?.message}>
-              <Input
+            <WideSkyField label="Email or username" invalid={!!errors.user} error={errors.user?.message}>
+              <WideSkyInput
                 {...register('user', { required: 'Email or username is required' })}
                 autoFocus
                 autoCapitalize="none"
                 placeholder={loginHint}
                 aria-label={selectors.pages.Login.username}
               />
-            </Field>
-            <Field label="Password" invalid={!!errors.password} error={errors.password?.message}>
+            </WideSkyField>
+            <WideSkyField label="Password" invalid={!!errors.password} error={errors.password?.message}>
               <PasswordField
                 id="current-password"
                 autoComplete="current-password"
                 passwordHint={passwordHint}
                 {...register('password', { required: 'Password is required' })}
               />
-            </Field>
+            </WideSkyField>
             <Button aria-label={selectors.pages.Login.submit} className={submitButton} disabled={isLoggingIn}>
               {isLoggingIn ? 'Logging in...' : 'Log in'}
             </Button>

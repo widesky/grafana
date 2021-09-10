@@ -187,7 +187,9 @@ export { getFormStyles } from './Forms/getFormStyles';
 export { Link } from './Link/Link';
 
 export { Label } from './Forms/Label';
+export { WideSkyLabel } from './Forms/WideSkyLabel';
 export { Field } from './Forms/Field';
+export { WideSkyField } from './Forms/WideSkyField';
 export { Legend } from './Forms/Legend';
 export { FieldSet } from './Forms/FieldSet';
 export { FieldValidationMessage } from './Forms/FieldValidationMessage';
@@ -209,8 +211,8 @@ export { HorizontalGroup, VerticalGroup, Container } from './Layout/Layout';
 export { Badge, BadgeColor, BadgeProps } from './Badge/Badge';
 export { RadioButtonGroup } from './Forms/RadioButtonGroup/RadioButtonGroup';
 
-export { Input, getInputStyles } from './Input/Input';
-export { FilterInput } from './FilterInput/FilterInput';
+export { Input } from './Input/Input';
+export { WideSkyInput } from './Input/WideSkyInput';
 export { FormInputSize } from './Forms/types';
 
 export { Switch, InlineSwitch } from './Switch/Switch';

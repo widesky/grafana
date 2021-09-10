@@ -9,7 +9,7 @@ export interface BrandComponentProps {
 }
 
 const LoginLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/widesky_icon.svg" alt="WideSky" />;
+  return <img className={className} src="public/img/WideSky_logo_login.svg" alt="WideSky" />;
 };
 
 const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
@@ -43,13 +43,14 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
 };
 
 const MenuLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/widesky_icon.svg" alt="WideSky" />;
+  return <img className={className} src="public/img/WideSky_logo_login.svg" alt="WideSky" />;
 };
 
 const LoginBoxBackground = () => {
   const theme = useTheme2();
   return css`
-    background: ${colorManipulator.alpha(theme.colors.background.primary, 0.7)};
+    ///background: ${colorManipulator.alpha(theme.colors.background.primary, 0.7)};
+    background: #fff;
     background-size: cover;
   `;
 };
@@ -60,7 +61,7 @@ export class Branding {
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
   static AppTitle = 'WideSky';
-  static LoginTitle = 'Welcome to WideSky';
+  static LoginTitle = '';
   static GetLoginSubTitle = (): null | string => {
     return null;
   };
