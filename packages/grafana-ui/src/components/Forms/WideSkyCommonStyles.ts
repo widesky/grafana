@@ -10,14 +10,14 @@ export const getFocusStyle = (theme: GrafanaTheme) => css`
 `;
 
 export const sharedInputStyle = (theme: GrafanaTheme2, invalid = false) => {
-  const borderColor = invalid ? theme.colors.error.border : theme.components.input.borderColor;
+  const borderColor = invalid ? theme.colors.error.border : '#04275F';
   const borderColorHover = invalid ? theme.colors.error.shade : theme.components.input.borderHover;
   const background = '#fff';
-  const textColor = theme.components.input.text;
+  const textColor = '#04275f';
 
   // Cannot use our normal borders for this color for some reason due the alpha values in them.
   // Need to colors without alpha channel
-  const autoFillBorder = theme.isDark ? '#2e2f35' : '#bab4ca';
+  const autoFillBorder = '#04275f';
 
   return css`
     background: ${background};
@@ -37,7 +37,8 @@ export const sharedInputStyle = (theme: GrafanaTheme2, invalid = false) => {
 
     &:-webkit-autofill:focus {
       /* Welcome to 2005. This is a HACK to get rid od Chromes default autofill styling */
-      box-shadow: 0 0 0 2px ${theme.colors.background.primary}, 0 0 0px 4px ${theme.colors.primary.main},
+      box-shadow: 0 0 0 2px ${autoFillBorder}, 0 0 0px 4px ${autoFillBorder},
+       /* box-shadow: 0 0 0 2px ${theme.colors.background.primary}, 0 0 0px 4px ${theme.colors.primary.main}, */
         inset 0 0 0 1px rgba(255, 255, 255, 0), inset 0 0 0 100px ${background}!important;
       -webkit-text-fill-color: ${textColor} !important;
     }
