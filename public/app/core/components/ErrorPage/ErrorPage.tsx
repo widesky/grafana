@@ -63,9 +63,9 @@ export class ErrorPage extends PureComponent<Props> {
                         and try again.
                       </p>
                       <p>
-                        If the error persists, seek help on the{' '}
-                        <a href="https://community.grafana.com" target="_blank" rel="noreferrer" className="error-link">
-                          community site
+                        If the error persists, seek help from your WideSky administrator or{' '}
+                        <a href="mailto: support@widesky.cloud" className="error-link">
+                          Contact Support
                         </a>
                         .
                       </p>
