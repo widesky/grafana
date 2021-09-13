@@ -150,7 +150,7 @@ func Recovery(cfg *setting.Cfg) web.Handler {
 
 				if ctx != nil && ctx.IsApiRequest() {
 					resp := make(map[string]interface{})
-					resp["message"] = "Internal Server Error - Check the Grafana server logs for the detailed error message."
+					resp["message"] = "Internal Server Error - Contact WideSky if the problem persists."
 
 					if data.ErrorMsg != "" {
 						resp["error"] = fmt.Sprintf("%v - %v", data.Title, data.ErrorMsg)
