@@ -140,7 +140,7 @@ export const getInputStyles = stylesFactory(({ theme, invalid = false, width }: 
         border-radius: ${theme.shape.borderRadius()};
         height: 100%;
         width: 100%;
-        background-color: '#fff';
+        background-color: #fff;
       `
     ),
     inputDisabled: css`

@@ -192,6 +192,7 @@ export { WideSkyLabel } from './Forms/WideSkyLabel';
 export { Field } from './Forms/Field';
 export { WideSkyField } from './Forms/WideSkyField';
 export { Legend } from './Forms/Legend';
+export { WideSkyLegend } from './Forms/WideSkyLegend';
 export { FieldSet } from './Forms/FieldSet';
 export { FieldValidationMessage } from './Forms/FieldValidationMessage';
 export { InlineField } from './Forms/InlineField';

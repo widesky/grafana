@@ -35,7 +35,7 @@ export const getLabelStyles = stylesFactory((theme: GrafanaTheme2) => {
     `,
     description: css`
       label: Label-description;
-      color: ${theme.colors.text.secondary};
+      color: #04275f;
       font-size: ${theme.typography.size.sm};
       font-weight: ${theme.typography.fontWeightRegular};
       margin-top: ${theme.spacing(0.25)};

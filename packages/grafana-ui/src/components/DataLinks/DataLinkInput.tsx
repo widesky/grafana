@@ -73,7 +73,7 @@ const getStyles = (theme: GrafanaTheme2) => ({
 // This memoised also because rerendering the slate editor grabs focus which created problem in some cases this
 // was used and changes to different state were propagated here.
 export const DataLinkInput: React.FC<DataLinkInputProps> = memo(
-  ({ value, onChange, suggestions, placeholder = 'http://your-grafana.com/d/000000010/annotations' }) => {
+  ({ value, onChange, suggestions, placeholder = 'http://your.widesky.cloud/d/000000010/annotations' }) => {
     const editorRef = useRef<Editor>() as RefObject<Editor>;
     const styles = useStyles2(getStyles);
     const [showingSuggestions, setShowingSuggestions] = useState(false);

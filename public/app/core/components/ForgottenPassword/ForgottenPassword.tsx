@@ -1,5 +1,15 @@
 import React, { FC, useState } from 'react';
-import { Form, Field, Input, Button, Legend, Container, useStyles, HorizontalGroup, LinkButton } from '@grafana/ui';
+import {
+  Form,
+  WideSkyField,
+  WideSkyInput,
+  Button,
+  WideSkyLegend,
+  Container,
+  useStyles,
+  HorizontalGroup,
+  LinkButton,
+} from '@grafana/ui';
 import { getBackendSrv } from '@grafana/runtime';
 import { css } from '@emotion/css';
 import { GrafanaTheme } from '@grafana/data';
@@ -10,7 +20,7 @@ interface EmailDTO {
 }
 
 const paragraphStyles = (theme: GrafanaTheme) => css`
-  color: ${theme.colors.formDescription};
+  color: #04275f;
   font-size: ${theme.typography.size.sm};
   font-weight: ${theme.typography.weight.regular};
   margin-top: ${theme.spacing.sm};
@@ -44,19 +54,19 @@ export const ForgottenPassword: FC = () => {
     <Form onSubmit={sendEmail}>
       {({ register, errors }) => (
         <>
-          <Legend>Reset password</Legend>
-          <Field
+          <WideSkyLegend>Reset password</WideSkyLegend>
+          <WideSkyField
             label="User"
             description="Enter your information to get a reset link sent to you"
             invalid={!!errors.userOrEmail}
             error={errors?.userOrEmail?.message}
           >
-            <Input
+            <WideSkyInput
               id="user-input"
               placeholder="Email or username"
               {...register('userOrEmail', { required: 'Email or username is required' })}
             />
-          </Field>
+          </WideSkyField>
           <HorizontalGroup>
             <Button>Send reset email</Button>
             <LinkButton fill="text" href={loginHref}>
