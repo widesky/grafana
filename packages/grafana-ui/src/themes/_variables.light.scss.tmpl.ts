@@ -93,6 +93,7 @@ $critical: ${theme.colors.error.text};
 // -------------------------
 $body-bg: ${theme.v1.colors.bodyBg};
 $page-bg: ${theme.v1.colors.bodyBg};
+$page-bg2: $white;
 $dashboard-bg: ${theme.v1.colors.dashboardBg};
 
 $text-color: ${theme.v1.colors.text};

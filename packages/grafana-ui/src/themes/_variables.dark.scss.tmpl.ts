@@ -96,6 +96,7 @@ $critical: ${theme.colors.error.text};
 // -------------------------
 $body-bg: ${theme.v1.colors.bodyBg};
 $page-bg: ${theme.v1.colors.bodyBg};
+$page-bg2: rgb(24, 27, 31);
 $dashboard-bg: ${theme.v1.colors.dashboardBg};
 
 $text-color-strong: ${theme.v1.colors.textStrong};
