@@ -21,20 +21,20 @@ h6 {font-size: 16px;}
 }
 
 a {
-  color: #E67612;
+  color: #0073BC;
   text-decoration: none;
 }
 
 a:hover {
-  color: #ff8f2b !important;
+  color: #4e9ed7 !important;
 }
 
 a:active {
-  color: #F2821E !important;
+  color: #04275F !important;
 }
 
 a:visited {
-  color: #E67612 !important;
+  color: #0073BC !important;
 }
 
 table.facebook td {
@@ -89,7 +89,7 @@ margin-bottom: 25px;
 }
 
 .footer {
-  background-color: #2e2e2e;
+  background-color: #edecec;
   color: #999999;
   margin: 0 auto;
   width: 100%;
@@ -128,15 +128,15 @@ table.columns td.better-button {
   border-radius: 2px;
 
   padding: 12px 25px;
-  border: 1px solid #ff8f2b;
+  border: 1px solid #4e9ed7;
   display: inline-block;
   color: #FFF;
 }
 
 .better-button:hover a {
   color: #FFFFFF !important;
-  background-color: #F2821E;
-  border: 1px solid #F2821E;
+  background-color: #04275F;
+  border: 1px solid #04275F;
 }
 
 .better-button:visited a {
@@ -166,24 +166,24 @@ table.columns td.better-button-alt {
   border-radius: 2px;
 
   padding: 12px 25px;
-  border: 1px solid #ff8f2b;
+  border: 1px solid #4e9ed7;
   background-color: #EFEFEF;
   display: inline-block;
-  color: #ff8f2b;
+  color: #4e9ed7;
 }
 
 .better-button-alt:hover a {
-  color: #ff8f2b !important;
+  color: #4e9ed7 !important;
   background-color: #DDDDDD;
-  border: 1px solid #F2821E;
+  border: 1px solid #04275F;
 }
 
 .better-button-alt:visited a {
-  color: #ff8f2b !important;
+  color: #4e9ed7 !important;
 }
 
 .better-button-alt:active a {
-  color: #ff8f2b !important;
+  color: #4e9ed7 !important;
 }
 
 .verification-code {
