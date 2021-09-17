@@ -34,7 +34,7 @@ a:active {
 }
 
 a:visited {
-  color: #0073BC !important;
+  color: #fff !important;
 }
 
 table.facebook td {
@@ -179,7 +179,7 @@ table.columns td.better-button-alt {
 }
 
 .better-button-alt:visited a {
-  color: #4e9ed7 !important;
+  color: #fff !important;
 }
 
 .better-button-alt:active a {
