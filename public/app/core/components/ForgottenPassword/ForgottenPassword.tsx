@@ -41,7 +41,7 @@ export const ForgottenPassword: FC = () => {
 
   if (emailSent) {
     return (
-      <div>
+      <div className={styles}>
         <p>An email with a reset link has been sent to the email address. You should receive it shortly.</p>
         <Container margin="md" />
         <LinkButton variant="primary" href={loginHref}>
