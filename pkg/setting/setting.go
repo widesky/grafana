@@ -233,6 +233,7 @@ type Cfg struct {
 	DataPath           string
 	LogsPath           string
 	PluginsPath        string
+	WideSkyPluginsPath string
 	BundledPluginsPath string
 
 	// SMTP email settings
@@ -887,6 +888,7 @@ func (cfg *Cfg) Load(args CommandLineArgs) error {
 	plugins := valueAsString(iniFile.Section("paths"), "plugins", "")
 	cfg.PluginsPath = makeAbsolute(plugins, HomePath)
 	cfg.BundledPluginsPath = makeAbsolute("plugins-bundled", HomePath)
+	cfg.WideSkyPluginsPath = "/var/local/widesky-grafana/plugins"
 	provisioning := valueAsString(iniFile.Section("paths"), "provisioning", "")
 	cfg.ProvisioningPath = makeAbsolute(provisioning, HomePath)
 
