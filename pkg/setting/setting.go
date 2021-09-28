@@ -888,7 +888,7 @@ func (cfg *Cfg) Load(args CommandLineArgs) error {
 	plugins := valueAsString(iniFile.Section("paths"), "plugins", "")
 	cfg.PluginsPath = makeAbsolute(plugins, HomePath)
 	cfg.BundledPluginsPath = makeAbsolute("plugins-bundled", HomePath)
-	cfg.WideSkyPluginsPath = "/var/local/widesky-grafana/plugins"
+	cfg.WideSkyPluginsPath = "/opt/widesky/plugins"
 	provisioning := valueAsString(iniFile.Section("paths"), "provisioning", "")
 	cfg.ProvisioningPath = makeAbsolute(provisioning, HomePath)
 
