@@ -436,6 +436,10 @@ type Cfg struct {
 
 	// Unified Alerting
 	UnifiedAlerting UnifiedAlertingSettings
+	AdminConfigPollInterval time.Duration
+
+	// Widesky whitelabels
+	FooterElement1Icon string
 
 	// Query history
 	QueryHistoryEnabled bool
@@ -1046,6 +1050,7 @@ func (cfg *Cfg) Load(args CommandLineArgs) error {
 	}
 
 	cfg.LogConfigSources()
+	cfg.readWideSkyWhiteLabels()
 
 	return nil
 }
@@ -1114,6 +1119,11 @@ func (cfg *Cfg) initLogging(file *ini.File) error {
 	logsPath := valueAsString(file.Section("paths"), "logs", "")
 	cfg.LogsPath = makeAbsolute(logsPath, HomePath)
 	return log.ReadLoggingConfig(logModes, cfg.LogsPath, file)
+}
+
+func (cfg *Cfg) readWideSkyWhiteLabels() {
+	whitelabelSec := cfg.Raw.Section("ws_whitelabel")
+	cfg.FooterElement1Icon = whitelabelSec.Key("footer_element1_icon").String()
 }
 
 func (cfg *Cfg) LogConfigSources() {

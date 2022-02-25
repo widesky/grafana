@@ -123,6 +123,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"externalUserMngLinkUrl":              setting.ExternalUserMngLinkUrl,
 		"externalUserMngLinkName":             setting.ExternalUserMngLinkName,
 		"viewersCanEdit":                      setting.ViewersCanEdit,
+		"footerElement1Icon":                  hs.Cfg.FooterElement1Icon,
 		"angularSupportEnabled":               hs.Cfg.AngularSupportEnabled,
 		"editorsCanAdmin":                     hs.Cfg.EditorsCanAdmin,
 		"disableSanitizeHtml":                 hs.Cfg.DisableSanitizeHtml,
