@@ -10,7 +10,8 @@ export interface BrandComponentProps {
 }
 
 const LoginLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/WideSky_logo_login.svg" alt="WideSky" />;
+  const { loginBoxLogo } = config;
+  return <img className={className} src={loginBoxLogo} alt="LoginBoxLogo" />;
 };
 
 const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
