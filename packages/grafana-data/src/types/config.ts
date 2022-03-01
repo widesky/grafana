@@ -180,7 +180,10 @@ export interface GrafanaConfig {
   geomapDisableCustomBaseLayer?: boolean;
   unifiedAlertingEnabled: boolean;
   angularSupportEnabled: boolean;
-  footerElement1Icon: string;
-  footerElement2Icon: string;
-  footerElement3Icon: string;
+  footerElement1Icon?: string;
+  footerElement2Icon?: string;
+  footerElement3Icon?: string;
+  footerElement1Text?: string;
+  footerElement2Text?: string;
+  footerElement3Text?: string;
 }

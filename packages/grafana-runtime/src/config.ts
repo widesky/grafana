@@ -118,6 +118,9 @@ export class GrafanaBootConfig implements GrafanaConfig {
   footerElement1Icon: '';
   footerElement2Icon: '';
   footerElement3Icon: '';
+  footerElement1Text: '';
+  footerElement2Text: '';
+  footerElement3Text: '';
 
   constructor(options: GrafanaBootConfig) {
     const mode = options.bootData.user.lightTheme ? 'light' : 'dark';

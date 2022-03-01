@@ -11,17 +11,17 @@ export interface FooterLink {
 }
 
 export let getFooterLinks = (): FooterLink[] => {
-  const { footerElement1Icon, footerElement2Icon } = config;
+  const { footerElement1Icon, footerElement2Icon, footerElement1Text, footerElement2Text } = config;
 
   return [
     {
-      text: 'Documentation',
+      text: footerElement1Text,
       icon: footerElement1Icon,
       url: 'https://widesky.cloud/docs/',
       target: '_blank',
     },
     {
-      text: 'Support',
+      text: footerElement2Text,
       icon: footerElement2Icon,
       url: 'https://widesky.cloud/contact-us/',
       target: '_blank',
@@ -30,15 +30,20 @@ export let getFooterLinks = (): FooterLink[] => {
 };
 
 export let getVersionLinks = (): FooterLink[] => {
-  const { buildInfo, licenseInfo, footerElement3Icon } = config;
+  const { buildInfo, licenseInfo, footerElement3Icon, footerElement3Text } = config;
   const links: FooterLink[] = [];
   const stateInfo = licenseInfo.stateInfo ? ` (${licenseInfo.stateInfo})` : '';
+  const footerElement = { icon: '', text: `${buildInfo.edition}${stateInfo}`, url: licenseInfo.licenseUrl };
 
   if (footerElement3Icon !== '') {
-    links.push({ icon: footerElement3Icon, text: `${buildInfo.edition}${stateInfo}`, url: licenseInfo.licenseUrl });
-  } else {
-    links.push({ text: `${buildInfo.edition}${stateInfo}`, url: licenseInfo.licenseUrl });
+    footerElement.icon = footerElement3Icon;
   }
+
+  if (footerElement3Text !== '') {
+    footerElement.text = footerElement3Text;
+  }
+
+  links.push(footerElement);
 
   if (buildInfo.hideVersion) {
     return links;
