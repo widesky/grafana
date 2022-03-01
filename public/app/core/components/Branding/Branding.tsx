@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { css, cx } from '@emotion/css';
 import { useTheme2, styleMixins } from '@grafana/ui';
 import { colorManipulator } from '@grafana/data';
+import config from 'app/core/config';
 
 export interface BrandComponentProps {
   className?: string;
@@ -14,6 +15,7 @@ const LoginLogo: FC<BrandComponentProps> = ({ className }) => {
 
 const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
   const theme = useTheme2();
+  const { loginBackground } = config;
 
   const background = css`
     &:before {
@@ -24,7 +26,7 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
       bottom: 0;
       top: 0;
       /// background: url(public/img/g8_login_${theme.isDark ? 'dark' : 'light'}.svg);
-      background: url(public/img/WideskyHeroBackground.svg);
+      background: url(${loginBackground});
       background-position: top center;
       background-size: auto;
       background-repeat: no-repeat;
