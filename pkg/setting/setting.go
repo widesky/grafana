@@ -440,6 +440,9 @@ type Cfg struct {
 
 	// Widesky whitelabels
 	FooterElement1Icon string
+	FooterElement2Icon string
+	FooterElement3Icon string
+
 
 	// Query history
 	QueryHistoryEnabled bool
@@ -1124,6 +1127,8 @@ func (cfg *Cfg) initLogging(file *ini.File) error {
 func (cfg *Cfg) readWideSkyWhiteLabels() {
 	whitelabelSec := cfg.Raw.Section("ws_whitelabel")
 	cfg.FooterElement1Icon = whitelabelSec.Key("footer_element1_icon").String()
+	cfg.FooterElement2Icon = whitelabelSec.Key("footer_element2_icon").String()
+	cfg.FooterElement3Icon = whitelabelSec.Key("footer_element3_icon").String()
 }
 
 func (cfg *Cfg) LogConfigSources() {

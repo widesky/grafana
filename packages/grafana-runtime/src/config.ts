@@ -116,6 +116,8 @@ export class GrafanaBootConfig implements GrafanaConfig {
 
   // WideSky Grafana white labeling
   footerElement1Icon: '';
+  footerElement2Icon: '';
+  footerElement3Icon: '';
 
   constructor(options: GrafanaBootConfig) {
     const mode = options.bootData.user.lightTheme ? 'light' : 'dark';

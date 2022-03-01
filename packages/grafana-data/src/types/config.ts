@@ -181,4 +181,6 @@ export interface GrafanaConfig {
   unifiedAlertingEnabled: boolean;
   angularSupportEnabled: boolean;
   footerElement1Icon: string;
+  footerElement2Icon: string;
+  footerElement3Icon: string;
 }
