@@ -186,4 +186,7 @@ export interface GrafanaConfig {
   footerElement1Text?: string;
   footerElement2Text?: string;
   footerElement3Text?: string;
+  footerElement1Link?: string;
+  footerElement2Link?: string;
+  footerElement3Link?: string;
 }

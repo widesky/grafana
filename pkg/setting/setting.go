@@ -447,6 +447,9 @@ type Cfg struct {
 	FooterElement2Text string
 	FooterElement3Text string
 
+	FooterElement1Link string
+	FooterElement2Link string
+	FooterElement3Link string
 
 	// Query history
 	QueryHistoryEnabled bool
@@ -1137,6 +1140,10 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.FooterElement1Text = whitelabelSec.Key("footer_element1_text").String()
 	cfg.FooterElement2Text = whitelabelSec.Key("footer_element2_text").String()
 	cfg.FooterElement3Text = whitelabelSec.Key("footer_element3_text").String()
+
+	cfg.FooterElement1Link = whitelabelSec.Key("footer_element1_link").String()
+	cfg.FooterElement2Link = whitelabelSec.Key("footer_element2_link").String()
+	cfg.FooterElement3Link = whitelabelSec.Key("footer_element3_link").String()
 }
 
 func (cfg *Cfg) LogConfigSources() {

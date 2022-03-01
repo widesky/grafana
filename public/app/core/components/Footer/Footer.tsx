@@ -11,26 +11,33 @@ export interface FooterLink {
 }
 
 export let getFooterLinks = (): FooterLink[] => {
-  const { footerElement1Icon, footerElement2Icon, footerElement1Text, footerElement2Text } = config;
+  const {
+    footerElement1Icon,
+    footerElement2Icon,
+    footerElement1Text,
+    footerElement2Text,
+    footerElement1Link,
+    footerElement2Link,
+  } = config;
 
   return [
     {
       text: footerElement1Text,
       icon: footerElement1Icon,
-      url: 'https://widesky.cloud/docs/',
+      url: footerElement1Link,
       target: '_blank',
     },
     {
       text: footerElement2Text,
       icon: footerElement2Icon,
-      url: 'https://widesky.cloud/contact-us/',
+      url: footerElement2Link,
       target: '_blank',
     },
   ];
 };
 
 export let getVersionLinks = (): FooterLink[] => {
-  const { buildInfo, licenseInfo, footerElement3Icon, footerElement3Text } = config;
+  const { buildInfo, licenseInfo, footerElement3Icon, footerElement3Text, footerElement3Link } = config;
   const links: FooterLink[] = [];
   const stateInfo = licenseInfo.stateInfo ? ` (${licenseInfo.stateInfo})` : '';
   const footerElement = { icon: '', text: `${buildInfo.edition}${stateInfo}`, url: licenseInfo.licenseUrl };
@@ -41,6 +48,10 @@ export let getVersionLinks = (): FooterLink[] => {
 
   if (footerElement3Text !== '') {
     footerElement.text = footerElement3Text;
+  }
+
+  if (footerElement3Link !== '') {
+    footerElement.url = footerElement3Link;
   }
 
   links.push(footerElement);
