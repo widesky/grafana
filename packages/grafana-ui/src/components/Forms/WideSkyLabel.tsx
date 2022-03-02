@@ -16,9 +16,11 @@ export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> 
   children: React.ReactNode;
   description?: React.ReactNode;
   category?: React.ReactNode[];
+
+  textColour?: string;
 }
 
-export const getLabelStyles = stylesFactory((theme: GrafanaTheme2) => {
+export const getLabelStyles = stylesFactory((theme: GrafanaTheme2, textColour) => {
   return {
     label: css`
       label: Label;
@@ -26,7 +28,7 @@ export const getLabelStyles = stylesFactory((theme: GrafanaTheme2) => {
       font-weight: ${theme.typography.fontWeightMedium};
       line-height: 1.25;
       margin-bottom: ${theme.spacing(0.5)};
-      color: #04275f;
+      color: ${textColour};
       max-width: 480px;
     `,
     labelContent: css`
@@ -35,7 +37,7 @@ export const getLabelStyles = stylesFactory((theme: GrafanaTheme2) => {
     `,
     description: css`
       label: Label-description;
-      color: #04275f;
+      color: ${textColour};
       font-size: ${theme.typography.size.sm};
       font-weight: ${theme.typography.fontWeightRegular};
       margin-top: ${theme.spacing(0.25)};
@@ -52,9 +54,16 @@ export const getLabelStyles = stylesFactory((theme: GrafanaTheme2) => {
   };
 });
 
-export const WideSkyLabel: React.FC<LabelProps> = ({ children, description, className, category, ...labelProps }) => {
+export const WideSkyLabel: React.FC<LabelProps> = ({
+  children,
+  description,
+  className,
+  category,
+  textColour = '#04275f',
+  ...labelProps
+}) => {
   const theme = useTheme2();
-  const styles = getLabelStyles(theme);
+  const styles = getLabelStyles(theme, textColour);
   const categories = category?.map((c, i) => {
     return (
       <span className={styles.categories} key={`${c}/${i}`}>

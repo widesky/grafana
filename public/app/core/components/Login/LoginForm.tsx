@@ -5,6 +5,7 @@ import { FormModel } from './LoginCtrl';
 import { Button, Form, WideSkyInput, WideSkyField } from '@grafana/ui';
 import { css } from '@emotion/css';
 import { PasswordField } from '../PasswordField/PasswordField';
+import config from 'app/core/config';
 
 interface Props {
   children: ReactElement;
@@ -25,12 +26,18 @@ export const submitButton = css`
 `;
 
 export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, passwordHint, loginHint }) => {
+  const { loginBoxTextColour } = config;
   return (
     <div className={wrapperStyles}>
       <Form onSubmit={onSubmit} validateOn="onChange">
         {({ register, errors }) => (
           <>
-            <WideSkyField label="Email or username" invalid={!!errors.user} error={errors.user?.message}>
+            <WideSkyField
+              label="Email or username"
+              invalid={!!errors.user}
+              error={errors.user?.message}
+              textColour={loginBoxTextColour}
+            >
               <WideSkyInput
                 {...register('user', { required: 'Email or username is required' })}
                 autoFocus

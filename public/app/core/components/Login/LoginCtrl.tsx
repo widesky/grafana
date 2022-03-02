@@ -128,15 +128,7 @@ export class LoginCtrl extends PureComponent<Props, State> {
     const { children } = this.props;
     const { isLoggingIn, isChangingPassword } = this.state;
     const { login, toGrafana, changePassword } = this;
-    const {
-      loginHint,
-      passwordHint,
-      disableLoginForm,
-      ldapEnabled,
-      authProxyEnabled,
-      disableUserSignUp,
-      footerElement1Icon,
-    } = config;
+    const { loginHint, passwordHint, disableLoginForm, ldapEnabled, authProxyEnabled, disableUserSignUp } = config;
 
     return (
       <>

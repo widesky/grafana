@@ -192,4 +192,5 @@ export interface GrafanaConfig {
   loginBackground?: string;
   loginBoxLogo?: string;
   loginBoxColour?: string;
+  loginBoxTextColour?: string;
 }

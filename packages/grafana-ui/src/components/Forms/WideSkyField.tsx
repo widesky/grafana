@@ -29,6 +29,7 @@ export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
   validationMessageHorizontalOverflow?: boolean;
 
   className?: string;
+  textColour?: string;
 }
 
 export const getFieldStyles = stylesFactory((theme: GrafanaTheme2) => {
@@ -72,6 +73,7 @@ export const WideSkyField: React.FC<FieldProps> = ({
   children,
   className,
   validationMessageHorizontalOverflow,
+  textColour = '#04275f',
   ...otherProps
 }) => {
   const theme = useTheme2();
@@ -80,7 +82,7 @@ export const WideSkyField: React.FC<FieldProps> = ({
 
   const labelElement =
     typeof label === 'string' ? (
-      <WideSkyLabel htmlFor={inputId} description={description}>
+      <WideSkyLabel htmlFor={inputId} description={description} textColour={textColour}>
         {`${label}${required ? ' *' : ''}`}
       </WideSkyLabel>
     ) : (
