@@ -88,6 +88,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 
 	jsonObj := map[string]interface{}{
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"defaultDatasource":                   defaultDS,
 		"datasources":                         dataSources,
 		"minRefreshInterval":                  setting.MinRefreshInterval,
@@ -135,6 +136,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"footerElement3Link":                  hs.Cfg.FooterElement3Link,
 		"loginBackground":                     hs.Cfg.LoginBackground,
 		"loginBoxLogo":                        hs.Cfg.LoginBoxLogo,
+		"loginBoxColour":                      hs.Cfg.LoginBoxColour,
 		"angularSupportEnabled":               hs.Cfg.AngularSupportEnabled,
 		"editorsCanAdmin":                     hs.Cfg.EditorsCanAdmin,
 		"disableSanitizeHtml":                 hs.Cfg.DisableSanitizeHtml,

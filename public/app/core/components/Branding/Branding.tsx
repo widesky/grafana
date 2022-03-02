@@ -51,9 +51,10 @@ const MenuLogo: FC<BrandComponentProps> = ({ className }) => {
 
 const LoginBoxBackground = () => {
   const theme = useTheme2();
+  const { loginBoxColour } = config;
   return css`
     ///background: ${colorManipulator.alpha(theme.colors.background.primary, 0.7)};
-    background: #fff;
+    background: ${loginBoxColour};
     background-size: cover;
   `;
 };
