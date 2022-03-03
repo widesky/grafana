@@ -21,8 +21,8 @@ type IndexViewData struct {
 	NewGrafanaVersion       string
 	AppName                 string
 	AppNameBodyClass        string
-	FavIcon                 template.URL
-	AppleTouchIcon          template.URL
+	FavIcon                 string
+	AppleTouchIcon          string
 	AppTitle                string
 	Sentry                  *setting.Sentry
 	ContentDeliveryURL      string

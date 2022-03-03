@@ -452,6 +452,8 @@ type Cfg struct {
 	FooterElement3Link string
 
 	LoginBackground string
+	BrowserTabFavicon string
+
 	LoginBoxLogo    string
 	LoginBoxColour  string
 	LoginBoxTextColour string
@@ -1159,6 +1161,8 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.FooterElement3Link = whitelabelSec.Key("footer_element3_link").String()
 
 	cfg.LoginBackground = whitelabelSec.Key("login_background").String()
+	cfg.BrowserTabFavicon = whitelabelSec.Key("browser_tab_favicon").String()
+
 	cfg.LoginBoxLogo = whitelabelSec.Key("login_box_logo").String()
 	cfg.LoginBoxColour = whitelabelSec.Key("login_box_colour").String()
 	cfg.LoginBoxTextColour = whitelabelSec.Key("login_box_text_colour").String()
