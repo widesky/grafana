@@ -13,10 +13,22 @@ import { HorizontalGroup, LinkButton } from '@grafana/ui';
 import { LoginLayout, InnerBox } from './LoginLayout';
 import config from 'app/core/config';
 
+const {
+  loginBoxLinkButtonBgColour,
+  loginBoxLinkButtonHoverBgColour,
+  loginBoxLinkButtonTextColour,
+  loginBoxLinkButtonHoverTextColour,
+} = config;
+
 const forgottenPasswordStyles = css`
   padding: 0;
   margin-top: 4px;
-  color: #04275f;
+  color: ${loginBoxLinkButtonTextColour};
+  background: ${loginBoxLinkButtonBgColour};
+  &:hover {
+    background: ${loginBoxLinkButtonHoverBgColour};
+    color: ${loginBoxLinkButtonHoverTextColour};
+  }
 `;
 
 export const LoginPage: FC = () => {

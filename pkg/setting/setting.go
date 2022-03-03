@@ -459,6 +459,10 @@ type Cfg struct {
 	LoginBoxButtonHoverBgColour string
 	LoginBoxButtonTextColour      string
 	LoginBoxButtonHoverTextColour string
+	LoginBoxLinkButtonBgColour        string
+	LoginBoxLinkButtonHoverBgColour   string
+	LoginBoxLinkButtonTextColour      string
+	LoginBoxLinkButtonHoverTextColour string
 
 	// Query history
 	QueryHistoryEnabled bool
@@ -1160,7 +1164,12 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.LoginBoxTextColour = whitelabelSec.Key("login_box_text_colour").String()
 	cfg.LoginBoxButtonBgColour = whitelabelSec.Key("login_box_button_bg_colour").String()
 	cfg.LoginBoxButtonHoverBgColour = whitelabelSec.Key("login_box_button_hover_bg_colour").String()
+	cfg.LoginBoxButtonTextColour = whitelabelSec.Key("login_box_button_text_colour").String()
 	cfg.LoginBoxButtonHoverTextColour = whitelabelSec.Key("login_box_button_hover_text_colour").String()
+	cfg.LoginBoxLinkButtonBgColour = whitelabelSec.Key("login_box_linkbutton_bg_colour").String()
+	cfg.LoginBoxLinkButtonHoverBgColour = whitelabelSec.Key("login_box_linkbutton_hover_bg_colour").String()
+	cfg.LoginBoxLinkButtonTextColour = whitelabelSec.Key("login_box_linkbutton_text_colour").String()
+	cfg.LoginBoxLinkButtonHoverTextColour = whitelabelSec.Key("login_box_linkbutton_hover_text_colour").String()
 }
 
 func (cfg *Cfg) LogConfigSources() {

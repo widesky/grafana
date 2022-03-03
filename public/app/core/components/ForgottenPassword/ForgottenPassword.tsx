@@ -19,18 +19,53 @@ interface EmailDTO {
   userOrEmail: string;
 }
 
+const {
+  loginBoxButtonBgColour,
+  loginBoxButtonHoverBgColour,
+  loginBoxButtonTextColour,
+  loginBoxButtonHoverTextColour,
+} = config;
+
+export const submitButton = css`
+  background: ${loginBoxButtonBgColour};
+  &:hover {
+    background: ${loginBoxButtonHoverBgColour};
+    color: ${loginBoxButtonHoverTextColour};
+  }
+  // For the <span> element to inherit its colour
+  color: ${loginBoxButtonTextColour};
+`;
+
+const { loginBoxTextColour } = config;
 const paragraphStyles = (theme: GrafanaTheme) => css`
-  color: #04275f;
+  color: ${loginBoxTextColour};
   font-size: ${theme.typography.size.sm};
   font-weight: ${theme.typography.weight.regular};
   margin-top: ${theme.spacing.sm};
   display: block;
 `;
 
+const {
+  loginBoxLinkButtonBgColour,
+  loginBoxLinkButtonHoverBgColour,
+  loginBoxLinkButtonTextColour,
+  loginBoxLinkButtonHoverTextColour,
+} = config;
+
+const backLoginPageStyles = css`
+  color: ${loginBoxLinkButtonTextColour};
+  background: ${loginBoxLinkButtonBgColour};
+  &:hover {
+    background: ${loginBoxLinkButtonHoverBgColour};
+    color: ${loginBoxLinkButtonHoverTextColour};
+  }
+`;
+
 export const ForgottenPassword: FC = () => {
   const [emailSent, setEmailSent] = useState(false);
   const styles = useStyles(paragraphStyles);
   const loginHref = `${config.appSubUrl}/login`;
+  const { loginBoxTextColour } = config;
 
   const sendEmail = async (formModel: EmailDTO) => {
     const res = await getBackendSrv().post('/api/user/password/send-reset-email', formModel);
@@ -60,6 +95,7 @@ export const ForgottenPassword: FC = () => {
             description="Enter your information to get a reset link sent to you"
             invalid={!!errors.userOrEmail}
             error={errors?.userOrEmail?.message}
+            textColour={loginBoxTextColour}
           >
             <WideSkyInput
               id="user-input"
@@ -68,8 +104,8 @@ export const ForgottenPassword: FC = () => {
             />
           </WideSkyField>
           <HorizontalGroup>
-            <Button>Send reset email</Button>
-            <LinkButton fill="text" href={loginHref}>
+            <Button className={submitButton}>Send reset email</Button>
+            <LinkButton className={backLoginPageStyles} fill="text" href={loginHref}>
               Back to login
             </LinkButton>
           </HorizontalGroup>

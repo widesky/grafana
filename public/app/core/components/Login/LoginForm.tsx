@@ -26,6 +26,7 @@ const {
   loginBoxButtonTextColour,
   loginBoxButtonHoverTextColour,
 } = config;
+
 export const submitButton = css`
   background: ${loginBoxButtonBgColour};
   justify-content: center;
@@ -59,7 +60,12 @@ export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, password
                 aria-label={selectors.pages.Login.username}
               />
             </WideSkyField>
-            <WideSkyField label="Password" invalid={!!errors.password} error={errors.password?.message}>
+            <WideSkyField
+              label="Password"
+              textColour={loginBoxTextColour}
+              invalid={!!errors.password}
+              error={errors.password?.message}
+            >
               <PasswordField
                 id="current-password"
                 autoComplete="current-password"
