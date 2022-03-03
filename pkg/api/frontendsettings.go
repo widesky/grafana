@@ -136,6 +136,8 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"loginBoxLogo":                        hs.Cfg.LoginBoxLogo,
 		"loginBoxColour":                      hs.Cfg.LoginBoxColour,
 		"loginBoxTextColour":                  hs.Cfg.LoginBoxTextColour,
+		"loginBoxButtonBgColour":              hs.Cfg.LoginBoxButtonBgColour,
+		"loginBoxButtonHoverBgColour":         hs.Cfg.LoginBoxButtonHoverBgColour,
 		"angularSupportEnabled":               hs.Cfg.AngularSupportEnabled,
 		"editorsCanAdmin":                     hs.Cfg.EditorsCanAdmin,
 		"disableSanitizeHtml":                 hs.Cfg.DisableSanitizeHtml,

@@ -20,9 +20,14 @@ const wrapperStyles = css`
   padding-bottom: 16px;
 `;
 
+const { loginBoxButtonBgColour, loginBoxButtonHoverBgColour } = config;
 export const submitButton = css`
+  background: ${loginBoxButtonBgColour};
   justify-content: center;
   width: 100%;
+  &:hover {
+    background: ${loginBoxButtonHoverBgColour};
+  }
 `;
 
 export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, passwordHint, loginHint }) => {
