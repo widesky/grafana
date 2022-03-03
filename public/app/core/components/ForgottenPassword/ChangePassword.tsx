@@ -7,6 +7,7 @@ interface Props {
   onSubmit: (pw: string) => void;
   onSkip?: (event?: SyntheticEvent) => void;
 }
+import config from 'app/core/config';
 
 interface PasswordDTO {
   newPassword: string;
@@ -14,6 +15,7 @@ interface PasswordDTO {
 }
 
 export const ChangePassword: FC<Props> = ({ onSubmit, onSkip }) => {
+  const { loginBoxTextColour } = config;
   const submit = (passwords: PasswordDTO) => {
     onSubmit(passwords.newPassword);
   };
@@ -21,7 +23,12 @@ export const ChangePassword: FC<Props> = ({ onSubmit, onSkip }) => {
     <Form onSubmit={submit}>
       {({ errors, register, getValues }) => (
         <>
-          <WideSkyField label="New password" invalid={!!errors.newPassword} error={errors?.newPassword?.message}>
+          <WideSkyField
+            label="New password"
+            invalid={!!errors.newPassword}
+            error={errors?.newPassword?.message}
+            textColour={loginBoxTextColour}
+          >
             <PasswordField
               id="new-password"
               autoFocus
@@ -29,7 +36,12 @@ export const ChangePassword: FC<Props> = ({ onSubmit, onSkip }) => {
               {...register('newPassword', { required: 'New Password is required' })}
             />
           </WideSkyField>
-          <WideSkyField label="Confirm new password" invalid={!!errors.confirmNew} error={errors?.confirmNew?.message}>
+          <WideSkyField
+            label="Confirm new password"
+            invalid={!!errors.confirmNew}
+            error={errors?.confirmNew?.message}
+            textColour={loginBoxTextColour}
+          >
             <PasswordField
               id="confirm-new-password"
               autoComplete="new-password"
