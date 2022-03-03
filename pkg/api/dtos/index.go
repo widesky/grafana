@@ -2,8 +2,6 @@ package dtos
 
 import (
 	"github.com/grafana/grafana/pkg/setting"
-
-	"html/template"
 )
 
 type IndexViewData struct {
@@ -26,7 +24,7 @@ type IndexViewData struct {
 	AppTitle                string
 	Sentry                  *setting.Sentry
 	ContentDeliveryURL      string
-	LoadingLogo             template.URL
+	LoadingLogo             string
 	// Nonce is a cryptographic identifier for use with Content Security Policy.
 	Nonce string
 }

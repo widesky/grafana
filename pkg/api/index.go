@@ -690,7 +690,7 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 		Sentry:                  &hs.Cfg.Sentry,
 		Nonce:                   c.RequestNonce,
 		ContentDeliveryURL:      hs.Cfg.GetContentDeliveryURL(hs.License.ContentDeliveryPrefix()),
-		LoadingLogo:             "public/img/widesky_icon.svg",
+		LoadingLogo:             hs.Cfg.LoadingLogo,
 	}
 
 	if hs.Features.IsEnabled(featuremgmt.FlagAccesscontrol) {

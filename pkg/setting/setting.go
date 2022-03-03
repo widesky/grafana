@@ -454,6 +454,7 @@ type Cfg struct {
 	LoginBackground string
 	BrowserTabFavicon string
 
+	LoadingLogo                       string
 	LoginBoxLogo    string
 	LoginBoxColour  string
 	LoginBoxTextColour string
@@ -461,6 +462,7 @@ type Cfg struct {
 	LoginBoxButtonHoverBgColour string
 	LoginBoxButtonTextColour      string
 	LoginBoxButtonHoverTextColour string
+
 	LoginBoxLinkButtonBgColour        string
 	LoginBoxLinkButtonHoverBgColour   string
 	LoginBoxLinkButtonTextColour      string
@@ -1163,6 +1165,7 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.LoginBackground = whitelabelSec.Key("login_background").String()
 	cfg.BrowserTabFavicon = whitelabelSec.Key("browser_tab_favicon").String()
 
+	cfg.LoadingLogo = whitelabelSec.Key("loading_logo").String()
 	cfg.LoginBoxLogo = whitelabelSec.Key("login_box_logo").String()
 	cfg.LoginBoxColour = whitelabelSec.Key("login_box_colour").String()
 	cfg.LoginBoxTextColour = whitelabelSec.Key("login_box_text_colour").String()
