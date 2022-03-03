@@ -130,6 +130,8 @@ export class GrafanaBootConfig implements GrafanaConfig {
   loginBoxTextColour: '';
   loginBoxButtonBgColour: '';
   loginBoxButtonHoverBgColour: '';
+  loginBoxButtonTextColour: '';
+  loginBoxButtonHoverTextColour: '';
 
   constructor(options: GrafanaBootConfig) {
     const mode = options.bootData.user.lightTheme ? 'light' : 'dark';

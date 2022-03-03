@@ -20,14 +20,22 @@ const wrapperStyles = css`
   padding-bottom: 16px;
 `;
 
-const { loginBoxButtonBgColour, loginBoxButtonHoverBgColour } = config;
+const {
+  loginBoxButtonBgColour,
+  loginBoxButtonHoverBgColour,
+  loginBoxButtonTextColour,
+  loginBoxButtonHoverTextColour,
+} = config;
 export const submitButton = css`
   background: ${loginBoxButtonBgColour};
   justify-content: center;
   width: 100%;
   &:hover {
     background: ${loginBoxButtonHoverBgColour};
+    color: ${loginBoxButtonHoverTextColour};
   }
+  // For the <span> element to inherit its colour
+  color: ${loginBoxButtonTextColour};
 `;
 
 export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, passwordHint, loginHint }) => {
