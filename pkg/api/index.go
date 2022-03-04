@@ -691,6 +691,7 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 		Nonce:                   c.RequestNonce,
 		ContentDeliveryURL:      hs.Cfg.GetContentDeliveryURL(hs.License.ContentDeliveryPrefix()),
 		LoadingLogo:             hs.Cfg.LoadingLogo,
+		LoadingText:             hs.Cfg.LoadingText,
 	}
 
 	if hs.Features.IsEnabled(featuremgmt.FlagAccesscontrol) {
