@@ -454,6 +454,7 @@ type Cfg struct {
 	LoginBackground string
 	BrowserTabFavicon string
 	BrowserTabTitle   string
+	AppSidebarLogo    string
 
 	LoadingLogo                       string
 	LoadingText                       string
@@ -1167,6 +1168,7 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.LoginBackground = whitelabelSec.Key("login_background").String()
 	cfg.BrowserTabFavicon = whitelabelSec.Key("browser_tab_favicon").String()
 	cfg.BrowserTabTitle = whitelabelSec.Key("browser_tab_title").String()
+	cfg.AppSidebarLogo = whitelabelSec.Key("app_sidebar_logo").String()
 
 	cfg.LoadingLogo = whitelabelSec.Key("loading_logo").String()
 	cfg.LoadingText = whitelabelSec.Key("loading_text").String()

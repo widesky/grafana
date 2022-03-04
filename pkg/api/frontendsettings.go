@@ -133,6 +133,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"footerElement2Link":                  hs.Cfg.FooterElement2Link,
 		"footerElement3Link":                  hs.Cfg.FooterElement3Link,
 		"browserTabTitle":                     hs.Cfg.BrowserTabTitle,
+		"appSidebarLogo":                      hs.Cfg.AppSidebarLogo,
 		"loginBackground":                     hs.Cfg.LoginBackground,
 		"loginBoxLogo":                        hs.Cfg.LoginBoxLogo,
 		"loginBoxColour":                      hs.Cfg.LoginBoxColour,
@@ -149,6 +150,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"editorsCanAdmin":                     hs.Cfg.EditorsCanAdmin,
 		"disableSanitizeHtml":                 hs.Cfg.DisableSanitizeHtml,
 		"pluginsToPreload":                    pluginsToPreload,
+
 
 		"buildInfo": map[string]interface{}{
 			"hideVersion":   hideVersion,

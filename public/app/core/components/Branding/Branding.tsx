@@ -46,7 +46,8 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
 };
 
 const MenuLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/widesky_icon.svg" alt="WideSky" />;
+  const { appSidebarLogo } = config;
+  return <img className={className} src={appSidebarLogo} alt="ApplicationLogo" />;
 };
 
 const LoginBoxBackground = () => {
