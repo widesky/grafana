@@ -132,6 +132,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"footerElement1Link":                  hs.Cfg.FooterElement1Link,
 		"footerElement2Link":                  hs.Cfg.FooterElement2Link,
 		"footerElement3Link":                  hs.Cfg.FooterElement3Link,
+		"browserTabTitle":                     hs.Cfg.BrowserTabTitle,
 		"loginBackground":                     hs.Cfg.LoginBackground,
 		"loginBoxLogo":                        hs.Cfg.LoginBoxLogo,
 		"loginBoxColour":                      hs.Cfg.LoginBoxColour,

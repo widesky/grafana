@@ -124,6 +124,7 @@ export class GrafanaBootConfig implements GrafanaConfig {
   footerElement1Link: '';
   footerElement2Link: '';
   footerElement3Link: '';
+  browserTabTitle: '';
   loginBackground: '';
   loginBoxLogo: '';
   loginBoxColour: '';

@@ -59,12 +59,13 @@ const LoginBoxBackground = () => {
   `;
 };
 
+const { browserTabTitle } = config;
 export class Branding {
   static LoginLogo = LoginLogo;
   static LoginBackground = LoginBackground;
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
-  static AppTitle = 'WideSky';
+  static AppTitle = browserTabTitle;
   static LoginTitle = '';
   static GetLoginSubTitle = (): null | string => {
     return null;
