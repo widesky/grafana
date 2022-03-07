@@ -685,7 +685,7 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 		AppNameBodyClass:        getAppNameBodyClass(hs.License.HasValidLicense()),
 		FavIcon:                 hs.Cfg.BrowserTabFavicon,
 		AppleTouchIcon:          hs.Cfg.BrowserTabFavicon,
-		AppTitle:                "WideSky",
+		AppTitle:                hs.Cfg.BrowserTabTitle,
 		NavTree:                 navTree,
 		Sentry:                  &hs.Cfg.Sentry,
 		Nonce:                   c.RequestNonce,
