@@ -8,11 +8,29 @@ interface Props {
   onSkip?: (event?: SyntheticEvent) => void;
 }
 import config from 'app/core/config';
+import { css } from '@emotion/css';
 
 interface PasswordDTO {
   newPassword: string;
   confirmNew: string;
 }
+
+const {
+  loginBoxButtonBgColour,
+  loginBoxButtonHoverBgColour,
+  loginBoxButtonTextColour,
+  loginBoxButtonHoverTextColour,
+} = config;
+
+export const skipButton = css`
+  background: ${loginBoxButtonBgColour};
+  &:hover {
+    background: ${loginBoxButtonHoverBgColour};
+    color: ${loginBoxButtonHoverTextColour};
+  }
+  // For the <span> element to inherit its colour
+  color: ${loginBoxButtonTextColour};
+`;
 
 export const ChangePassword: FC<Props> = ({ onSubmit, onSkip }) => {
   const { loginBoxTextColour } = config;
@@ -61,7 +79,13 @@ export const ChangePassword: FC<Props> = ({ onSubmit, onSkip }) => {
                 content="If you skip you will be prompted to change password next time you log in."
                 placement="bottom"
               >
-                <Button fill="text" onClick={onSkip} type="button" aria-label={selectors.pages.Login.skip}>
+                <Button
+                  className={skipButton}
+                  fill="text"
+                  onClick={onSkip}
+                  type="button"
+                  aria-label={selectors.pages.Login.skip}
+                >
                   Skip
                 </Button>
               </Tooltip>
