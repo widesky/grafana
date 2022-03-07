@@ -89,7 +89,7 @@ export const ForgottenPassword: FC = () => {
     <Form onSubmit={sendEmail}>
       {({ register, errors }) => (
         <>
-          <WideSkyLegend>Reset password</WideSkyLegend>
+          <WideSkyLegend textColour={loginBoxTextColour}>Reset password</WideSkyLegend>
           <WideSkyField
             label="User"
             description="Enter your information to get a reset link sent to you"
