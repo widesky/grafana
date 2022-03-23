@@ -136,6 +136,7 @@ export class GrafanaBootConfig implements GrafanaConfig {
   loginBoxLogoMaxWidthMediaBreakpoint: '';
   loginBoxColour: '';
   loginBoxTextColour: '';
+  loginBoxTextboxPlaceholderColour: '';
   loginBoxButtonBgColour: '';
   loginBoxButtonHoverBgColour: '';
   loginBoxButtonTextColour: '';

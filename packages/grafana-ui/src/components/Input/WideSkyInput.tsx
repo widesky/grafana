@@ -22,15 +22,17 @@ export interface Props extends Omit<HTMLProps<HTMLInputElement>, 'prefix' | 'siz
   addonBefore?: ReactNode;
   /** Add a component as an addon after the input */
   addonAfter?: ReactNode;
+  placeholderColour?: string;
 }
 
 interface StyleDeps {
   theme: GrafanaTheme2;
   invalid: boolean;
   width?: number;
+  placeholderColour?: string;
 }
 
-export const getInputStyles = stylesFactory(({ theme, invalid = false, width }: StyleDeps) => {
+export const getInputStyles = stylesFactory(({ theme, invalid = false, width, placeholderColour }: StyleDeps) => {
   const prefixSuffixStaticWidth = '28px';
   const prefixSuffix = css`
     position: absolute;
@@ -127,6 +129,22 @@ export const getInputStyles = stylesFactory(({ theme, invalid = false, width }: 
         &[readonly] {
           cursor: default;
         }
+
+        ::placeholder {
+          /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: ${placeholderColour};
+          opacity: 1; /* Firefox */
+        }
+
+        :-ms-input-placeholder {
+          /* Internet Explorer 10-11 */
+          color: ${placeholderColour};
+        }
+
+        ::-ms-input-placeholder {
+          /* Microsoft Edge */
+          color: ${placeholderColour};
+        }
       }
     `,
 
@@ -141,6 +159,22 @@ export const getInputStyles = stylesFactory(({ theme, invalid = false, width }: 
         height: 100%;
         width: 100%;
         background-color: #fff;
+
+        ::placeholder {
+          /* Chrome, Firefox, Opera, Safari 10.1+ */
+          color: ${placeholderColour};
+          opacity: 1; /* Firefox */
+        }
+
+        :-ms-input-placeholder {
+          /* Internet Explorer 10-11 */
+          color: ${placeholderColour};
+        }
+
+        ::-ms-input-placeholder {
+          /* Microsoft Edge */
+          color: ${placeholderColour};
+        }
       `
     ),
     inputDisabled: css`
@@ -215,7 +249,18 @@ export const getInputStyles = stylesFactory(({ theme, invalid = false, width }: 
 });
 
 export const WideSkyInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { className, addonAfter, addonBefore, prefix, suffix, invalid, loading, width = 0, ...restProps } = props;
+  const {
+    className,
+    addonAfter,
+    addonBefore,
+    prefix,
+    suffix,
+    invalid,
+    loading,
+    width = 0,
+    placeholderColour,
+    ...restProps
+  } = props;
   /**
    * Prefix & suffix are positioned absolutely within inputWrapper. We use client rects below to apply correct padding to the input
    * when prefix/suffix is larger than default (28px = 16px(icon) + 12px(left/right paddings)).
@@ -225,7 +270,7 @@ export const WideSkyInput = React.forwardRef<HTMLInputElement, Props>((props, re
   const [suffixRect, suffixRef] = useClientRect<HTMLDivElement>();
 
   const theme = useTheme2();
-  const styles = getInputStyles({ theme, invalid: !!invalid, width });
+  const styles = getInputStyles({ theme, invalid: !!invalid, width, placeholderColour });
 
   return (
     <div className={cx(styles.wrapper, className)}>

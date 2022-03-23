@@ -144,6 +144,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"loginBoxLogoMaxWidthMediaBreakpoint": hs.Cfg.LoginBoxLogoMaxWidthMediaBreakpoint,
 		"loginBoxColour":                      hs.Cfg.LoginBoxColour,
 		"loginBoxTextColour":                  hs.Cfg.LoginBoxTextColour,
+		"loginBoxTextboxPlaceholderColour":    hs.Cfg.LoginBoxTextboxPlaceholderColour,
 		"loginBoxButtonBgColour":              hs.Cfg.LoginBoxButtonBgColour,
 		"loginBoxButtonHoverBgColour":         hs.Cfg.LoginBoxButtonHoverBgColour,
 		"loginBoxButtonTextColour":            hs.Cfg.LoginBoxButtonTextColour,

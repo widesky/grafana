@@ -25,6 +25,8 @@ const {
   loginBoxButtonHoverBgColour,
   loginBoxButtonTextColour,
   loginBoxButtonHoverTextColour,
+  loginBoxTextColour,
+  loginBoxTextboxPlaceholderColour,
 } = config;
 
 export const submitButton = css`
@@ -40,7 +42,6 @@ export const submitButton = css`
 `;
 
 export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, passwordHint, loginHint }) => {
-  const { loginBoxTextColour } = config;
   return (
     <div className={wrapperStyles}>
       <Form onSubmit={onSubmit} validateOn="onChange">
@@ -57,6 +58,7 @@ export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, password
                 autoFocus
                 autoCapitalize="none"
                 placeholder={loginHint}
+                placeholderColour={loginBoxTextboxPlaceholderColour}
                 aria-label={selectors.pages.Login.username}
               />
             </WideSkyField>
@@ -70,6 +72,7 @@ export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, password
                 id="current-password"
                 autoComplete="current-password"
                 passwordHint={passwordHint}
+                placeholderColour={loginBoxTextboxPlaceholderColour}
                 {...register('password', { required: 'Password is required' })}
               />
             </WideSkyField>

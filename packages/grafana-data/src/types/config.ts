@@ -201,6 +201,7 @@ export interface GrafanaConfig {
   loginBoxLogoMaxWidthMediaBreakpoint?: string;
   loginBoxColour?: string;
   loginBoxTextColour?: string;
+  loginBoxTextboxPlaceholderColour?: string;
   loginBoxButtonBgColour?: string;
   loginBoxButtonHoverBgColour?: string;
   loginBoxButtonTextColour?: string;
