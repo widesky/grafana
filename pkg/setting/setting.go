@@ -459,6 +459,7 @@ type Cfg struct {
 	LoadingLogo                       string
 	LoadingText                       string
 	LoginBoxLogo    string
+	LoginBoxLogoMaxWidth              string
 	LoginBoxColour  string
 	LoginBoxTextColour string
 	LoginBoxButtonBgColour      string
@@ -1173,6 +1174,7 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.LoadingLogo = whitelabelSec.Key("loading_logo").String()
 	cfg.LoadingText = whitelabelSec.Key("loading_text").String()
 	cfg.LoginBoxLogo = whitelabelSec.Key("login_box_logo").String()
+	cfg.LoginBoxLogoMaxWidth = whitelabelSec.Key("login_box_logo_max_width").String()
 	cfg.LoginBoxColour = whitelabelSec.Key("login_box_colour").String()
 	cfg.LoginBoxTextColour = whitelabelSec.Key("login_box_text_colour").String()
 	cfg.LoginBoxButtonBgColour = whitelabelSec.Key("login_box_button_bg_colour").String()

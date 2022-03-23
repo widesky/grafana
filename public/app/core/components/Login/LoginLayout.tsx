@@ -4,6 +4,7 @@ import { useStyles2, styleMixins } from '@grafana/ui';
 import { Branding } from '../Branding/Branding';
 import { GrafanaTheme2 } from '@grafana/data';
 import { Footer } from '../Footer/Footer';
+import config from 'app/core/config';
 
 interface InnerBoxProps {
   enterAnimation?: boolean;
@@ -47,6 +48,7 @@ to{
 export const getLoginStyles = (theme: GrafanaTheme2) => {
   /// const bgColor = theme.isDark ? '#000' : theme.colors.background.canvas;
   const bgColor = 'transparent';
+  const { loginBoxLogoMaxWidth } = config;
 
   return {
     container: css({
@@ -81,7 +83,7 @@ export const getLoginStyles = (theme: GrafanaTheme2) => {
       margin-bottom: 15px;
 
       @media ${styleMixins.mediaUp(theme.v1.breakpoints.sm)} {
-        max-width: 200px;
+        max-width: ${loginBoxLogoMaxWidth};
       }
     `,
     loginLogoWrapper: css`

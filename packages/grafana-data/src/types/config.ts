@@ -193,6 +193,7 @@ export interface GrafanaConfig {
   appSidebarLogo?: string;
   loginBackground?: string;
   loginBoxLogo?: string;
+  loginBoxLogoMaxWidth?: string;
   loginBoxColour?: string;
   loginBoxTextColour?: string;
   loginBoxButtonBgColour?: string;
