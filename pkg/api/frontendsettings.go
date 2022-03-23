@@ -141,6 +141,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"loginBackground":                     hs.Cfg.LoginBackground,
 		"loginBoxLogo":                        hs.Cfg.LoginBoxLogo,
 		"loginBoxLogoMaxWidth":                hs.Cfg.LoginBoxLogoMaxWidth,
+		"loginBoxLogoMaxWidthMediaBreakpoint": hs.Cfg.LoginBoxLogoMaxWidthMediaBreakpoint,
 		"loginBoxColour":                      hs.Cfg.LoginBoxColour,
 		"loginBoxTextColour":                  hs.Cfg.LoginBoxTextColour,
 		"loginBoxButtonBgColour":              hs.Cfg.LoginBoxButtonBgColour,
@@ -155,8 +156,6 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"editorsCanAdmin":                     hs.Cfg.EditorsCanAdmin,
 		"disableSanitizeHtml":                 hs.Cfg.DisableSanitizeHtml,
 		"pluginsToPreload":                    pluginsToPreload,
-
-
 		"buildInfo": map[string]interface{}{
 			"hideVersion":   hideVersion,
 			"version":       version,

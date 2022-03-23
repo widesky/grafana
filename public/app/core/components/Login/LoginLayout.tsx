@@ -48,7 +48,7 @@ to{
 export const getLoginStyles = (theme: GrafanaTheme2) => {
   /// const bgColor = theme.isDark ? '#000' : theme.colors.background.canvas;
   const bgColor = 'transparent';
-  const { loginBoxLogoMaxWidth } = config;
+  const { loginBoxLogoMaxWidth, loginBoxLogoMaxWidthMediaBreakpoint } = config;
 
   return {
     container: css({
@@ -79,11 +79,11 @@ export const getLoginStyles = (theme: GrafanaTheme2) => {
     `,
     loginLogo: css`
       width: 100%;
-      max-width: 60px;
+      max-width: ${loginBoxLogoMaxWidth};
       margin-bottom: 15px;
 
       @media ${styleMixins.mediaUp(theme.v1.breakpoints.sm)} {
-        max-width: ${loginBoxLogoMaxWidth};
+        max-width: ${loginBoxLogoMaxWidthMediaBreakpoint};
       }
     `,
     loginLogoWrapper: css`
