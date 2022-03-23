@@ -451,7 +451,14 @@ type Cfg struct {
 	FooterElement2Link string
 	FooterElement3Link string
 
+	FooterElement1TextColor string
+	FooterElement2TextColor string
+	FooterElement3TextColor string
+
+	FooterPipeColor string
+
 	LoginBackground string
+
 	BrowserTabFavicon string
 	BrowserTabTitle   string
 	AppSidebarLogo    string
@@ -1165,6 +1172,12 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.FooterElement1Link = whitelabelSec.Key("footer_element1_link").String()
 	cfg.FooterElement2Link = whitelabelSec.Key("footer_element2_link").String()
 	cfg.FooterElement3Link = whitelabelSec.Key("footer_element3_link").String()
+
+	cfg.FooterElement1TextColor = whitelabelSec.Key("footer_element1_text_color").String()
+	cfg.FooterElement2TextColor = whitelabelSec.Key("footer_element2_text_color").String()
+	cfg.FooterElement3TextColor = whitelabelSec.Key("footer_element3_text_color").String()
+
+	cfg.FooterPipeColor = whitelabelSec.Key("footer_pipe_color").String()
 
 	cfg.LoginBackground = whitelabelSec.Key("login_background").String()
 	cfg.BrowserTabFavicon = whitelabelSec.Key("browser_tab_favicon").String()

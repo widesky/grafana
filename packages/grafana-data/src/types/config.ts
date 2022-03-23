@@ -189,6 +189,10 @@ export interface GrafanaConfig {
   footerElement1Link?: string;
   footerElement2Link?: string;
   footerElement3Link?: string;
+  footerElement1TextColor?: string;
+  footerElement2TextColor?: string;
+  footerElement3TextColor?: string;
+  footerPipeColor?: string;
   browserTabTitle?: string;
   appSidebarLogo?: string;
   loginBackground?: string;
