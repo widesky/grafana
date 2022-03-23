@@ -110,7 +110,7 @@ export const ForgottenPassword: FC = () => {
             </LinkButton>
           </HorizontalGroup>
 
-          <p className={styles}>Did you forget your username or email? Contact your WideSky administrator.</p>
+          <p className={styles}>Did you forget your username or email? Contact your administrator.</p>
         </>
       )}
     </Form>
