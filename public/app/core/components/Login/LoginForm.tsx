@@ -72,7 +72,6 @@ export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, password
                 id="current-password"
                 autoComplete="current-password"
                 passwordHint={passwordHint}
-                placeholderColour={loginBoxTextboxPlaceholderColour}
                 {...register('password', { required: 'Password is required' })}
               />
             </WideSkyField>
