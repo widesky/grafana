@@ -470,6 +470,7 @@ type Cfg struct {
 	LoginBoxLogoMaxWidthMediaBreakpoint string
 	LoginBoxColour  string
 	LoginBoxTextColour string
+	LoginBoxTextboxBorderColour         string
 	LoginBoxButtonBgColour      string
 	LoginBoxTextboxPlaceholderColour    string
 	LoginBoxButtonHoverBgColour string
@@ -1194,6 +1195,7 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.LoginBoxColour = whitelabelSec.Key("login_box_colour").String()
 	cfg.LoginBoxTextColour = whitelabelSec.Key("login_box_text_colour").String()
 	cfg.LoginBoxTextboxPlaceholderColour = whitelabelSec.Key("login_box_textbox_placeholder_colour").String()
+	cfg.LoginBoxTextboxBorderColour = whitelabelSec.Key("login_box_textbox_border_colour").String()
 	cfg.LoginBoxButtonBgColour = whitelabelSec.Key("login_box_button_bg_colour").String()
 	cfg.LoginBoxButtonHoverBgColour = whitelabelSec.Key("login_box_button_hover_bg_colour").String()
 	cfg.LoginBoxButtonTextColour = whitelabelSec.Key("login_box_button_text_colour").String()

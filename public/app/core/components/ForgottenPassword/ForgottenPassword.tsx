@@ -25,6 +25,7 @@ const {
   loginBoxButtonTextColour,
   loginBoxButtonHoverTextColour,
   loginBoxTextboxPlaceholderColour,
+  loginBoxTextboxBorderColour,
 } = config;
 
 export const submitButton = css`
@@ -102,6 +103,7 @@ export const ForgottenPassword: FC = () => {
               id="user-input"
               placeholder="Email or username"
               placeholderColour={loginBoxTextboxPlaceholderColour}
+              borderColour={loginBoxTextboxBorderColour}
               {...register('userOrEmail', { required: 'Email or username is required' })}
             />
           </WideSkyField>

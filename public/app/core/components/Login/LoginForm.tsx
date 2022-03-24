@@ -27,6 +27,7 @@ const {
   loginBoxButtonHoverTextColour,
   loginBoxTextColour,
   loginBoxTextboxPlaceholderColour,
+  loginBoxTextboxBorderColour,
 } = config;
 
 export const submitButton = css`
@@ -59,6 +60,7 @@ export const LoginForm: FC<Props> = ({ children, onSubmit, isLoggingIn, password
                 autoCapitalize="none"
                 placeholder={loginHint}
                 placeholderColour={loginBoxTextboxPlaceholderColour}
+                borderColour={loginBoxTextboxBorderColour}
                 aria-label={selectors.pages.Login.username}
               />
             </WideSkyField>

@@ -4,7 +4,7 @@ import { selectors } from '@grafana/e2e-selectors';
 import { WideSkyInput, WideSkyIconButton } from '@grafana/ui';
 import config from 'app/core/config';
 
-const { loginBoxTextboxPlaceholderColour } = config;
+const { loginBoxTextboxPlaceholderColour, loginBoxTextboxBorderColour } = config;
 
 export interface Props {
   autoFocus?: boolean;
@@ -26,6 +26,7 @@ export const PasswordField: FC<Props> = React.forwardRef<HTMLInputElement, Props
         type={showPassword ? 'text' : 'password'}
         placeholder={passwordHint}
         placeholderColour={loginBoxTextboxPlaceholderColour}
+        borderColour={loginBoxTextboxBorderColour}
         aria-label={selectors.pages.Login.password}
         ref={ref}
         suffix={

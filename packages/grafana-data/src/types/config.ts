@@ -202,6 +202,7 @@ export interface GrafanaConfig {
   loginBoxColour?: string;
   loginBoxTextColour?: string;
   loginBoxTextboxPlaceholderColour?: string;
+  loginBoxTextboxBorderColour?: string;
   loginBoxButtonBgColour?: string;
   loginBoxButtonHoverBgColour?: string;
   loginBoxButtonTextColour?: string;

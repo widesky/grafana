@@ -23,6 +23,7 @@ export interface Props extends Omit<HTMLProps<HTMLInputElement>, 'prefix' | 'siz
   /** Add a component as an addon after the input */
   addonAfter?: ReactNode;
   placeholderColour?: string;
+  borderColour?: string;
 }
 
 interface StyleDeps {
@@ -30,223 +31,227 @@ interface StyleDeps {
   invalid: boolean;
   width?: number;
   placeholderColour?: string;
+  borderColour?: string;
 }
 
-export const getInputStyles = stylesFactory(({ theme, invalid = false, width, placeholderColour }: StyleDeps) => {
-  const prefixSuffixStaticWidth = '28px';
-  const prefixSuffix = css`
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 0;
-    flex-shrink: 0;
-    font-size: ${theme.typography.size.md};
-    height: 100%;
-    /* Min width specified for prefix/suffix classes used outside React component*/
-    min-width: ${prefixSuffixStaticWidth};
-    color: ${theme.colors.text.secondary};
-  `;
+export const getInputStyles = stylesFactory(
+  ({ theme, invalid = false, width, placeholderColour, borderColour }: StyleDeps) => {
+    const prefixSuffixStaticWidth = '28px';
+    const prefixSuffix = css`
+      position: absolute;
+      top: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 0;
+      flex-shrink: 0;
+      font-size: ${theme.typography.size.md};
+      height: 100%;
+      /* Min width specified for prefix/suffix classes used outside React component*/
+      min-width: ${prefixSuffixStaticWidth};
+      color: ${theme.colors.text.secondary};
+    `;
 
-  return {
-    // Wraps inputWrapper and addons
-    wrapper: cx(
-      css`
-        label: input-wrapper;
-        display: flex;
-        width: ${width ? `${theme.spacing(width)}` : '100%'};
-        height: ${theme.spacing(theme.components.height.md)};
-        border-radius: ${theme.shape.borderRadius()};
-        &:hover {
-          > .prefix,
-          .suffix,
-          .input {
-            border-color: ${invalid ? theme.colors.error.border : '#04275f'};
+    return {
+      // Wraps inputWrapper and addons
+      wrapper: cx(
+        css`
+          label: input-wrapper;
+          display: flex;
+          width: ${width ? `${theme.spacing(width)}` : '100%'};
+          height: ${theme.spacing(theme.components.height.md)};
+          border-radius: ${theme.shape.borderRadius()};
+          &:hover {
+            > .prefix,
+            .suffix,
+            .input {
+              border-color: ${invalid ? theme.colors.error.border : '#04275f'};
+            }
+
+            // only show number buttons on hover
+            input[type='number'] {
+              -moz-appearance: number-input;
+              -webkit-appearance: number-input;
+              appearance: textfield;
+            }
+
+            input[type='number']::-webkit-inner-spin-button,
+            input[type='number']::-webkit-outer-spin-button {
+              -webkit-appearance: inner-spin-button !important;
+              opacity: 1;
+            }
           }
+        `
+      ),
+      // Wraps input and prefix/suffix
+      inputWrapper: css`
+        label: input-inputWrapper;
+        position: relative;
+        flex-grow: 1;
+        /* we want input to be above addons, especially for focused state */
+        z-index: 1;
 
-          // only show number buttons on hover
-          input[type='number'] {
-            -moz-appearance: number-input;
-            -webkit-appearance: number-input;
-            appearance: textfield;
-          }
-
-          input[type='number']::-webkit-inner-spin-button,
-          input[type='number']::-webkit-outer-spin-button {
-            -webkit-appearance: inner-spin-button !important;
-            opacity: 1;
+        /* when input rendered with addon before only*/
+        &:not(:first-child):last-child {
+          > input {
+            border-left: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
           }
         }
-      `
-    ),
-    // Wraps input and prefix/suffix
-    inputWrapper: css`
-      label: input-inputWrapper;
-      position: relative;
-      flex-grow: 1;
-      /* we want input to be above addons, especially for focused state */
-      z-index: 1;
 
-      /* when input rendered with addon before only*/
-      &:not(:first-child):last-child {
-        > input {
+        /* when input rendered with addon after only*/
+        &:first-child:not(:last-child) {
+          > input {
+            border-right: none;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        /* when rendered with addon before and after */
+        &:not(:first-child):not(:last-child) {
+          > input {
+            border-right: none;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+
+        input {
+          /* paddings specified for classes used outside React component */
+          &:not(:first-child) {
+            padding-left: ${prefixSuffixStaticWidth};
+          }
+          &:not(:last-child) {
+            padding-right: ${prefixSuffixStaticWidth};
+          }
+          &[readonly] {
+            cursor: default;
+          }
+
+          ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: ${placeholderColour};
+            opacity: 1; /* Firefox */
+          }
+
+          ::-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: ${placeholderColour};
+          }
+
+          ::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: ${placeholderColour};
+          }
+        }
+      `,
+
+      input: cx(
+        sharedInputStyle(theme, invalid),
+        css`
+          label: input-input;
+          position: relative;
+          z-index: 0;
+          flex-grow: 1;
+          border-radius: ${theme.shape.borderRadius()};
+          height: 100%;
+          width: 100%;
+          background-color: #fff;
+          border-color: ${borderColour};
+
+          ::placeholder {
+            /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: ${placeholderColour};
+            opacity: 1; /* Firefox */
+          }
+
+          ::-ms-input-placeholder {
+            /* Internet Explorer 10-11 */
+            color: ${placeholderColour};
+          }
+
+          ::-ms-input-placeholder {
+            /* Microsoft Edge */
+            color: ${placeholderColour};
+          }
+        `
+      ),
+      inputDisabled: css`
+        background-color: ${theme.colors.action.disabledBackground};
+        color: ${theme.colors.action.disabledText};
+        border: 1px solid ${theme.colors.action.disabledBackground};
+        &:focus {
+          box-shadow: none;
+        }
+      `,
+      addon: css`
+        label: input-addon;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 0;
+        flex-shrink: 0;
+        position: relative;
+
+        &:first-child {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          > :last-child {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+        }
+
+        &:last-child {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          > :first-child {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+        > *:focus {
+          /* we want anything that has focus and is an addon to be above input */
+          z-index: 2;
+        }
+      `,
+      prefix: cx(
+        prefixSuffix,
+        css`
+          label: input-prefix;
+          padding-left: ${theme.spacing(1)};
+          padding-right: ${theme.spacing(0.5)};
+          border-right: none;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        `
+      ),
+      suffix: cx(
+        prefixSuffix,
+        css`
+          label: input-suffix;
+          padding-left: ${theme.spacing(1)};
+          padding-right: ${theme.spacing(1)};
+          margin-bottom: -2px;
           border-left: none;
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
+          right: 0;
+        `
+      ),
+      loadingIndicator: css`
+        & + * {
+          margin-left: ${theme.spacing(0.5)};
         }
-      }
-
-      /* when input rendered with addon after only*/
-      &:first-child:not(:last-child) {
-        > input {
-          border-right: none;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-      }
-
-      /* when rendered with addon before and after */
-      &:not(:first-child):not(:last-child) {
-        > input {
-          border-right: none;
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-      }
-
-      input {
-        /* paddings specified for classes used outside React component */
-        &:not(:first-child) {
-          padding-left: ${prefixSuffixStaticWidth};
-        }
-        &:not(:last-child) {
-          padding-right: ${prefixSuffixStaticWidth};
-        }
-        &[readonly] {
-          cursor: default;
-        }
-
-        ::placeholder {
-          /* Chrome, Firefox, Opera, Safari 10.1+ */
-          color: ${placeholderColour};
-          opacity: 1; /* Firefox */
-        }
-
-        :-ms-input-placeholder {
-          /* Internet Explorer 10-11 */
-          color: ${placeholderColour};
-        }
-
-        ::-ms-input-placeholder {
-          /* Microsoft Edge */
-          color: ${placeholderColour};
-        }
-      }
-    `,
-
-    input: cx(
-      sharedInputStyle(theme, invalid),
-      css`
-        label: input-input;
-        position: relative;
-        z-index: 0;
-        flex-grow: 1;
-        border-radius: ${theme.shape.borderRadius()};
-        height: 100%;
-        width: 100%;
-        background-color: #fff;
-
-        ::placeholder {
-          /* Chrome, Firefox, Opera, Safari 10.1+ */
-          color: ${placeholderColour};
-          opacity: 1; /* Firefox */
-        }
-
-        :-ms-input-placeholder {
-          /* Internet Explorer 10-11 */
-          color: ${placeholderColour};
-        }
-
-        ::-ms-input-placeholder {
-          /* Microsoft Edge */
-          color: ${placeholderColour};
-        }
-      `
-    ),
-    inputDisabled: css`
-      background-color: ${theme.colors.action.disabledBackground};
-      color: ${theme.colors.action.disabledText};
-      border: 1px solid ${theme.colors.action.disabledBackground};
-      &:focus {
-        box-shadow: none;
-      }
-    `,
-    addon: css`
-      label: input-addon;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-grow: 0;
-      flex-shrink: 0;
-      position: relative;
-
-      &:first-child {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        > :last-child {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-      }
-
-      &:last-child {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        > :first-child {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-      }
-      > *:focus {
-        /* we want anything that has focus and is an addon to be above input */
-        z-index: 2;
-      }
-    `,
-    prefix: cx(
-      prefixSuffix,
-      css`
-        label: input-prefix;
-        padding-left: ${theme.spacing(1)};
-        padding-right: ${theme.spacing(0.5)};
-        border-right: none;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      `
-    ),
-    suffix: cx(
-      prefixSuffix,
-      css`
-        label: input-suffix;
-        padding-left: ${theme.spacing(1)};
-        padding-right: ${theme.spacing(1)};
-        margin-bottom: -2px;
-        border-left: none;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        right: 0;
-      `
-    ),
-    loadingIndicator: css`
-      & + * {
-        margin-left: ${theme.spacing(0.5)};
-      }
-    `,
-  };
-});
+      `,
+    };
+  }
+);
 
 export const WideSkyInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const {
@@ -259,6 +264,7 @@ export const WideSkyInput = React.forwardRef<HTMLInputElement, Props>((props, re
     loading,
     width = 0,
     placeholderColour,
+    borderColour,
     ...restProps
   } = props;
   /**
@@ -270,7 +276,7 @@ export const WideSkyInput = React.forwardRef<HTMLInputElement, Props>((props, re
   const [suffixRect, suffixRef] = useClientRect<HTMLDivElement>();
 
   const theme = useTheme2();
-  const styles = getInputStyles({ theme, invalid: !!invalid, width, placeholderColour });
+  const styles = getInputStyles({ theme, invalid: !!invalid, width, placeholderColour, borderColour });
 
   return (
     <div className={cx(styles.wrapper, className)}>

@@ -137,6 +137,7 @@ export class GrafanaBootConfig implements GrafanaConfig {
   loginBoxColour: '';
   loginBoxTextColour: '';
   loginBoxTextboxPlaceholderColour: '';
+  loginBoxTextboxBorderColour: '';
   loginBoxButtonBgColour: '';
   loginBoxButtonHoverBgColour: '';
   loginBoxButtonTextColour: '';

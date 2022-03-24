@@ -145,6 +145,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"loginBoxColour":                      hs.Cfg.LoginBoxColour,
 		"loginBoxTextColour":                  hs.Cfg.LoginBoxTextColour,
 		"loginBoxTextboxPlaceholderColour":    hs.Cfg.LoginBoxTextboxPlaceholderColour,
+		"loginBoxTextboxBorderColour":         hs.Cfg.LoginBoxTextboxBorderColour,
 		"loginBoxButtonBgColour":              hs.Cfg.LoginBoxButtonBgColour,
 		"loginBoxButtonHoverBgColour":         hs.Cfg.LoginBoxButtonHoverBgColour,
 		"loginBoxButtonTextColour":            hs.Cfg.LoginBoxButtonTextColour,
