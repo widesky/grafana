@@ -63,7 +63,7 @@ export class ErrorPage extends PureComponent<Props> {
                         and try again.
                       </p>
                       <p>
-                        If the error persists, seek help from your WideSky administrator or{' '}
+                        If the error persists, seek help from your administrator or{' '}
                         <a href="mailto: support@widesky.cloud" className="error-link">
                           Contact Support
                         </a>

@@ -195,6 +195,7 @@ export interface GrafanaConfig {
   footerPipeColor?: string;
   browserTabTitle?: string;
   appSidebarLogo?: string;
+  applicationName?: string;
   loginBackground?: string;
   loginBoxLogo?: string;
   loginBoxLogoMaxWidth?: string;

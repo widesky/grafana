@@ -46,7 +46,8 @@ const (
 	Dev              = "development"
 	Prod             = "production"
 	Test             = "test"
-	ApplicationName  = "WideSky"
+
+//	ApplicationName  = "WideSky"
 )
 
 // This constant corresponds to the default value for ldap_sync_ttl in .ini files
@@ -59,6 +60,8 @@ const (
 const zoneInfo = "ZONEINFO"
 
 var (
+	ApplicationName = "WideSky"
+
 	// App settings.
 	Env              = Dev
 	AppUrl           string
@@ -462,6 +465,7 @@ type Cfg struct {
 	BrowserTabFavicon string
 	BrowserTabTitle   string
 	AppSidebarLogo    string
+	ApplicationName   string
 
 	LoadingLogo                       string
 	LoadingText                       string
@@ -1186,6 +1190,9 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.BrowserTabFavicon = whitelabelSec.Key("browser_tab_favicon").String()
 	cfg.BrowserTabTitle = whitelabelSec.Key("browser_tab_title").String()
 	cfg.AppSidebarLogo = whitelabelSec.Key("app_sidebar_logo").String()
+	cfg.ApplicationName = whitelabelSec.Key("application_name").String()
+	// Reset the application name
+	ApplicationName = cfg.ApplicationName
 
 	cfg.LoadingLogo = whitelabelSec.Key("loading_logo").String()
 	cfg.LoadingText = whitelabelSec.Key("loading_text").String()

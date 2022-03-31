@@ -138,6 +138,7 @@ func (hs *HTTPServer) getFrontendSettingsMap(c *models.ReqContext) (map[string]i
 		"footerPipeColor":                     hs.Cfg.FooterPipeColor,
 		"browserTabTitle":                     hs.Cfg.BrowserTabTitle,
 		"appSidebarLogo":                      hs.Cfg.AppSidebarLogo,
+		"applicationName":                     hs.Cfg.ApplicationName,
 		"loginBackground":                     hs.Cfg.LoginBackground,
 		"loginBoxLogo":                        hs.Cfg.LoginBoxLogo,
 		"loginBoxLogoMaxWidth":                hs.Cfg.LoginBoxLogoMaxWidth,
