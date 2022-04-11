@@ -1,14 +1,15 @@
 import React from 'react';
-import { Icon, getSvgSize } from '../Icon/Icon';
+import { Icon } from '../Icon/Icon';
+import { getSvgSize } from '../Icon/utils';
 import { IconName, IconSize, IconType } from '../../types/icon';
 import { stylesFactory } from '../../themes/stylesFactory';
 import { css, cx } from '@emotion/css';
 import { useTheme2 } from '../../themes/ThemeContext';
 import { GrafanaTheme2, colorManipulator } from '@grafana/data';
-import { Tooltip } from '../Tooltip/Tooltip';
-import { TooltipPlacement } from '../Tooltip/PopoverController';
+import { TooltipPlacement, PopoverContent, Tooltip } from '../Tooltip';
+import { getFocusStyles, getMouseFocusStyles } from '../../themes/mixins';
 
-export type WideSkyIconButtonVariant = 'primary' | 'secondary' | 'destructive';
+export type IconButtonVariant = 'primary' | 'secondary' | 'destructive';
 
 export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** Name of the icon **/
@@ -20,11 +21,11 @@ export interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** Type od the icon - mono or default */
   iconType?: IconType;
   /** Tooltip content to display on hover */
-  tooltip?: string;
+  tooltip?: PopoverContent;
   /** Position of the tooltip */
   tooltipPlacement?: TooltipPlacement;
   /** Variant to change the color of the Icon */
-  variant?: WideSkyIconButtonVariant;
+  variant?: IconButtonVariant;
   /** Text avilable ony for screenscreen readers. Will use tooltip text as fallback. */
   ariaLabel?: string;
 }
@@ -48,9 +49,10 @@ export const WideSkyIconButton = React.forwardRef<HTMLButtonElement, Props>(
   ) => {
     const theme = useTheme2();
     const styles = getStyles(theme, size, variant);
+    const tooltipString = typeof tooltip === 'string' ? tooltip : '';
 
     const button = (
-      <button ref={ref} aria-label={ariaLabel || tooltip || ''} {...restProps} className={cx(styles.button, className)}>
+      <button ref={ref} aria-label={ariaLabel || tooltipString} {...restProps} className={cx(styles.button, className)}>
         <Icon name={name} size={size} className={styles.icon} type={iconType} />
       </button>
     );
@@ -69,7 +71,7 @@ export const WideSkyIconButton = React.forwardRef<HTMLButtonElement, Props>(
 
 WideSkyIconButton.displayName = 'IconButton';
 
-const getStyles = stylesFactory((theme: GrafanaTheme2, size: IconSize, variant: WideSkyIconButtonVariant) => {
+const getStyles = stylesFactory((theme: GrafanaTheme2, size: IconSize, variant: IconButtonVariant) => {
   const pixelSize = getSvgSize(size);
   const hoverSize = Math.max(pixelSize / 3, 8);
   let iconColor = '#04275F';
@@ -124,6 +126,15 @@ const getStyles = stylesFactory((theme: GrafanaTheme2, size: IconSize, variant: 
         box-sizing: border-box;
         transform: scale(0);
         transition-property: transform, opacity;
+      }
+
+      &:focus,
+      &:focus-visible {
+        ${getFocusStyles(theme)}
+      }
+
+      &:focus:not(:focus-visible) {
+        ${getMouseFocusStyles(theme)}
       }
 
       &:hover {

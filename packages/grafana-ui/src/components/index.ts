@@ -1,6 +1,6 @@
 export { Icon } from './Icon/Icon';
 export { IconButton, IconButtonVariant } from './IconButton/IconButton';
-export { WideSkyIconButton, WideSkyIconButtonVariant } from './IconButton/WideSkyIconButton';
+export { WideSkyIconButton } from './IconButton/WideSkyIconButton';
 export { ConfirmButton } from './ConfirmButton/ConfirmButton';
 export { DeleteButton } from './ConfirmButton/DeleteButton';
 export { Tooltip } from './Tooltip/Tooltip';
@@ -213,7 +213,8 @@ export { HorizontalGroup, VerticalGroup, Container } from './Layout/Layout';
 export { Badge, BadgeColor, BadgeProps } from './Badge/Badge';
 export { RadioButtonGroup } from './Forms/RadioButtonGroup/RadioButtonGroup';
 
-export { Input } from './Input/Input';
+export { Input, getInputStyles } from './Input/Input';
+export { FilterInput } from './FilterInput/FilterInput';
 export { WideSkyInput } from './Input/WideSkyInput';
 export { FormInputSize } from './Forms/types';
 

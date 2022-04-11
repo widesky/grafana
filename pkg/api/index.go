@@ -682,7 +682,6 @@ func (hs *HTTPServer) setIndexViewData(c *models.ReqContext) (*dtos.IndexViewDat
 		NewGrafanaVersion:       hs.grafanaUpdateChecker.LatestVersion(),
 		NewGrafanaVersionExists: hs.grafanaUpdateChecker.UpdateAvailable(),
 		AppName:                 setting.ApplicationName,
-		AppNameBodyClass:        getAppNameBodyClass(hs.License.HasValidLicense()),
 		FavIcon:                 hs.Cfg.BrowserTabFavicon,
 		AppleTouchIcon:          hs.Cfg.BrowserTabFavicon,
 		AppTitle:                hs.Cfg.BrowserTabTitle,

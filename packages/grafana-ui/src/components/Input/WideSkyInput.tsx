@@ -5,7 +5,7 @@ import { sharedInputStyle } from '../Forms/WideSkyCommonStyles';
 //import { getFocusStyle, sharedInputStyle } from '../Forms/WideSkyCommonStyles';
 import { stylesFactory, useTheme2 } from '../../themes';
 import { Spinner } from '../Spinner/Spinner';
-import { useClientRect } from '../../utils/useClientRect';
+import useMeasure from 'react-use/lib/useMeasure';
 
 export interface Props extends Omit<HTMLProps<HTMLInputElement>, 'prefix' | 'size'> {
   /** Sets the width to a multiple of 8px. Should only be used with inline forms. Setting width of the container is preferred in other cases.*/
@@ -272,8 +272,8 @@ export const WideSkyInput = React.forwardRef<HTMLInputElement, Props>((props, re
    * when prefix/suffix is larger than default (28px = 16px(icon) + 12px(left/right paddings)).
    * Thanks to that prefix/suffix do not overflow the input element itself.
    */
-  const [prefixRect, prefixRef] = useClientRect<HTMLDivElement>();
-  const [suffixRect, suffixRef] = useClientRect<HTMLDivElement>();
+  const [prefixRef, prefixRect] = useMeasure<HTMLDivElement>();
+  const [suffixRef, suffixRect] = useMeasure<HTMLDivElement>();
 
   const theme = useTheme2();
   const styles = getInputStyles({ theme, invalid: !!invalid, width, placeholderColour, borderColour });
@@ -294,8 +294,8 @@ export const WideSkyInput = React.forwardRef<HTMLInputElement, Props>((props, re
           className={styles.input}
           {...restProps}
           style={{
-            paddingLeft: prefixRect ? prefixRect.width : undefined,
-            paddingRight: suffixRect ? suffixRect.width : undefined,
+            paddingLeft: prefix ? prefixRect.width + 12 : undefined,
+            paddingRight: suffix || loading ? suffixRect.width + 12 : undefined,
           }}
         />
 

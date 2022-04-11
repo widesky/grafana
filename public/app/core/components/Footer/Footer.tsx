@@ -7,7 +7,7 @@ const DEFAULT_GRAFANA_FOOTER_COLOR = '#ccccdc';
 export interface FooterLink {
   text: string;
   id?: string;
-  icon?: IconName;
+  icon?: string;
   url?: string;
   target?: string;
   color: string;
