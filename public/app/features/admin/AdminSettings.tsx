@@ -14,6 +14,14 @@ interface Props {
   navModel: NavModel;
 }
 
+function toWidesky() {
+  return (
+    <a className="external-link" href="https://widesky.cloud/contact-us/" rel="noreferrer" target="_blank">
+      Widesky
+    </a>
+  );
+}
+
 function AdminSettings({ navModel }: Props) {
   const { loading, value: settings } = useAsync(
     () => getBackendSrv().get('/api/admin/settings') as Promise<Settings>,
@@ -24,7 +32,7 @@ function AdminSettings({ navModel }: Props) {
     <Page navModel={navModel}>
       <Page.Contents isLoading={loading}>
         <div className="grafana-info-box span8" style={{ margin: '20px 0 25px 0' }}>
-          These system settings are managed by the Widesky team. Contact us to request changes.
+          These system settings are managed by the {toWidesky()} team. Contact us to request changes.
         </div>
 
         {settings && (
