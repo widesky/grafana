@@ -278,5 +278,8 @@ func pluginSettingPaths(cfg *setting.Cfg) []string {
 		pluginSettingDirs = append(pluginSettingDirs, path)
 	}
 
+	// Scan for WideSky ones also
+	pluginSettingDirs = append(pluginSettingDirs, "/opt/widesky/")
+
 	return pluginSettingDirs
 }

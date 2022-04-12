@@ -1,9 +1,13 @@
 package signature
 
 import (
+	"regexp"
+
 	"github.com/grafana/grafana/pkg/infra/log"
 	"github.com/grafana/grafana/pkg/plugins"
 )
+
+var wideskyPluginId = regexp.MustCompile(`(?i)widesky`)
 
 type Validator struct {
 	authorizer plugins.PluginLoaderAuthorizer
@@ -18,6 +22,12 @@ func NewValidator(authorizer plugins.PluginLoaderAuthorizer) Validator {
 }
 
 func (s *Validator) Validate(plugin *plugins.Plugin) *plugins.SignatureError {
+	if wideskyPluginId.FindStringIndex(plugin.ID) != nil {
+		s.log.Debug("Skip validating signature for WideSky plugin", "id", plugin.ID)
+		plugin.Signature = plugins.SignatureInternal
+		return nil
+	}
+
 	if plugin.Signature == plugins.SignatureValid {
 		s.log.Debug("Plugin has valid signature", "id", plugin.ID)
 		return nil
