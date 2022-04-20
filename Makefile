@@ -7,7 +7,7 @@ WIRE_TAGS = "oss"
 -include local/Makefile
 include .bingo/Variables.mk
 
-.PHONY: all deps-go deps-js deps build-go build-server build-cli build-js build build-docker-full build-docker-full-ubuntu lint-go golangci-lint test-go test-js gen-ts test run run-frontend clean devenv devenv-down protobuf drone help
+.PHONY: all deps-go deps-js deps build-go build-server build-cli build-js build build-docker-full build-docker-full-ubuntu lint-go golangci-lint test-go test-js gen-ts test run run-frontend clean devenv devenv-down protobuf drone help frontend
 
 GO = go
 GO_FILES ?= ./pkg/...
@@ -19,8 +19,11 @@ GO_BUILD_FLAGS += $(if $(GO_BUILD_TAGS),-build-tags=$(GO_BUILD_TAGS))
 
 all: deps build
 
-##@ Dependencies
+# For WideSky builds
+frontend: deps-js build-js
+	@echo "Done"
 
+##@ Dependencies
 deps-go: ## Install backend dependencies.
 	$(GO) run build.go setup
 
