@@ -513,7 +513,7 @@ func (hs *HTTPServer) buildAlertNavLinks(c *models.ReqContext, uaVisibleForOrg b
 		})
 	}
 
-	if len(alertChildNavs) > 0 {
+	if len(alertChildNavs) > 0 && hs.Cfg.AppSidebarAlertEnabled == true {
 		return []*dtos.NavLink{
 			{
 				Text:       "Alerting",

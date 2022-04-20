@@ -438,7 +438,7 @@ type Cfg struct {
 	GeomapEnableCustomBaseLayers bool
 
 	// Unified Alerting
-	UnifiedAlerting UnifiedAlertingSettings
+	UnifiedAlerting         UnifiedAlertingSettings
 	AdminConfigPollInterval time.Duration
 
 	// Widesky whitelabels
@@ -462,24 +462,25 @@ type Cfg struct {
 
 	LoginBackground string
 
-	BrowserTabFavicon string
-	BrowserTabTitle   string
-	AppSidebarLogo    string
-	ApplicationName   string
+	BrowserTabFavicon      string
+	BrowserTabTitle        string
+	AppSidebarLogo         string
+	AppSidebarAlertEnabled bool
+	ApplicationName        string
 
-	LoadingLogo                       string
-	LoadingText                       string
-	LoginBoxLogo    string
-	LoginBoxLogoMaxWidth              string
+	LoadingLogo                         string
+	LoadingText                         string
+	LoginBoxLogo                        string
+	LoginBoxLogoMaxWidth                string
 	LoginBoxLogoMaxWidthMediaBreakpoint string
-	LoginBoxColour  string
-	LoginBoxTextColour string
+	LoginBoxColour                      string
+	LoginBoxTextColour                  string
 	LoginBoxTextboxBorderColour         string
-	LoginBoxButtonBgColour      string
+	LoginBoxButtonBgColour              string
 	LoginBoxTextboxPlaceholderColour    string
-	LoginBoxButtonHoverBgColour string
-	LoginBoxButtonTextColour      string
-	LoginBoxButtonHoverTextColour string
+	LoginBoxButtonHoverBgColour         string
+	LoginBoxButtonTextColour            string
+	LoginBoxButtonHoverTextColour       string
 
 	LoginBoxLinkButtonBgColour        string
 	LoginBoxLinkButtonHoverBgColour   string
@@ -1190,6 +1191,7 @@ func (cfg *Cfg) readWideSkyWhiteLabels() {
 	cfg.BrowserTabFavicon = whitelabelSec.Key("browser_tab_favicon").String()
 	cfg.BrowserTabTitle = whitelabelSec.Key("browser_tab_title").String()
 	cfg.AppSidebarLogo = whitelabelSec.Key("app_sidebar_logo").String()
+	cfg.AppSidebarAlertEnabled = whitelabelSec.Key("app_sidebar_alert_enabled").MustBool(true)
 	cfg.ApplicationName = whitelabelSec.Key("application_name").String()
 	// Reset the application name
 	ApplicationName = cfg.ApplicationName
