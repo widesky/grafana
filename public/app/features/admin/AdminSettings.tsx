@@ -17,7 +17,7 @@ interface Props {
 function toWidesky() {
   return (
     <a className="external-link" href="https://widesky.cloud/contact-us/" rel="noreferrer" target="_blank">
-      Widesky
+      WideSky
     </a>
   );
 }
