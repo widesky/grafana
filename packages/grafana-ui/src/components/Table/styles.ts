@@ -192,7 +192,7 @@ export const getTableStyles = (theme: GrafanaTheme2) => {
     `,
 
     tableContentWrapper: (totalColumnsWidth: number) => css`
-      width: ${totalColumnsWidth ?? '100%'};
+      width: ${totalColumnsWidth + 'px' ?? '100%'};
       display: flex;
       flex-direction: column;
     `,
