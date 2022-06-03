@@ -442,6 +442,10 @@ type Cfg struct {
 	AdminConfigPollInterval time.Duration
 
 	// Widesky whitelabels
+	FooterElement1Hide bool
+	FooterElement2Hide bool
+	FooterElement3Hide bool
+
 	FooterElement1Icon string
 	FooterElement2Icon string
 	FooterElement3Icon string
@@ -1169,6 +1173,10 @@ func (cfg *Cfg) initLogging(file *ini.File) error {
 
 func (cfg *Cfg) readWideSkyWhiteLabels() {
 	whitelabelSec := cfg.Raw.Section("ws_whitelabel")
+	cfg.FooterElement1Hide = whitelabelSec.Key("footer_element1_hide").MustBool(false)
+	cfg.FooterElement2Hide = whitelabelSec.Key("footer_element2_hide").MustBool(false)
+	cfg.FooterElement3Hide = whitelabelSec.Key("footer_element3_hide").MustBool(false)
+
 	cfg.FooterElement1Icon = whitelabelSec.Key("footer_element1_icon").String()
 	cfg.FooterElement2Icon = whitelabelSec.Key("footer_element2_icon").String()
 	cfg.FooterElement3Icon = whitelabelSec.Key("footer_element3_icon").String()

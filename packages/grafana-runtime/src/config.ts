@@ -115,6 +115,9 @@ export class GrafanaBootConfig implements GrafanaConfig {
   };
 
   // WideSky Grafana white labeling
+  footerElement1Hide = false;
+  footerElement2Hide = false;
+  footerElement3Hide = false;
   footerElement1Icon = '';
   footerElement2Icon = '';
   footerElement3Icon = '';

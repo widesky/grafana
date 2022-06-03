@@ -15,6 +15,8 @@ export interface FooterLink {
 
 export let getFooterLinks = (): FooterLink[] => {
   const {
+    footerElement1Hide,
+    footerElement2Hide,
     footerElement1Icon,
     footerElement2Icon,
     footerElement1Text,
@@ -25,28 +27,36 @@ export let getFooterLinks = (): FooterLink[] => {
     footerElement2TextColor,
   } = config;
 
-  return [
-    {
+  const elements = [];
+
+  if (footerElement1Hide === false) {
+    elements.push({
       text: footerElement1Text,
       icon: footerElement1Icon,
       url: footerElement1Link,
       target: '_blank',
       color: footerElement1TextColor,
-    },
-    {
+    });
+  }
+
+  if (footerElement2Hide === false) {
+    elements.push({
       text: footerElement2Text,
       icon: footerElement2Icon,
       url: footerElement2Link,
       target: '_blank',
       color: footerElement2TextColor,
-    },
-  ];
+    });
+  }
+
+  return elements;
 };
 
 export let getVersionLinks = (): FooterLink[] => {
   const {
     buildInfo,
     licenseInfo,
+    footerElement3Hide,
     footerElement3Icon,
     footerElement3Text,
     footerElement3Link,
@@ -54,26 +64,29 @@ export let getVersionLinks = (): FooterLink[] => {
   } = config;
   const links: FooterLink[] = [];
   const stateInfo = licenseInfo.stateInfo ? ` (${licenseInfo.stateInfo})` : '';
-  const footerElement = {
-    icon: '',
-    text: `${buildInfo.edition}${stateInfo}`,
-    url: licenseInfo.licenseUrl,
-    color: footerElement3TextColor,
-  };
 
-  if (footerElement3Icon !== '') {
-    footerElement.icon = footerElement3Icon;
+  if (footerElement3Hide === false) {
+    const footerElement = {
+      icon: '',
+      text: `${buildInfo.edition}${stateInfo}`,
+      url: licenseInfo.licenseUrl,
+      color: footerElement3TextColor,
+    };
+
+    if (footerElement3Icon !== '') {
+      footerElement.icon = footerElement3Icon;
+    }
+
+    if (footerElement3Text !== '') {
+      footerElement.text = footerElement3Text;
+    }
+
+    if (footerElement3Link !== '') {
+      footerElement.url = footerElement3Link;
+    }
+
+    links.push(footerElement);
   }
-
-  if (footerElement3Text !== '') {
-    footerElement.text = footerElement3Text;
-  }
-
-  if (footerElement3Link !== '') {
-    footerElement.url = footerElement3Link;
-  }
-
-  links.push(footerElement);
 
   if (buildInfo.hideVersion) {
     return links;
