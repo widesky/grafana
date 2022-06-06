@@ -1,21 +1,18 @@
 {
   "type": "panel",
-  "name": "Heatmap",
-  "id": "heatmap",
+  "name": "Heatmap (preview)",
+  "id": "heatmap-new",
+  "state": "alpha",
 
   "info": {
-    "description": "Like a histogram over time",
+    "description": "Next generation heatmap visualization",
     "author": {
       "name": "Grafana Labs",
       "url": "https://grafana.com"
     },
     "logos": {
-      "small": "img/icn-heatmap-panel.svg",
-      "large": "img/icn-heatmap-panel.svg"
-    },
-    "links": [
-      { "name": "Brendan Gregg - Heatmaps", "url": "http://www.brendangregg.com/heatmaps.html" },
-      { "name": "Brendan Gregg - Latency Heatmaps", "url": " http://www.brendangregg.com/HeatMaps/latency.html" }
-    ]
+      "small": "img/heatmap.svg",
+      "large": "img/heatmap.svg"
+    }
   }
 }
