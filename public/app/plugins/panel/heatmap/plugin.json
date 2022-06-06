@@ -1,8 +1,7 @@
 {
   "type": "panel",
-  "name": "Heatmap (preview)",
-  "id": "heatmap-new",
-  "state": "alpha",
+  "name": "Heatmap",
+  "id": "heatmap",
 
   "info": {
     "description": "Next generation heatmap visualization",
