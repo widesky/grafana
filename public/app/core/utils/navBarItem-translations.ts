@@ -121,7 +121,7 @@ export function getNavTitle(navId: string | undefined) {
     case 'migrate-to-cloud':
       return t('nav.migrate-to-cloud.title', 'Migrate to Grafana Cloud');
     case 'upgrading':
-      return t('nav.upgrading.title', 'Stats and license');
+      return t('nav.upgrading.title', 'Stats');
     case 'monitoring':
       return t('nav.monitoring.title', 'Observability');
     case 'infrastructure':
