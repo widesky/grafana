@@ -8,5 +8,4 @@ Once logged in, {{.OrgName}} will be available in the left side menu, in the dro
 Log in now:
 {{.AppUrl}}
 
-
-Sent by Grafana v{{.BuildVersion}} (c) {{now | date "2006"}} Grafana Labs
+Sent by WideSky (c) 2021 WideSky PTY LTD
