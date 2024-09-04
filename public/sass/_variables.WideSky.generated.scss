@@ -2,29 +2,29 @@
  * !!! THIS FILE WAS GENERATED AUTOMATICALLY !!!
  *
  * Do not modify this file!
- * - Edit grafana-ui/src/themes/dark.ts to regenerate
- * - Edit grafana-ui/src/themes/_variables.dark.scss.tmpl.ts to update template
+ * - Edit grafana-ui/src/themes/WideSky.ts to regenerate
+ * - Edit grafana-ui/src/themes/_variables.WideSky.scss.tmpl.ts to update template
  *
  * !!! THIS FILE WAS GENERATED AUTOMATICALLY !!!
  */
 
-@use 'sass:color';
 // Global values
 // --------------------------------------------------
 
+// This is used for icon selection - so we use dark theme icons
 $theme-name: dark;
 
-$colors-action-hover: rgba(204, 204, 220, 0.16);
+$colors-action-hover: rgba(74, 155, 212,0.2);
 $colors-action-selected: rgba(204, 204, 220, 0.12);
 
 // New Colors
 // -------------------------
-$blue-light: #4e9ed7;
+$blue-light: #FFF;
 $blue-base: #0073BC;
-$blue-shade: rgb(38, 136, 198);
+$blue-shade: #4A9BD4;
 $red-base: #D10E5C;
 $red-shade: rgb(215, 50, 116);
-$green-base: #1A7F4B;
+$green-base: #66A94C;
 $green-shade: rgb(60, 146, 102);
 $orange-dark: #ff780a;
 $widesky-blue: #0073BC;
@@ -62,27 +62,26 @@ $gray-6: #f4f5f8;
 
 $white: #ffffff;
 
-$layer0: #111217;
-$layer1: #181b1f;
-$layer2: #22252b;
+$layer0: #0F1214;
+$layer1: #111315;
+$layer2: #212126;
 
-$divider: rgba(204, 204, 220, 0.12);
-
-$border0: rgba(204, 204, 220, 0.12);
-$border1: rgba(204, 204, 220, 0.20);
+$divider: rgba(204, 204, 220, 0.15);
+$border0: rgba(204, 204, 220, 0.15);
+$border1: rgba(204, 204, 220, 0.25);
 
 // Accent colors
 // -------------------------
-$blue: #33a2e5;
+$blue: #FFF;
 $red: $red-base;
 $yellow: #ecbb13;
 $orange: #eb7b18;
 $purple: #9933cc;
-$variable: #4e9ed7;
+$variable: #FFF;
 
 $brand-primary: #eb7b18;
-$brand-success: #1A7F4B;
-$brand-warning: #FF9900;
+$brand-success: #66A94C;
+$brand-warning: #CE4824;
 $brand-danger: #D10E5C;
 
 $query-red: #FF5286;
@@ -91,16 +90,17 @@ $query-purple: #fe85fc;
 $query-orange: #eb7b18;
 
 // Status colors
-// -------------------------¨
+// -------------------------
 $online: #6CCF8E;
-$warn: #fbad37;
+$warn: #F8D06B;
 $critical: #FF5286;
+
 
 // Scaffolding
 // -------------------------
-$body-bg: #111217;
-$page-bg: #111217;
-$dashboard-bg: #111217;
+$body-bg: #0F1214;
+$page-bg: #0F1214;
+$dashboard-bg: #0F1214;
 
 $text-color-strong: #FFFFFF;
 $text-color: rgb(204, 204, 220);
@@ -108,21 +108,21 @@ $text-color-semi-weak: rgba(204, 204, 220, 0.65);
 $text-color-weak: rgba(204, 204, 220, 0.65);
 $text-color-faint: rgba(204, 204, 220, 0.6);
 $text-color-emphasis: #FFFFFF;
-$text-blue: #4e9ed7;
+$text-blue: #FFF;
 
 $text-shadow-faint: 1px 1px 4px rgb(45, 45, 45);
 $textShadow: none;
 
 // gradients
-$brand-gradient-horizontal: linear-gradient(270deg, #4e9ed7 0%, #0073bc 100%);
-$brand-gradient-vertical: linear-gradient(0.01deg, #4e9ed7 0.01%, #0073bc 99.99%);
+$brand-gradient-horizontal: linear-gradient(to right, rgb(78, 158, 215) 30%, rgb(0, 115, 188) 99%);
+$brand-gradient-vertical: linear-gradient(rgb(78, 158, 215) 30%, rgb(0, 115, 188) 99%);
 
 // Links
 // -------------------------
 $link-color: rgb(204, 204, 220);
 $link-color-disabled: rgba(204, 204, 220, 0.6);
 $link-hover-color: #FFFFFF;
-$external-link-color: #4e9ed7;
+$external-link-color: rgb(204, 204, 220);
 
 // Typography
 // -------------------------
@@ -134,30 +134,30 @@ $hr-border-color: $dark-9;
 
 // Panel
 // -------------------------
-$panel-bg: #181b1f;
-$panel-border: 1px solid rgba(204, 204, 220, 0.12);
-$panel-header-hover-bg: rgba(204, 204, 220, 0.16);
+$panel-bg: #111315;
+$panel-border: 1px solid rgba(204, 204, 220, 0.15);
+$panel-header-hover-bg: rgba(74, 155, 212,0.2);
 $panel-box-shadow: none;
 $panel-corner: $panel-bg;
 
 // page header
-$page-header-bg: #111217;
+$page-header-bg: #0F1214;
 $page-header-shadow: inset 0px -4px 14px $dark-3;
-$page-header-border-color: #111217;
+$page-header-border-color: #0F1214;
 
 $divider-border-color: $gray-1;
 
 // Graphite Target Editor
-$tight-form-func-bg: #22252b;
-$tight-form-func-highlight-bg: rgb(40, 43, 49);
+$tight-form-func-bg: #212126;
+$tight-form-func-highlight-bg: rgb(39, 39, 44);
 
-$modal-backdrop-bg: rgba(204, 204, 220, 0.16);
+$modal-backdrop-bg: rgba(74, 155, 212,0.2);
 $code-tag-bg: $dark-1;
 $code-tag-border: $dark-9;
 
 // cards
-$card-background: #22252b;
-$card-background-hover: rgb(40, 43, 49);
+$card-background: #212126;
+$card-background-hover: rgb(39, 39, 44);
 $card-shadow: none;
 
 // Lists
@@ -165,7 +165,7 @@ $list-item-bg: $card-background;
 $list-item-hover-bg: $card-background-hover;
 $list-item-shadow: $card-shadow;
 
-$empty-list-cta-bg: #22252b;
+$empty-list-cta-bg: #212126;
 
 // Scrollbars
 $scrollbarBackground: #404357;
@@ -174,10 +174,10 @@ $scrollbarBorder: black;
 
 // Tables
 // -------------------------
-$table-bg-accent: #22252b;
-$table-border: rgba(204, 204, 220, 0.20);
-$table-bg-odd: rgb(28, 31, 35);
-$table-bg-hover: rgb(35, 38, 42);
+$table-bg-accent: #212126;
+$table-border: rgba(204, 204, 220, 0.25);
+$table-bg-odd: rgb(21, 23, 25);
+$table-bg-hover: rgb(28, 30, 32);
 
 // Buttons
 // -------------------------
@@ -185,7 +185,7 @@ $btn-primary-bg: $blue-base;
 $btn-primary-bg-hl: $blue-shade;
 
 $btn-secondary-bg: $dark-6;
-$btn-secondary-bg-hl: color.adjust($dark-6, $lightness: 4%);
+$btn-secondary-bg-hl: lighten($dark-6, 4%);
 
 $btn-success-bg: $green-base;
 $btn-success-bg-hl: $green-shade;
@@ -194,7 +194,7 @@ $btn-danger-bg: $red-base;
 $btn-danger-bg-hl: $red-shade;
 
 $btn-inverse-bg: $dark-6;
-$btn-inverse-bg-hl: color.adjust($dark-6, $lightness: 4%);
+$btn-inverse-bg-hl: lighten($dark-6, 4%);
 $btn-inverse-text-color: $link-color;
 $btn-inverse-text-shadow: 0px 1px 0 rgba(0, 0, 0, 0.1);
 
@@ -213,16 +213,16 @@ $btn-active-box-shadow: 0px 0px 4px rgba(255, 120, 10, 0.5);
 
 // Forms
 // -------------------------
-$input-bg: #111217;
+$input-bg: #111315;
 $input-bg-disabled: rgba(204, 204, 220, 0.04);
 
 $input-color: rgb(204, 204, 220);
-$input-border-color: rgba(204, 204, 220, 0.20);
+$input-border-color: rgba(204, 204, 220, 0.25);
 $input-box-shadow: none;
 $input-border-focus: #4e9ed7;
 $input-box-shadow-focus: #4e9ed7 !default;
 $input-color-placeholder: rgba(204, 204, 220, 0.6);
-$input-label-bg: #22252b;
+$input-label-bg: #212126;
 $input-color-select-arrow: $white;
 
 // Search
@@ -235,11 +235,11 @@ $typeahead-selected-color: $yellow;
 
 // Dropdowns
 // -------------------------
-$dropdownBackground: #181b1f;
-$dropdownBorder: rgba(204, 204, 220, 0.12);
-$dropdownDividerTop: rgba(204, 204, 220, 0.12);
-$dropdownDividerBottom: rgba(204, 204, 220, 0.12);
-$dropdownShadow: 0px 8px 24px rgb(1, 4, 9);
+$dropdownBackground: #111315;
+$dropdownBorder: rgba(204, 204, 220, 0.15);
+$dropdownDividerTop: rgba(204, 204, 220, 0.15);
+$dropdownDividerBottom: rgba(204, 204, 220, 0.15);
+$dropdownShadow: 0px 13px 20px 1px rgba(24, 26, 27, 0.18);
 
 $dropdownLinkColor: $link-color;
 $dropdownLinkColorHover: $white;
@@ -260,16 +260,16 @@ $navbarBorder: 1px solid $dark-6;
 $side-menu-bg: $panel-bg;
 $side-menu-bg-mobile: $panel-bg;
 $side-menu-border: none;
-$side-menu-item-hover-bg: #22252b;
+$side-menu-item-hover-bg: #212126;
 $side-menu-shadow: 0 0 30px #111;
 $side-menu-icon-color: #9fa7b3;
 $side-menu-header-color: rgb(204, 204, 220);
 
 // Menu dropdowns
 // -------------------------
-$menu-dropdown-bg: #181b1f;
-$menu-dropdown-hover-bg: rgba(204, 204, 220, 0.16);
-$menu-dropdown-shadow: 0px 8px 24px rgb(1, 4, 9);
+$menu-dropdown-bg: #111315;
+$menu-dropdown-hover-bg: rgba(74, 155, 212,0.2);
+$menu-dropdown-shadow: 0px 13px 20px 1px rgba(24, 26, 27, 0.18);
 
 // Tabs
 // -------------------------
@@ -277,14 +277,14 @@ $tab-border-color: $dark-9;
 
 // Form states and alerts
 // -------------------------
-$warning-text-color: #fbad37;
+$warning-text-color: #F8D06B;
 $error-text-color: #FF5286;
 $success-text-color: #6CCF8E;
 
 $alert-error-bg: #D10E5C;
-$alert-success-bg: #1A7F4B;
-$alert-warning-bg: #FF9900;
-$alert-info-bg: #FF9900;
+$alert-success-bg: #66A94C;
+$alert-warning-bg: #CE4824;
+$alert-info-bg: #CE4824;
 
 // Tooltips and popovers
 // -------------------------
@@ -293,17 +293,17 @@ $tooltipLinkColor: $link-color;
 $tooltipExternalLinkColor: $external-link-color;
 $graph-tooltip-bg: $dark-1;
 
-$tooltipBackground: #22252b;
+$tooltipBackground: #212126;
 $tooltipColor: rgb(204, 204, 220);
-$tooltipArrowColor: #22252b;
+$tooltipArrowColor: #212126;
 $tooltipBackgroundError: #D10E5C;
-$tooltipShadow: 0px 4px 8px rgba(1, 4, 9, 0.75);
+$tooltipShadow: 0px 4px 8px rgba(24, 26, 27, 0.2);
 
-$popover-bg: #181b1f;
+$popover-bg: #111315;
 $popover-color: rgb(204, 204, 220);
-$popover-border-color: rgba(204, 204, 220, 0.12);
-$popover-header-bg: #22252b;
-$popover-shadow: 0px 8px 24px rgb(1, 4, 9);
+$popover-border-color: rgba(204, 204, 220, 0.15);
+$popover-header-bg: #212126;
+$popover-shadow: 0px 13px 20px 1px rgba(24, 26, 27, 0.18);
 
 $popover-help-bg: $tooltipBackground;
 $popover-help-color: $text-color;
@@ -338,13 +338,13 @@ $json-explorer-url-color: #027bff;
 
 // Changelog and diff
 // -------------------------
-$diff-label-bg: rgba(204, 204, 220, 0.16);
+$diff-label-bg: rgba(74, 155, 212,0.2);
 $diff-label-fg: $white;
 
-$diff-group-bg: #22252b;
+$diff-group-bg: #212126;
 $diff-arrow-color: $white;
 
-$diff-json-bg: #22252b;
+$diff-json-bg: #212126;
 $diff-json-fg: rgb(204, 204, 220);
 
 $diff-json-added: $blue-shade;
@@ -357,6 +357,9 @@ $diff-json-changed-fg: $gray-5;
 $diff-json-changed-num: $text-color;
 
 $diff-json-icon: $gray-5;
+
+//Submenu
+$variable-option-bg: $dropdownLinkBackgroundHover;
 
 //Switch Slider
 // -------------------------
@@ -384,9 +387,9 @@ $panel-editor-viz-item-border-hover: 1px solid $blue-light;
 $panel-editor-viz-item-bg: $input-bg;
 $panel-editor-tabs-line-color: #e3e3e3;
 
-$panel-editor-viz-item-bg-hover: color.adjust($blue-base, $lightness: -46%);
+$panel-editor-viz-item-bg-hover: darken($blue-base, 46%);
 
-$panel-grid-placeholder-bg: color.adjust(#1f60c4, $lightness: -30%);
+$panel-grid-placeholder-bg: darken(#1f60c4, 30%);
 $panel-grid-placeholder-shadow: 0 0 4px #3274d9;
 
 // logs
