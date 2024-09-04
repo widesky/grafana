@@ -251,6 +251,8 @@ function getTranslatedThemeName(theme: ThemeRegistryItem) {
       return t('shared.preferences.theme.light-label', 'Light');
     case 'system':
       return t('shared.preferences.theme.system-label', 'System preference');
+    case 'WideSky':
+      return config.wideSkyTheme?.name || theme.name;
     default:
       return theme.name;
   }

@@ -244,6 +244,7 @@ export const availableIconsIndex = {
   'wrap-text': true,
   rss: true,
   x: true,
+  widesky: true,
 };
 
 export type IconName = keyof typeof availableIconsIndex;

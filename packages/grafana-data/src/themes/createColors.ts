@@ -1,11 +1,12 @@
 import { merge } from 'lodash';
 
 import { alpha, darken, emphasize, getContrastRatio, lighten } from './colorManipulator';
+import { CustomColors } from './createTheme';
 import { palette } from './palette';
-import { DeepPartial, ThemeRichColor } from './types';
+import { BrandGradient, DeepPartial, ThemeRichColor } from './types';
 
 /** @internal */
-export type ThemeColorsMode = 'light' | 'dark';
+export type ThemeColorsMode = 'light' | 'dark' | 'WideSky';
 
 /** @internal */
 export interface ThemeColorsBase<TColor> {
@@ -157,8 +158,8 @@ class DarkColors implements ThemeColorsBase<Partial<ThemeRichColor>> {
   };
 
   gradients = {
-    brandHorizontal: 'linear-gradient(270deg, #F55F3E 0%, #FF8833 100%)',
-    brandVertical: 'linear-gradient(0.01deg, #F55F3E 0.01%, #FF8833 99.99%)',
+    brandHorizontal: 'linear-gradient(270deg, #4e9ed7 0%, #0073bc 100%)',
+    brandVertical: 'linear-gradient(0.01deg, #4e9ed7 0.01%, #0073bc 99.99%)',
   };
 
   contrastThreshold = 3;
@@ -239,8 +240,8 @@ class LightColors implements ThemeColorsBase<Partial<ThemeRichColor>> {
   };
 
   gradients = {
-    brandHorizontal: 'linear-gradient(90deg, #FF8833 0%, #F53E4C 100%)',
-    brandVertical: 'linear-gradient(0.01deg, #F53E4C -31.2%, #FF8833 113.07%)',
+    brandHorizontal: 'linear-gradient(90deg, #0073bc 0%, #4e9ed7 100%);',
+    brandVertical: 'linear-gradient(0.01deg, #4e9ed7 -31.2%, #0073bc 113.07%);',
   };
 
   contrastThreshold = 3;
@@ -248,10 +249,138 @@ class LightColors implements ThemeColorsBase<Partial<ThemeRichColor>> {
   tonalOffset = 0.2;
 }
 
+export class WideSkyColors implements ThemeColorsBase<Partial<ThemeRichColor>> {
+  mode: ThemeColorsMode = 'WideSky';
+
+  background = {
+    canvas: CustomColors.wideSkyTheme!.backgroundCanvas,
+    primary: CustomColors.wideSkyTheme!.backgroundPrimary,
+    secondary: CustomColors.wideSkyTheme!.backgroundSecondary,
+  };
+
+  gradients = {
+    brandHorizontal: this.getGradient('linear-gradient(90deg, $0 0%, $1 100%);', CustomColors.wideSkyTheme!.horizontal),
+    brandVertical: this.getGradient(
+      'linear-gradient(0.01deg, $0 -31.2%, $1 113.07%);',
+      CustomColors.wideSkyTheme!.vertical
+    ),
+  };
+
+  primary = {
+    main: CustomColors.wideSkyTheme!.primary.main,
+    shade: CustomColors.wideSkyTheme!.primary.shade,
+    text: CustomColors.wideSkyTheme!.primary.text,
+    contrastText: CustomColors.wideSkyTheme!.primary.text,
+  };
+  secondary = {
+    main: this.fromBaseOrValue(CustomColors.wideSkyTheme!.secondary.main, 0.16),
+    shade: this.fromBaseOrValue(CustomColors.wideSkyTheme!.secondary.shade, 0.2),
+    text: this.fromBaseOrValue(CustomColors.wideSkyTheme!.secondary.text, 1),
+    contrastText: this.fromBaseOrValue(CustomColors.wideSkyTheme!.secondary.text, 1),
+  };
+
+  info = {
+    main: CustomColors.wideSkyTheme!.info.main,
+    shade: CustomColors.wideSkyTheme!.info.shade,
+    contrastText: CustomColors.wideSkyTheme!.info.text,
+  };
+
+  error = {
+    main: CustomColors.wideSkyTheme!.error.main,
+    shade: CustomColors.wideSkyTheme!.error.shade,
+    contrastText: CustomColors.wideSkyTheme!.error.text,
+  };
+
+  success = {
+    main: CustomColors.wideSkyTheme!.success.main,
+    shade: CustomColors.wideSkyTheme!.success.shade,
+    contrastText: CustomColors.wideSkyTheme!.success.text,
+  };
+
+  warning = {
+    main: CustomColors.wideSkyTheme!.warning.main,
+    shade: CustomColors.wideSkyTheme!.warning.shade,
+    contrastText: CustomColors.wideSkyTheme!.warning.text,
+  };
+
+  text = {
+    primary: this.fromBaseOrValue(CustomColors.wideSkyTheme!.textPrimary, 1),
+    secondary: this.fromBaseOrValue(CustomColors.wideSkyTheme!.textSecondary, 0.75),
+    disabled: this.fromBaseOrValue(CustomColors.wideSkyTheme!.textDisabled, 0.5),
+    link: this.asValueOrDefault(
+      CustomColors.wideSkyTheme!.textLink,
+      this.fromBaseOrValue(CustomColors.wideSkyTheme!.textPrimary, 1)
+    ),
+    maxContrast: palette.white,
+  };
+
+  border = {
+    weak: this.fromBorderOrValue(CustomColors.wideSkyTheme!.borderWeak, 0.12),
+    medium: this.fromBorderOrValue(CustomColors.wideSkyTheme!.borderMedium, 0.3),
+    strong: this.fromBorderOrValue(CustomColors.wideSkyTheme!.borderStrong, 0.4),
+  };
+
+  action = {
+    hover: this.fromBaseOrValue(CustomColors.wideSkyTheme!.actionHover, 0.12),
+    selected: this.fromBaseOrValue(CustomColors.wideSkyTheme!.actionSelected, 0.08),
+    focus: this.fromBaseOrValue(CustomColors.wideSkyTheme!.actionFocus, 0.12),
+    disabledBackground: this.fromBaseOrValue(CustomColors.wideSkyTheme!.actionDisabledBackground, 0.04),
+    disabledText: this.text.disabled,
+    hoverOpacity: 0.08,
+    disabledOpacity: 0.38,
+    selectedBorder: palette.orangeDarkMain,
+  };
+
+  contrastThreshold = 3;
+  hoverFactor = 0.03;
+  tonalOffset = 0.15;
+
+  static WS_NOT_SET = 'NOT_SET';
+
+  /**
+   * Apply a gradient CSS. If all is not set, comprise gradient from the template. Otherwise use the all string.
+   * @param template Template to add colorA and colorB to.
+   * @param colorA Color for $0 in template.
+   * @param colorB Color for $1 in template.
+   * @param all A complete gradient CSS.
+   */
+  getGradient(template: string, gradient: BrandGradient) {
+    if (gradient.all === WideSkyColors.WS_NOT_SET) {
+      // just customise the colors
+      template = template.replace('$0', gradient.colorA);
+      template = template.replace('$1', gradient.colorB);
+
+      return template;
+    } else {
+      // allow full user customisation
+      return gradient.all;
+    }
+  }
+
+  fromBaseOrValue(value: string, opacity: number) {
+    return CustomColors.wideSkyTheme!.baseColor === WideSkyColors.WS_NOT_SET
+      ? value
+      : `rgba(${CustomColors.wideSkyTheme!.baseColor}, ${opacity})`;
+  }
+
+  fromBorderOrValue(value: string, opacity: number) {
+    return CustomColors.wideSkyTheme!.borderColor === WideSkyColors.WS_NOT_SET
+      ? value
+      : `rgba(${CustomColors.wideSkyTheme!.borderColor}, ${opacity})`;
+  }
+
+  asValueOrDefault(value: string, defaultVal: string) {
+    return value === WideSkyColors.WS_NOT_SET ? defaultVal : value;
+  }
+}
+
 export function createColors(colors: ThemeColorsInput): ThemeColors {
   const dark = new DarkColors();
   const light = new LightColors();
-  const base = (colors.mode ?? 'dark') === 'dark' ? dark : light;
+  let base: ThemeColorsBase<Partial<ThemeRichColor>> = (colors.mode ?? 'dark') === 'dark' ? dark : light;
+  if (CustomColors.wideSkyTheme !== undefined && colors.mode === 'WideSky') {
+    base = new WideSkyColors();
+  }
   const {
     primary = base.primary,
     secondary = base.secondary,

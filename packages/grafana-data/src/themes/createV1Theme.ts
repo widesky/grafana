@@ -133,6 +133,7 @@ export function createV1Theme(theme: Omit<GrafanaTheme2, 'v1'>): GrafanaTheme {
     variable: '#32d1df',
     orange: '#eb7b18',
     orangeDark: '#ff780a',
+    wideSkyBlue: '#0073BC',
   };
 
   const backgrounds = {
@@ -180,13 +181,14 @@ export function createV1Theme(theme: Omit<GrafanaTheme2, 'v1'>): GrafanaTheme {
 
   return {
     ...oldCommon,
-    type: theme.colors.mode === 'dark' ? GrafanaThemeType.Dark : GrafanaThemeType.Light,
+    type: theme.colors.mode === 'dark' ? GrafanaThemeType.Dark : theme.colors.mode === 'light' ? GrafanaThemeType.Light : GrafanaThemeType.WideSky,
     isDark: theme.isDark,
     isLight: theme.isLight,
+    isWideSky: theme.isWideSky,
     name: theme.name,
     palette: {
       ...basicColors,
-      brandPrimary: basicColors.orange,
+      brandPrimary: basicColors.wideSkyBlue,
       brandSuccess: theme.colors.success.main,
       brandWarning: theme.colors.warning.main,
       brandDanger: theme.colors.error.main,

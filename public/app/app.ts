@@ -13,6 +13,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import {
+  CustomColors,
   locationUtil,
   monacoLanguageRegistry,
   setLocale,
@@ -130,6 +131,7 @@ export class GrafanaApp {
       setBackendSrv(backendSrv);
       initEchoSrv();
       initIconCache();
+      await CustomColors.initCustomTheme();
       // This needs to be done after the `initEchoSrv` since it is being used under the hood.
       startMeasure('frontend_app_init');
 

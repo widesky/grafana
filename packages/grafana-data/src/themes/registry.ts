@@ -35,6 +35,7 @@ const themeRegistry = new Registry<ThemeRegistryItem>(() => {
     { id: 'system', name: 'System preference', build: getSystemPreferenceTheme },
     { id: 'dark', name: 'Dark', build: () => createTheme({ colors: { mode: 'dark' } }) },
     { id: 'light', name: 'Light', build: () => createTheme({ colors: { mode: 'light' } }) },
+    { id: 'WideSky', name: 'WideSky', build: () => createTheme({ colors: { mode: 'WideSky' } }) },
     { id: 'blue-night', name: 'Blue night', build: createBlueNight, isExtra: true },
     { id: 'midnight', name: 'Midnight', build: createMidnight, isExtra: true },
   ];
