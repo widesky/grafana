@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 
 	"github.com/grafana/grafana/pkg/api/dtos"
@@ -10,6 +11,7 @@ import (
 	"github.com/grafana/grafana/pkg/services/auth/identity"
 	contextmodel "github.com/grafana/grafana/pkg/services/contexthandler/model"
 	"github.com/grafana/grafana/pkg/services/dashboards"
+	"github.com/grafana/grafana/pkg/services/org"
 	pref "github.com/grafana/grafana/pkg/services/preference"
 	"github.com/grafana/grafana/pkg/services/preference/prefapi"
 	"github.com/grafana/grafana/pkg/web"
@@ -94,8 +96,25 @@ func (hs *HTTPServer) UpdateUserPreferences(c *contextmodel.ReqContext) response
 		return response.Error(http.StatusInternalServerError, "Failed to update user preferences", errID)
 	}
 
-	return prefapi.UpdatePreferencesFor(c.Req.Context(), hs.DashboardService,
+	resp := prefapi.UpdatePreferencesFor(c.Req.Context(), hs.DashboardService,
 		hs.preferenceService, c.SignedInUser.GetOrgID(), userID, 0, &dtoCmd)
+
+	if userID == 0 || !hs.Cfg.WideSkyProvisioner.LanguagePermissions.Enabled {
+		return resp
+	}
+
+	orgBytes := hs.getUserOrgList(c.Req.Context(), userID).Body()
+	var orgsJson []org.UserOrgDTO
+
+	err := json.Unmarshal(orgBytes, &orgsJson)
+	if err != nil {
+		hs.Cfg.Logger.Error("Failed to parse a list of all organisations of a user")
+		return resp
+	}
+
+	// WideSky organisation language assignment enabled
+	prefapi.UpdateUsersOrgByLanguage(c.Req.Context(), hs.userService, hs.preferenceService, hs.Cfg, orgsJson, c.SignedInUser.GetOrgID(), userID, &dtoCmd)
+	return resp
 }
 
 // swagger:route PATCH /user/preferences user_preferences patchUserPreferences

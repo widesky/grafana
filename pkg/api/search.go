@@ -94,6 +94,34 @@ func (hs *HTTPServer) Search(c *contextmodel.ReqContext) response.Response {
 
 	defer c.TimeRequest(metrics.MApiDashboardSearch)
 
+	if !hs.Cfg.WideSkyProvisioner.TeamPermissions.Enabled || c.SignedInUser.IsGrafanaAdmin {
+		return response.JSON(http.StatusOK, hits)
+	}
+
+	for i := len(hits) - 1; i >= 0; i-- {
+		v := hits[i]
+		wsCanAccess := true
+
+		if permitTeams, found := hs.Cfg.WideSkyProvisioner.TeamPermissions.Dashboards[v.UID]; found {
+			// This is one of the protected dashboard
+			wsCanAccess = false
+
+			// User is not an admin, so further check is required.
+			for _, teamId := range c.SignedInUser.Teams {
+				for _, permitTeam := range permitTeams {
+					if permitTeam == strconv.FormatInt(teamId, 10) {
+						wsCanAccess = true
+						break
+					}
+				}
+			}
+		}
+
+		if !wsCanAccess {
+			hits = append(hits[:i], hits[i+1:]...)
+		}
+	}
+
 	return response.JSON(http.StatusOK, hits)
 }
 

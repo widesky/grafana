@@ -142,6 +142,7 @@ func (hs *HTTPServer) GetPluginList(c *contextmodel.ReqContext) response.Respons
 			SignatureOrg:    pluginDef.SignatureOrg,
 			AccessControl:   pluginsMetadata[pluginDef.ID],
 			AngularDetected: pluginDef.Angular.Detected,
+			OverrideLabel:   pluginDef.OverrideLabel,
 		}
 
 		if hs.Features.IsEnabled(c.Req.Context(), featuremgmt.FlagExternalServiceAccounts) {
@@ -203,6 +204,7 @@ func (hs *HTTPServer) GetPluginSettingByID(c *contextmodel.ReqContext) response.
 		SignatureOrg:     plugin.SignatureOrg,
 		SecureJsonFields: map[string]bool{},
 		AngularDetected:  plugin.Angular.Detected,
+		OverrideLabel:    plugin.OverrideLabel,
 	}
 
 	if plugin.IsApp() {

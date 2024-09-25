@@ -94,6 +94,8 @@ type Includes struct {
 	UID        string       `json:"uid"`
 
 	ID string `json:"-"`
+
+	OverrideLabel map[string]string `json:"overrideLabel"`
 }
 
 func (e Includes) DashboardURLPath() string {

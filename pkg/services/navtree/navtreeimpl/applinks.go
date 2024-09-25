@@ -4,6 +4,7 @@ import (
 	"path"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/grafana/grafana/pkg/plugins"
 	ac "github.com/grafana/grafana/pkg/services/accesscontrol"
@@ -13,6 +14,7 @@ import (
 	"github.com/grafana/grafana/pkg/services/pluginsintegration/pluginaccesscontrol"
 	"github.com/grafana/grafana/pkg/services/pluginsintegration/pluginsettings"
 	"github.com/grafana/grafana/pkg/services/pluginsintegration/pluginstore"
+	"github.com/grafana/grafana/pkg/services/user"
 	"github.com/grafana/grafana/pkg/util"
 )
 
@@ -66,8 +68,18 @@ func (s *ServiceImpl) addAppLinks(treeRoot *navtree.NavTreeRoot, c *contextmodel
 
 func (s *ServiceImpl) processAppPlugin(plugin pluginstore.Plugin, c *contextmodel.ReqContext, treeRoot *navtree.NavTreeRoot) *navtree.NavLink {
 	hasAccessToInclude := s.hasAccessToInclude(c, plugin.ID)
+	currOrgAlias := getOrgAlias(*c.SignedInUser)
+
+	// WideSky specific code path - extract the orgAlias value from the current organization
+	// then use the defined overrideLabel (optional) value found in the plugin.json
+	// as the label name for the navigation link
+	var pluginName = plugin.Name
+	if value, ok := plugin.OverrideLabel[currOrgAlias]; ok {
+		pluginName = value
+	}
+
 	appLink := &navtree.NavLink{
-		Text:       plugin.Name,
+		Text:       pluginName,
 		Id:         "plugin-page-" + plugin.ID,
 		Img:        plugin.Info.Logos.Small,
 		SubTitle:   plugin.Info.Description,
@@ -79,6 +91,10 @@ func (s *ServiceImpl) processAppPlugin(plugin pluginstore.Plugin, c *contextmode
 
 	for _, include := range plugin.Includes {
 		if !hasAccessToInclude(include) {
+			continue
+		}
+
+		if s.cfg.WideSkyProvisioner.TeamPermissions.Enabled && !WideSkyTeamHasAccess(c, s.cfg.WideSkyProvisioner.TeamPermissions.Plugins, plugin.ID, include.Name) {
 			continue
 		}
 
@@ -131,11 +147,19 @@ func (s *ServiceImpl) processAppPlugin(plugin pluginstore.Plugin, c *contextmode
 		}
 
 		if include.Type == "dashboard" && include.AddToNav {
+			// WideSky specific code path - extract the orgAlias value from the current organization
+			// then use the defined overrideLabel (optional) value found in the plugin.json
+			// as the label name for the navigation link
+			var labelValue = include.Name
+			if value, ok := include.OverrideLabel[currOrgAlias]; ok {
+				labelValue = value
+			}
+
 			dboardURL := include.DashboardURLPath()
 			if dboardURL != "" {
 				link := &navtree.NavLink{
 					Url:      path.Join(s.cfg.AppSubURL, dboardURL),
-					Text:     include.Name,
+					Text:     labelValue,
 					PluginID: plugin.ID,
 				}
 				appLink.Children = append(appLink.Children, link)
@@ -348,4 +372,54 @@ func (s *ServiceImpl) readNavigationSettings() {
 
 		s.navigationAppPathConfig[url] = *appCfg
 	}
+}
+
+// WideSky function for extracting the org alias from an org name
+func getOrgAlias(user user.SignedInUser) string {
+	alias := ""
+
+	parts := strings.Split(user.OrgName, "_")
+	if len(parts) > 1 {
+		alias = parts[len(parts)-1]
+	}
+
+	return alias
+}
+
+// Determine if the team which the user resides, has access to an app's navlink TODO: Move to own file to reduce diff?
+func WideSkyTeamHasAccess(c *contextmodel.ReqContext, wideSkyTeamPermissions map[string]map[string][]string, pluginID string, pageName string) bool {
+	// Check Is Grafana admin, administrator has access to everything
+	if c.SignedInUser.IsGrafanaAdmin {
+		return true
+	}
+
+	pageNames, found := wideSkyTeamPermissions[pluginID]
+
+	if !found {
+		// No access set for this Plugin ID so deny all access
+		return false
+	}
+
+	var permittedTeams []string
+
+	if teamIds, noLimit := pageNames["__NO_LIMIT__"]; noLimit {
+		permittedTeams = teamIds
+	}
+
+	// Check page specific permission
+	if teamIds, hasPagePerm := pageNames[pageName]; len(permittedTeams) == 0 && hasPagePerm {
+		permittedTeams = teamIds
+	}
+
+	// Check if this users set of teams is permitted to see the page
+	for _, teamId := range c.SignedInUser.Teams {
+		for _, permitTeam := range permittedTeams {
+			// Current team belongs to the no limit group
+			if permitTeam == strconv.FormatInt(teamId, 10) {
+				return true
+			}
+		}
+	}
+
+	return false
 }
