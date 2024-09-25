@@ -6,6 +6,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"html/template"
 	"net/http"
 	"strings"
 
@@ -128,6 +129,7 @@ func (hs *HTTPServer) setIndexViewData(c *contextmodel.ReqContext) (*dtos.IndexV
 		NewGrafanaVersion:                   hs.grafanaUpdateChecker.LatestVersion(),
 		NewGrafanaVersionExists:             hs.grafanaUpdateChecker.UpdateAvailable(),
 		AppName:                             setting.ApplicationName,
+		AppLogo:                             "public/img/grafana_mask_icon.svg",
 		AppNameBodyClass:                    "app-grafana",
 		FavIcon:                             "public/img/fav32.png",
 		AppleTouchIcon:                      "public/img/apple-touch-icon.png",
@@ -163,6 +165,14 @@ func (hs *HTTPServer) setIndexViewData(c *contextmodel.ReqContext) (*dtos.IndexV
 	data.NavTree.ApplyAdminIA()
 	data.NavTree.ApplyHelpVersion(data.Settings.BuildInfo.VersionString) // RunIndexDataHooks can modify the version string
 	data.NavTree.Sort()
+
+	if hs.Cfg.WideSkyWhitelabeling != nil {
+		data.AppName = hs.Cfg.WideSkyWhitelabeling.ApplicationName
+		data.AppLogo = template.URL(hs.Cfg.WideSkyWhitelabeling.ApplicationLogo)
+		data.FavIcon = template.URL(hs.Cfg.WideSkyWhitelabeling.BrowserTabFavicon)
+		data.AppTitle = hs.Cfg.WideSkyWhitelabeling.ApplicationName
+		data.LoadingLogo = template.URL(hs.Cfg.WideSkyWhitelabeling.LoadingLogo)
+	}
 
 	return &data, nil
 }
