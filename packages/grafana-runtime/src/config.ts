@@ -21,6 +21,7 @@ import {
   colorManipulator,
   CustomColors,
   WideSkyCustomTheme,
+  WideSkyProvisioner,
 } from '@grafana/data';
 
 export interface AzureSettings {
@@ -241,6 +242,7 @@ export class GrafanaBootConfig implements GrafanaConfig {
   };
 
   wideSkyTheme?: WideSkyCustomTheme;
+  wideSkyProvisioner?: WideSkyProvisioner;
 
   constructor(options: GrafanaBootConfig) {
     this.bootData = options.bootData;
