@@ -128,6 +128,30 @@ func (hs *HTTPServer) GetDashboard(c *contextmodel.ReqContext) response.Response
 	canAdmin, _ := guardian.CanAdmin()
 	canDelete, _ := guardian.CanDelete()
 
+	if hs.Cfg.WideSkyProvisioner.TeamPermissions.Enabled == true {
+		if permitTeams, found := hs.Cfg.WideSkyProvisioner.TeamPermissions.Dashboards[uid]; found {
+			// This is one of the protected dashboard
+			if !c.SignedInUser.IsGrafanaAdmin {
+				// User is not an admin, so further check is required.
+				wsCanAccess := false
+
+				for _, teamId := range c.SignedInUser.Teams { // Generally only 1 team for a user
+					for _, permitTeam := range permitTeams {
+						if permitTeam == strconv.FormatInt(teamId, 10) {
+							wsCanAccess = true
+							break
+						}
+					}
+				}
+
+				if !wsCanAccess {
+					return response.Error(403, "Access to dashboard is forbidden, contact your WideSky administrator.", errors.New("Cannot access dashboard"))
+				}
+
+			}
+		}
+	}
+
 	isStarred, err := hs.isDashboardStarredByUser(c, dash.ID)
 	if err != nil {
 		return response.Error(http.StatusInternalServerError, "Error while checking if dashboard was starred by user", err)
@@ -571,8 +595,6 @@ func (hs *HTTPServer) GetHomeDashboard(c *contextmodel.ReqContext) response.Resp
 	if err := jsonParser.Decode(dash.Dashboard); err != nil {
 		return response.Error(http.StatusInternalServerError, "Failed to load home dashboard", err)
 	}
-
-	hs.addGettingStartedPanelToHomeDashboard(c, dash.Dashboard)
 
 	return response.JSON(http.StatusOK, &dash)
 }

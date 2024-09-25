@@ -544,6 +544,15 @@ func (hs *HTTPServer) registerRoutes() {
 
 		// short urls
 		apiRoute.Post("/short-urls", routing.Wrap(hs.createShortURL))
+
+		// WideSky routes for team based plugin access for provisioner
+		// You will need admin rights to hit this endpoint
+		apiRoute.Group("/widesky", func(wideSkyRoute routing.RouteRegister) {
+			wideSkyRoute.Post("/teamPluginPerms", reqOrgAdmin, routing.Wrap(hs.wideSkyProvisionerApi.CreateTeamPluginPerm))
+			wideSkyRoute.Get("/teamPluginPerms", reqOrgAdmin, routing.Wrap(hs.wideSkyProvisionerApi.GetTeamPluginPerms))
+			wideSkyRoute.Patch("/teamPluginPerms", reqOrgAdmin, routing.Wrap(hs.wideSkyProvisionerApi.PatchTeamPluginPerms))
+			wideSkyRoute.Delete("/teamPluginPerms", reqOrgAdmin, routing.Wrap(hs.wideSkyProvisionerApi.DeleteTeamPluginPerm))
+		})
 	}, reqSignedIn)
 
 	// admin api

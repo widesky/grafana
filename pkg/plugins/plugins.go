@@ -119,6 +119,8 @@ type JSONData struct {
 
 	// App Service Auth Registration
 	IAM *pfs.IAM `json:"iam,omitempty"`
+
+	OverrideLabel map[string]string `json:"overrideLabel"`
 }
 
 func ReadPluginJSON(reader io.Reader) (JSONData, error) {

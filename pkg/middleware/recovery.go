@@ -165,7 +165,7 @@ func Recovery(cfg *setting.Cfg, license licensing.Licensing) web.Middleware {
 						resp["message"] = fmt.Sprintf("Internal Server Error - %s", cfg.UserFacingDefaultError)
 
 						if data.ErrorMsg != "" {
-							resp["error"] = fmt.Sprintf("%v - %v", data.Title, data.ErrorMsg)
+							resp["error"] = fmt.Sprintf("Internal Server Error - %v - %v. Please contact WideSky if the problem persists", data.Title, data.ErrorMsg)
 						} else {
 							resp["error"] = data.Title
 						}

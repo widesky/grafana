@@ -27,6 +27,8 @@ import (
 	"github.com/grafana/grafana/pkg/services/anonymous"
 	grafanaapiserver "github.com/grafana/grafana/pkg/services/apiserver"
 	"github.com/grafana/grafana/pkg/services/apiserver/endpoints/request"
+	"github.com/grafana/grafana/pkg/services/wideskyprovisioner"
+	wideskyprovisionerApi "github.com/grafana/grafana/pkg/services/wideskyprovisioner/api"
 
 	"github.com/grafana/grafana/pkg/api/avatar"
 	"github.com/grafana/grafana/pkg/api/routing"
@@ -216,6 +218,10 @@ type HTTPServer struct {
 	anonService          anonymous.Service
 	userVerifier         user.Verifier
 	tlsCerts             TLSCerts
+
+	// WideSky
+	wideSkyProvisionerService wideskyprovisioner.Service
+	wideSkyProvisionerApi     *wideskyprovisionerApi.API
 }
 
 type TLSCerts struct {
@@ -265,7 +271,7 @@ func ProvideHTTPServer(opts ServerOptions, cfg *setting.Cfg, routeRegister routi
 	annotationRepo annotations.Repository, tagService tag.Service, searchv2HTTPService searchV2.SearchHTTPService, oauthTokenService oauthtoken.OAuthTokenService,
 	statsService stats.Service, authnService authn.Service, pluginsCDNService *pluginscdn.Service, promGatherer prometheus.Gatherer,
 	starApi *starApi.API, promRegister prometheus.Registerer, clientConfigProvider grafanaapiserver.DirectRestConfigProvider, anonService anonymous.Service,
-	userVerifier user.Verifier,
+	userVerifier user.Verifier, wideSkyProvisionerService wideskyprovisioner.Service, wideSkyProvisionerApi *wideskyprovisionerApi.API,
 ) (*HTTPServer, error) {
 	web.Env = cfg.Env
 	m := web.New()
@@ -367,6 +373,8 @@ func ProvideHTTPServer(opts ServerOptions, cfg *setting.Cfg, routeRegister routi
 		namespacer:                   request.GetNamespaceMapper(cfg),
 		anonService:                  anonService,
 		userVerifier:                 userVerifier,
+		wideSkyProvisionerService:    wideSkyProvisionerService,
+		wideSkyProvisionerApi:        wideSkyProvisionerApi,
 	}
 	if hs.Listener != nil {
 		hs.log.Debug("Using provided listener")
