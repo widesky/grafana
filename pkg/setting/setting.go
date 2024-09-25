@@ -523,6 +523,13 @@ type Cfg struct {
 	// Experimental scope settings
 	ScopesListScopesURL     string
 	ScopesListDashboardsURL string
+
+	// Navlink UI
+	StarredEnabled    bool
+	DashboardsEnabled bool
+
+	// WideSky
+	WideSkyWhitelabeling *WideSkyWhitelabelingSettings
 }
 
 // AddChangePasswordLink returns if login form is disabled or not since
@@ -1288,6 +1295,12 @@ func (cfg *Cfg) parseINIFile(iniFile *ini.File) error {
 	scopesSection := iniFile.Section("scopes")
 	cfg.ScopesListScopesURL = scopesSection.Key("list_scopes_endpoint").MustString("")
 	cfg.ScopesListDashboardsURL = scopesSection.Key("list_dashboards_endpoint").MustString("")
+
+	cfg.readWideSkyWhitelabeling()
+
+	navlink := iniFile.Section("navlink")
+	cfg.StarredEnabled = navlink.Key("starred_enabled").MustBool(true)
+	cfg.DashboardsEnabled = navlink.Key("dashboards_enabled").MustBool(true)
 
 	return nil
 }

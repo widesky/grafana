@@ -78,7 +78,7 @@ func (s *ServiceImpl) GetNavTree(c *contextmodel.ReqContext, prefs *pref.Prefere
 
 	treeRoot.AddSection(s.getHomeNode(c, prefs))
 
-	if hasAccess(ac.EvalPermission(dashboards.ActionDashboardsRead)) {
+	if (s.cfg.StarredEnabled || c.IsGrafanaAdmin) && hasAccess(ac.EvalPermission(dashboards.ActionDashboardsRead)) {
 		starredItemsLinks, err := s.buildStarredItemsNavLinks(c)
 		if err != nil {
 			return nil, err
@@ -95,10 +95,10 @@ func (s *ServiceImpl) GetNavTree(c *contextmodel.ReqContext, prefs *pref.Prefere
 		})
 	}
 
-	if c.IsPublicDashboardView() || hasAccess(ac.EvalAny(
+	if (s.cfg.DashboardsEnabled || c.IsGrafanaAdmin) && (c.IsPublicDashboardView() || hasAccess(ac.EvalAny(
 		ac.EvalPermission(dashboards.ActionFoldersRead), ac.EvalPermission(dashboards.ActionFoldersCreate),
 		ac.EvalPermission(dashboards.ActionDashboardsRead), ac.EvalPermission(dashboards.ActionDashboardsCreate)),
-	) {
+	)) {
 		dashboardChildLinks := s.buildDashboardNavLinks(c)
 
 		dashboardLink := &navtree.NavLink{
