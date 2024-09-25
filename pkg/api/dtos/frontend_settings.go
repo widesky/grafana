@@ -272,4 +272,7 @@ type FrontendSettingsDTO struct {
 	// Experimental Scope settings
 	ListScopesEndpoint          string `json:"listScopesEndpoint"`
 	ListDashboardScopesEndpoint string `json:"listDashboardScopesEndpoint"`
+
+	// WideSky
+	WideSkyWhitelabeling *setting.WideSkyWhitelabelingSettings `json:"wideSkyWhitelabeling,omitempty"`
 }

@@ -34,6 +34,9 @@ type IndexViewData struct {
 	Nonce           string
 	NewsFeedEnabled bool
 	Assets          *EntryPointAssets // Includes CDN info
+
+	// WideSky
+	AppLogo template.URL
 }
 
 type EntryPointAssets struct {
