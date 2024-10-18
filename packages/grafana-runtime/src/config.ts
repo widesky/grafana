@@ -17,6 +17,8 @@ import {
   SystemDateFormatSettings,
   getThemeById,
   AngularMeta,
+  WideSkyWhitelabeling,
+  colorManipulator,
 } from '@grafana/data';
 
 export interface AzureSettings {
@@ -184,6 +186,58 @@ export class GrafanaBootConfig implements GrafanaConfig {
    */
   language: string | undefined;
 
+  // WideSky
+  wideSkyWhitelabeling: WideSkyWhitelabeling = {
+    appSidebarLogo: 'public/img/grafana_icon.svg',
+    applicationName: 'Grafana',
+    applicationLogo: 'public/img/grafana_icon.svg',
+    browserTabTitle: 'Grafana',
+    browserTabSubtitle: 'Welcome to Grafana',
+    showEnterpriseUpgradeInfo: true,
+    adminSettingsMessage:
+      'These system settings are defined in grafana.ini or custom.ini (or overridden in ENV variables). To change these you currently need to restart Grafana.',
+
+    footerItems: [
+      {
+        text: 'Documentation',
+        icon: 'document-info',
+        url: 'https://grafana.com/docs/grafana/latest/?utm_source=grafana_footer',
+        hide: false,
+      },
+      {
+        text: 'Support',
+        icon: 'question-circle',
+        url: 'https://grafana.com/products/enterprise/?utm_source=grafana_footer',
+        hide: false,
+      },
+      {
+        text: 'Community',
+        icon: 'comments-alt',
+        url: 'https://community.grafana.com/?utm_source=grafana_footer',
+        hide: false,
+      },
+    ],
+
+    helpOptions: [],
+
+    loginBox: {
+      logo: 'public/img/grafana_icon.svg',
+      logoMaxWidth: 60,
+      logoMaxWidthMediaBreakpoint: 100,
+    },
+    loginBackground: {
+        // Set in constructor
+        image: '',
+        position: 'center',
+        minHeight: '100%',
+    },
+
+    entityNotFoundText: 'or seeking help on the',
+    entityNotFoundLink: 'https://community.grafana.com',
+    entityNotFoundLinkText: 'community site.',
+    templateVariableHelpLink: 'https://grafana.com/docs/grafana/latest/variables/',
+  };
+
   constructor(options: GrafanaBootConfig) {
     this.bootData = options.bootData;
 
@@ -227,6 +281,13 @@ export class GrafanaBootConfig implements GrafanaConfig {
     this.theme2 = getThemeById(this.bootData.user.theme);
     this.bootData.user.lightTheme = this.theme2.isLight;
     this.theme = this.theme2.v1;
+
+    this.windowTitlePrefix = `${this.wideSkyWhitelabeling.applicationName} - `;
+    this.wideSkyWhitelabeling.loginBackground.image =
+      options.wideSkyWhitelabeling?.loginBackground.image ||
+      `public/img/g8_login_${this.theme2.isDark ? 'dark' : 'light'}.svg`;
+    this.wideSkyWhitelabeling.loginBox.color =
+      options.wideSkyWhitelabeling?.loginBox.color || colorManipulator.alpha(this.theme2.colors.background.primary, 0.7);
   }
 }
 

@@ -2,6 +2,7 @@ import { css } from '@emotion/css';
 import React from 'react';
 
 import { GrafanaTheme2 } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { useStyles2, useTheme2 } from '@grafana/ui';
 
 const title = { fontWeight: 500, fontSize: '26px', lineHeight: '123%' };
@@ -56,8 +57,8 @@ export function LicenseChrome({ header, editionNotice, subheader, children }: Pr
           }}
         >
           <img
-            src="public/img/grafana_icon.svg"
-            alt="Grafana"
+            src={config.wideSkyWhitelabeling.applicationLogo}
+            alt={config.wideSkyWhitelabeling.applicationName}
             width="80px"
             style={{ position: 'absolute', left: '23px', top: '20px' }}
           />

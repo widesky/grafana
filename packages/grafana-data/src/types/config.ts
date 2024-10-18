@@ -239,6 +239,9 @@ export interface GrafanaConfig {
    * Grafana's supported language.
    */
   language: string | undefined;
+
+  // WideSky
+  wideSkyWhitelabeling?: WideSkyWhitelabeling;
 }
 
 export interface SqlConnectionLimits {
@@ -274,4 +277,71 @@ export interface AuthSettings {
 
   disableLogin?: boolean;
   basicAuthStrongPasswordPolicy?: boolean;
+}
+
+// WideSky
+interface HelpOption {
+  label: string;
+  href: string;
+}
+
+interface FooterItem {
+  text: string;
+  url: string;
+  icon: IconName;
+  hide: boolean;
+  color?: string;
+}
+
+interface LoginBox {
+  logo: string;
+  logoMaxWidth: number;
+  logoMaxWidthMediaBreakpoint: number;
+
+  color?: string;
+  textColor?: string;
+  textboxBorderColor?: string;
+  textboxPlaceholderColor?: string;
+  textboxBackgroundColor?: string;
+
+  buttonBgColor?: string;
+  buttonHoverBgColor?: string;
+  buttonTextColor?: string;
+  buttonHoverTextColor?: string;
+
+  linkButtonBgColor?: string;
+  linkButtonHoverBgColor?: string;
+  linkButtonTextColor?: string;
+  linkButtonHoverTextColor?: string;
+}
+
+interface LoginBackground {
+  image: string;
+  background?: string;
+  position: string;
+  color?: string;
+  minHeight: string;
+}
+
+export interface WideSkyWhitelabeling {
+  appSidebarLogo: string;
+  applicationName: string;
+  applicationLogo: string;
+  browserTabTitle: string;
+  browserTabSubtitle: string;
+  showEnterpriseUpgradeInfo: boolean;
+  adminSettingsMessage: string;
+
+  footerItems: FooterItem[];
+  footerPipeColor?: string;
+
+  helpOptions: HelpOption[];
+
+  loginBox: LoginBox;
+  loginBackground: LoginBackground;
+
+  entityNotFoundText: string;
+  entityNotFoundLink: string;
+  entityNotFoundLinkText: string;
+  templateVariableHelpLink: string;
 }

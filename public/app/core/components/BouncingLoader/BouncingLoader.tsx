@@ -2,6 +2,7 @@ import { css, keyframes } from '@emotion/css';
 import React from 'react';
 
 import { GrafanaTheme2 } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { useStyles2 } from '@grafana/ui';
 
 import { t } from '../../internationalization';
@@ -17,7 +18,7 @@ export function BouncingLoader() {
       aria-label={t('bouncing-loader.label', 'Loading')}
     >
       <div className={styles.bounce}>
-        <img alt="" src="public/img/grafana_icon.svg" className={styles.logo} />
+        <img alt="" src={config.wideSkyWhitelabeling.applicationLogo} className={styles.logo} />
       </div>
     </div>
   );

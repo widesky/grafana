@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAsync } from 'react-use';
 
+import { IconName } from '@grafana/data';
 import { getBackendSrv } from '@grafana/runtime';
 import { Button, Field, Input } from '@grafana/ui';
 import { Form } from 'app/core/components/Form/Form';
@@ -18,11 +19,13 @@ interface FormModel {
   password?: string;
 }
 
+const applicationName = getConfig().wideSkyWhitelabeling.applicationName;
+
 const navModel = {
   main: {
-    icon: 'grafana' as const,
+    icon: applicationName.toLowerCase() as IconName,
     text: 'Invite',
-    subTitle: 'Register your Grafana account',
+    subTitle: `Register your ${applicationName} account`,
     breadcrumbs: [{ title: 'Login', url: 'login' }],
   },
   node: {
@@ -66,7 +69,7 @@ export const SignupInvitedPage = ({ match }: Props) => {
         <h3 className="page-sub-heading">Hello {greeting || 'there'}.</h3>
 
         <div className="modal-tagline p-b-2">
-          <em>{invitedBy || 'Someone'}</em> has invited you to join Grafana and the organization{' '}
+          <em>{invitedBy || 'Someone'}</em> has invited you to join {applicationName} and the organization{' '}
           <span className="highlight-word">{contextSrv.user.orgName}</span>
           <br />
           Please complete the following and choose a password to accept your invitation and continue:

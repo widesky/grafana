@@ -2,6 +2,7 @@ import { css } from '@emotion/css';
 import React from 'react';
 
 import { GrafanaTheme2 } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { EmptyState, TextLink, useStyles2 } from '@grafana/ui';
 
 export interface Props {
@@ -18,9 +19,9 @@ export function EntityNotFound({ entity = 'Page' }: Props) {
     <div className={styles.container}>
       <EmptyState message={`${entity} not found`} variant="not-found">
         We&apos;re looking but can&apos;t seem to find this {entity.toLowerCase()}. Try returning{' '}
-        <TextLink href="/">home</TextLink> or seeking help on the{' '}
-        <TextLink href="https://community.grafana.com" external>
-          community site.
+        <TextLink href="/">home</TextLink> {config.wideSkyWhitelabeling.entityNotFoundText}{' '}
+        <TextLink href={config.wideSkyWhitelabeling.entityNotFoundLink} external>
+          {config.wideSkyWhitelabeling.entityNotFoundLinkText}
         </TextLink>
       </EmptyState>
     </div>

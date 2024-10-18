@@ -11,32 +11,17 @@ export interface FooterLink {
   id: string;
   icon?: IconName;
   url?: string;
+  color?: string;
+  hide?: boolean;
 }
 
 export let getFooterLinks = (): FooterLink[] => {
-  return [
-    {
-      target: '_blank',
-      id: 'documentation',
-      text: t('nav.help/documentation', 'Documentation'),
-      icon: 'document-info',
-      url: 'https://grafana.com/docs/grafana/latest/?utm_source=grafana_footer',
-    },
-    {
-      target: '_blank',
-      id: 'support',
-      text: t('nav.help/support', 'Support'),
-      icon: 'question-circle',
-      url: 'https://grafana.com/products/enterprise/?utm_source=grafana_footer',
-    },
-    {
-      target: '_blank',
-      id: 'community',
-      text: t('nav.help/community', 'Community'),
-      icon: 'comments-alt',
-      url: 'https://community.grafana.com/?utm_source=grafana_footer',
-    },
-  ];
+    return config.wideSkyWhitelabeling.footerItems.map(item => ({
+        ...item,
+        target: '_blank',
+        text: t(`nav.help/${item.text.toLocaleLowerCase()}`, item.text),
+        id: item.text.toLocaleLowerCase(),
+    }));
 };
 
 export function getVersionMeta(version: string) {
@@ -105,8 +90,8 @@ export const Footer = React.memo(({ customLinks, hideEdition }: Props) => {
     <footer className="footer">
       <div className="text-center">
         <ul>
-          {links.map((link, index) => (
-            <li key={index}>
+          {links.filter(link => link.hide !== true || link.hide === undefined).map((link, index) => (
+            <li key={index} style={{ color: config.wideSkyWhitelabeling.footerPipeColor }}>
               <FooterItem item={link} />
             </li>
           ))}
@@ -121,10 +106,10 @@ Footer.displayName = 'Footer';
 function FooterItem({ item }: { item: FooterLink }) {
   const content = item.url ? (
     <a href={item.url} target={item.target} rel="noopener noreferrer" id={item.id}>
-      {item.text}
+      <span style={{ color: item.color }}>{item.text}</span>
     </a>
   ) : (
-    item.text
+    <span style={{ color: item.color }}>{item.text}</span>
   );
 
   return (
