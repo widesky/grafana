@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 
 import { selectors } from '@grafana/e2e-selectors';
-import { Input, IconButton } from '@grafana/ui';
+import { Input, IconButton, useStyles2 } from '@grafana/ui';
 import { Props as InputProps } from '@grafana/ui/src/components/Input/Input';
+
+import { getStyles } from '../Login/LoginForm';
 
 interface Props extends Omit<InputProps, 'type'> {}
 
 export const PasswordField = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const [showPassword, setShowPassword] = useState(false);
+  const styles = useStyles2(getStyles);
 
   return (
     <Input
@@ -15,6 +18,7 @@ export const PasswordField = React.forwardRef<HTMLInputElement, Props>((props, r
       type={showPassword ? 'text' : 'password'}
       data-testid={selectors.pages.Login.password}
       ref={ref}
+      className={styles.input}
       suffix={
         <IconButton
           name={showPassword ? 'eye-slash' : 'eye'}

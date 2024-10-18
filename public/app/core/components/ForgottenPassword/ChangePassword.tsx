@@ -1,3 +1,4 @@
+import { css } from '@emotion/css';
 import React, { SyntheticEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -51,7 +52,7 @@ export const ChangePassword = ({ onSubmit, onSkip, showDefaultPasswordWarning }:
       {showDefaultPasswordWarning && (
         <Alert severity="info" title="Continuing to use the default password exposes you to security risks." />
       )}
-      <Field label="New password" invalid={!!errors.newPassword} error={errors?.newPassword?.message}>
+      <Field label="New password" invalid={!!errors.newPassword} error={errors?.newPassword?.message} className={css({ '& div': { color: config.wideSkyWhitelabeling.loginBox.textColor } })}>
         <PasswordField
           onFocus={() => setDisplayValidationLabels(true)}
           {...register('newPassword', {
@@ -71,7 +72,7 @@ export const ChangePassword = ({ onSubmit, onSkip, showDefaultPasswordWarning }:
           strongPasswordValidations={strongPasswordValidations}
         />
       )}
-      <Field label="Confirm new password" invalid={!!errors.confirmNew} error={errors?.confirmNew?.message}>
+      <Field label="Confirm new password" invalid={!!errors.confirmNew} error={errors?.confirmNew?.message} className={css({ '& div': { color: config.wideSkyWhitelabeling.loginBox.textColor } })}>
         <PasswordField
           {...register('confirmNew', {
             required: 'Confirmed Password is required',
@@ -91,7 +92,7 @@ export const ChangePassword = ({ onSubmit, onSkip, showDefaultPasswordWarning }:
             content="If you skip you will be prompted to change password next time you log in."
             placement="bottom"
           >
-            <Button fill="text" onClick={onSkip} type="button" data-testid={selectors.pages.Login.skip}>
+            <Button className={styles.submitButton} fill="text" onClick={onSkip} type="submit" data-testid={selectors.pages.Login.skip}>
               Skip
             </Button>
           </Tooltip>

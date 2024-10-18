@@ -4,7 +4,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import { TypedVariableModel } from '@grafana/data';
 import { selectors } from '@grafana/e2e-selectors';
-import { reportInteraction } from '@grafana/runtime';
+import { config, reportInteraction } from '@grafana/runtime';
 import { Button, useStyles2, Stack } from '@grafana/ui';
 import EmptyListCTA from 'app/core/components/EmptyListCTA/EmptyListCTA';
 
@@ -118,7 +118,7 @@ function EmptyVariablesList({ onAdd }: { onAdd: () => void }): ReactElement {
                     or sensor names in your metric queries you can use variables in their place. Variables are shown as
                     list boxes at the top of the dashboard. These drop-down lists make it easy to change the data
                     being displayed in your dashboard. Check out the
-                    <a class="external-link" href="https://grafana.com/docs/grafana/latest/variables/" target="_blank">
+                    <a class="external-link" href="${config.wideSkyWhitelabeling.templateVariableHelpLink}" target="_blank">
                       Templates and variables documentation
                     </a>
                     for more information.

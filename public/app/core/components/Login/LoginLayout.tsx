@@ -2,6 +2,7 @@ import { cx, css, keyframes } from '@emotion/css';
 import React, { useEffect, useState } from 'react';
 
 import { GrafanaTheme2 } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { useStyles2 } from '@grafana/ui';
 
 import { Branding } from '../Branding/Branding';
@@ -82,8 +83,10 @@ export const getLoginStyles = (theme: GrafanaTheme2) => {
       minWidth: '100%',
     }),
     container: css({
-      minHeight: '100%',
-      backgroundPosition: 'center',
+      minHeight: config.wideSkyWhitelabeling.loginBackground.minHeight,
+      backgroundPosition: config.wideSkyWhitelabeling.loginBackground.position,
+      background: config.wideSkyWhitelabeling.loginBackground.background,
+      backgroundColor: config.wideSkyWhitelabeling.loginBackground.color,
       backgroundRepeat: 'no-repeat',
       minWidth: '100%',
       marginLeft: 0,
@@ -107,11 +110,11 @@ export const getLoginStyles = (theme: GrafanaTheme2) => {
     }),
     loginLogo: css({
       width: '100%',
-      maxWidth: 60,
+      maxWidth: config.wideSkyWhitelabeling.loginBox.logoMaxWidth,
       marginBottom: theme.spacing(2),
 
       [theme.breakpoints.up('sm')]: {
-        maxWidth: 100,
+        maxWidth: config.wideSkyWhitelabeling.loginBox.logoMaxWidthMediaBreakpoint,
       },
     }),
     loginLogoWrapper: css({

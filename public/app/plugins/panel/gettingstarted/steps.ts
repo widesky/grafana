@@ -1,3 +1,4 @@
+import { config } from '@grafana/runtime';
 import { getBackendSrv } from 'app/core/services/backend_srv';
 import store from 'app/core/store';
 import { getDatasourceSrv } from 'app/features/plugins/datasource_srv';
@@ -12,7 +13,7 @@ const step2Key = `${keyPrefix}${step2TutorialTitle.replace(' ', '-').trim().toLo
 
 export const getSteps = (): SetupStep[] => [
   {
-    heading: 'Welcome to Grafana',
+    heading: `Welcome to ${config.wideSkyWhitelabeling.applicationName}`,
     subheading: 'The steps below will guide you to quickly finish setting up your Grafana installation.',
     title: 'Basic',
     info: 'The steps below will guide you to quickly finish setting up your Grafana installation.',

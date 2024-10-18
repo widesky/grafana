@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { GrafanaTheme2, NavModel } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { LinkButton, useStyles2 } from '@grafana/ui';
 import { Page } from 'app/core/components/Page/Page';
 
@@ -38,6 +39,10 @@ interface UpgradeInfoProps {
 
 export const UpgradeInfo = ({ editionNotice }: UpgradeInfoProps) => {
   const styles = useStyles2(getStyles);
+
+  if (config.wideSkyWhitelabeling.showEnterpriseUpgradeInfo === false) {
+    return null;
+  }
 
   return (
     <>

@@ -2,6 +2,7 @@ import { css, cx } from '@emotion/css';
 import React, { FC } from 'react';
 
 import { colorManipulator } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { useTheme2 } from '@grafana/ui';
 
 export interface BrandComponentProps {
@@ -10,7 +11,7 @@ export interface BrandComponentProps {
 }
 
 export const LoginLogo: FC<BrandComponentProps & { logo?: string }> = ({ className, logo }) => {
-  return <img className={className} src={`${logo ? logo : 'public/img/grafana_icon.svg'}`} alt="Grafana" />;
+  return <img className={className} src={config.wideSkyWhitelabeling.loginBox.logo} alt={config.wideSkyWhitelabeling.applicationName} />;
 };
 
 const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
@@ -24,7 +25,7 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
       right: 0,
       bottom: 0,
       top: 0,
-      background: `url(public/img/g8_login_${theme.isDark ? 'dark' : 'light'}.svg)`,
+      background: `url(${config.wideSkyWhitelabeling.loginBackground.image})`,
       backgroundPosition: 'top center',
       backgroundSize: 'auto',
       backgroundRepeat: 'no-repeat',
@@ -33,7 +34,7 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
       transition: 'opacity 3s ease-in-out',
 
       [theme.breakpoints.up('md')]: {
-        backgroundPosition: 'center',
+        backgroundPosition: config.wideSkyWhitelabeling.loginBackground.position,
         backgroundSize: 'cover',
       },
     },
@@ -43,13 +44,13 @@ const LoginBackground: FC<BrandComponentProps> = ({ className, children }) => {
 };
 
 const MenuLogo: FC<BrandComponentProps> = ({ className }) => {
-  return <img className={className} src="public/img/grafana_icon.svg" alt="Grafana" />;
+  return <img className={className} src={config.wideSkyWhitelabeling.appSidebarLogo} alt={config.wideSkyWhitelabeling.applicationName} />;
 };
 
 const LoginBoxBackground = () => {
   const theme = useTheme2();
   return css({
-    background: colorManipulator.alpha(theme.colors.background.primary, 0.7),
+    background: config.wideSkyWhitelabeling.loginBox.color,
     backgroundSize: 'cover',
   });
 };
@@ -59,9 +60,9 @@ export class Branding {
   static LoginBackground = LoginBackground;
   static MenuLogo = MenuLogo;
   static LoginBoxBackground = LoginBoxBackground;
-  static AppTitle = 'Grafana';
-  static LoginTitle = 'Welcome to Grafana';
-  static HideEdition = false;
+  static AppTitle = config.wideSkyWhitelabeling.browserTabTitle;
+  static LoginTitle = config.wideSkyWhitelabeling.browserTabSubtitle;
+  static HideEdition = config.buildInfo.hideVersion;
   static GetLoginSubTitle = (): null | string => {
     return null;
   };
