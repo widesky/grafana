@@ -1,4 +1,4 @@
-import { DataQuery, locationUtil, setWeekStart, DashboardLoadedEvent } from '@grafana/data';
+import { DataQuery, locationUtil, setWeekStart, DashboardLoadedEvent, urlUtil } from '@grafana/data';
 import { config, isFetchError, locationService } from '@grafana/runtime';
 import { notifyApp } from 'app/core/actions';
 import appEvents from 'app/core/app_events';
@@ -87,6 +87,33 @@ async function fetchDashboard(
         return await dashboardLoaderSrv.loadDashboard('public', args.urlSlug, args.accessToken);
       }
       case DashboardRoutes.Normal: {
+        if (config.wideSkyProvisioner?.languagePermissions.enabled) {
+          // If the user's has changed organisations in a different tab, and a tab containing a page
+          // from a different dashboard exists, redirect to home
+          const location = locationService.getLocation();
+          const urlArgs = urlUtil.parseKeyValue(
+            location.search.startsWith('?') ? location.search.substring(1) : location.search
+          );
+
+          const userInfo = config && config.bootData && config.bootData.user ? config.bootData.user : null;
+          const misMatchOrgId = userInfo && urlArgs.orgId && Number(urlArgs.orgId) !== userInfo.orgId;
+          if (misMatchOrgId) {
+            console.log(`Found a mismatched orgId with prev as ${urlArgs.orgId} and actual as ${userInfo.orgId}`);
+            console.log("Redirecting to the user's home page");
+            // send em to the home page
+            const fixedUrl = locationUtil.getUrlForPartial(locationService.getLocation(), { orgId: userInfo.orgId });
+            const newSearch = fixedUrl.substring(fixedUrl.indexOf('?'));
+            locationService.replace({
+              ...locationService.getLocation(),
+              search: newSearch,
+              pathname: '/',
+            });
+            const newArgs = Object.assign({}, args, { routeName: DashboardRoutes.Home });
+
+            return fetchDashboard(newArgs, dispatch, getState);
+          }
+        }
+
         const dashDTO: DashboardDTO = await dashboardLoaderSrv.loadDashboard(args.urlType, args.urlSlug, args.urlUid);
 
         // only the folder API has information about ancestors
@@ -111,7 +138,6 @@ async function fetchDashboard(
               ...locationService.getLocation(),
               pathname: dashboardUrl,
             });
-            console.log('not correct url correcting', dashboardUrl, currentPath);
           }
         }
         return dashDTO;

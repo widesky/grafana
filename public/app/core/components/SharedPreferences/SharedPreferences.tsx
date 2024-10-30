@@ -32,20 +32,26 @@ export interface Props {
 export type State = UserPreferencesDTO;
 
 function getLanguageOptions(): Array<SelectableValue<string>> {
-  const languageOptions = LANGUAGES.map((v) => ({
-    value: v.code,
-    label: v.name,
-  })).sort((a, b) => {
-    if (a.value === PSEUDO_LOCALE) {
-      return 1;
-    }
+  const languageOptions = LANGUAGES.filter(
+    (v) =>
+      !config.wideSkyProvisioner?.languagePermissions.enabled ||
+      config.wideSkyProvisioner?.languagePermissions.languages[v.code]
+  )
+    .map((v) => ({
+      value: v.code,
+      label: v.name,
+    }))
+    .sort((a, b) => {
+      if (a.value === PSEUDO_LOCALE) {
+        return 1;
+      }
 
-    if (b.value === PSEUDO_LOCALE) {
-      return -1;
-    }
+      if (b.value === PSEUDO_LOCALE) {
+        return -1;
+      }
 
-    return a.label.localeCompare(b.label);
-  });
+      return a.label.localeCompare(b.label);
+    });
 
   const options = [
     {
@@ -207,7 +213,6 @@ export class SharedPreferences extends PureComponent<Props, State> {
                 <span className={styles.labelText}>
                   <Trans i18nKey="shared-preferences.fields.locale-label">Language</Trans>
                 </span>
-                <FeatureBadge featureState={FeatureState.beta} />
               </Label>
             }
             data-testid="User preferences language drop down"

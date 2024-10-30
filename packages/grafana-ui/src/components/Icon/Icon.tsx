@@ -37,7 +37,7 @@ export const Icon = React.forwardRef<SVGElement, IconProps>(
   ({ size = 'md', type = 'default', name, className, style, title = '', ...rest }, ref) => {
     const styles = useStyles2(getIconStyles);
 
-    if (!isIconName(name)) {
+    if (!isIconName(name) && !name.startsWith('public/plugins')) {
       console.warn('Icon component passed an invalid icon name', name);
     }
 
@@ -49,7 +49,7 @@ export const Icon = React.forwardRef<SVGElement, IconProps>(
     const svgHgt = svgSize;
     const svgWid = name.startsWith('gf-bar-align') ? 16 : name.startsWith('gf-interp') ? 30 : svgSize;
     const subDir = getIconSubDir(iconName, type);
-    const svgPath = `${iconRoot}${subDir}/${iconName}.svg`;
+    const svgPath = name.startsWith('public/plugins') ? name : `${iconRoot}${subDir}/${iconName}.svg`;
 
     const composedClassName = cx(
       styles.icon,

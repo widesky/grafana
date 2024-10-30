@@ -63,7 +63,7 @@ export function MegaMenuItem({ link, activeItem, level = 0, onClick }: Props) {
     <li ref={item} className={styles.listItem}>
       <div
         className={cx(styles.menuItem, {
-          [styles.menuItemWithIcon]: Boolean(level === 0 && link.icon),
+          [styles.menuItemWithIcon]: Boolean(level === 0 && (link.icon || link.img)),
         })}
       >
         {level !== 0 && <Indent level={level === MAX_DEPTH ? level - 1 : level} spacing={3} />}
@@ -93,12 +93,17 @@ export function MegaMenuItem({ link, activeItem, level = 0, onClick }: Props) {
             <div
               className={cx(styles.labelWrapper, {
                 [styles.hasActiveChild]: hasActiveChild,
-                [styles.labelWrapperWithIcon]: Boolean(level === 0 && link.icon),
+                [styles.labelWrapperWithIcon]: Boolean(level === 0 && (link.icon || link.img)),
               })}
             >
               {level === 0 && link.icon && (
                 <FeatureHighlightWrapper>
                   <Icon className={styles.icon} name={toIconName(link.icon) ?? 'link'} size="lg" />
+                </FeatureHighlightWrapper>
+              )}
+              {level === 0 && link.img && !link.icon && (
+                <FeatureHighlightWrapper>
+                  <Icon className={styles.icon} name={link.img} size="lg" />
                 </FeatureHighlightWrapper>
               )}
               <Text truncate>{link.text}</Text>
