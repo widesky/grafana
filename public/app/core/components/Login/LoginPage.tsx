@@ -40,7 +40,11 @@ export const LoginPage = () => {
         <LoginLayout isChangingPassword={isChangingPassword}>
           {!isChangingPassword && (
             <InnerBox>
-              {loginErrorMessage && (
+              {loginErrorMessage && config.auth.disableLogin &&
+                <Alert className={styles.alert} severity="warning" title="Please refresh page"/>
+              }
+
+              {loginErrorMessage && !config.auth.disableLogin && (
                 <Alert className={styles.alert} severity="error" title={t('login.error.title', 'Login failed')}>
                   {loginErrorMessage}
                 </Alert>
@@ -61,7 +65,7 @@ export const LoginPage = () => {
                   </HorizontalGroup>
                 </LoginForm>
               )}
-              <LoginServiceButtons />
+              {!(loginErrorMessage && config.auth.disableLogin) && <LoginServiceButtons />}
               {!disableUserSignUp && <UserSignup />}
             </InnerBox>
           )}
