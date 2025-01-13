@@ -1,3 +1,4 @@
+import { GrafanaTheme2 } from '@grafana/data';
 import { getThemeById } from '@grafana/data/src/themes/registry';
 import { ThemeChangedEvent } from '@grafana/runtime';
 
@@ -56,5 +57,5 @@ export async function changeTheme(themeId: string, runtimeOnly?: boolean) {
 
 export async function toggleTheme(runtimeOnly: boolean) {
   const currentTheme = config.theme2;
-  changeTheme(currentTheme.isDark ? 'light' : 'dark', runtimeOnly);
+  changeTheme(currentTheme.isDark ? (currentTheme.isLight ? 'WideSky' : 'light') : 'dark', runtimeOnly);
 }

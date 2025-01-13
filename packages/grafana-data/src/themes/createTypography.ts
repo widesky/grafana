@@ -3,6 +3,7 @@
 // Copyright (c) 2014 Call-Em-All
 
 import { ThemeColors } from './createColors';
+import { CustomColors } from './createTheme';
 
 /** @beta */
 export interface ThemeTypography extends ThemeTypographyVariantTypes {
@@ -57,8 +58,8 @@ const defaultFontFamily = '"Inter", "Helvetica", "Arial", sans-serif';
 const defaultFontFamilyMonospace = "'Roboto Mono', monospace";
 
 export function createTypography(colors: ThemeColors, typographyInput: ThemeTypographyInput = {}): ThemeTypography {
+  let { fontFamily = defaultFontFamily } = typographyInput;
   const {
-    fontFamily = defaultFontFamily,
     fontFamilyMonospace = defaultFontFamilyMonospace,
     // The default font size of the Material Specification.
     fontSize = 14, // px
@@ -70,6 +71,18 @@ export function createTypography(colors: ThemeColors, typographyInput: ThemeTypo
     // 16px is the default font-size used by browsers.
     htmlFontSize = 14,
   } = typographyInput;
+
+  let wsFontHeader: string | undefined;
+  if (CustomColors.wideSkyTheme !== undefined && colors.mode === 'WideSky') {
+    wsFontHeader =
+      CustomColors.wideSkyTheme.fontHeader !== 'NOT_SET'
+        ? `${CustomColors.wideSkyTheme.fontHeader}, ${defaultFontFamily}`
+        : undefined;
+    fontFamily =
+      CustomColors.wideSkyTheme.fontBody !== 'NOT_SET'
+        ? `${CustomColors.wideSkyTheme.fontBody}, ${defaultFontFamily}`
+        : defaultFontFamily;
+  }
 
   if (process.env.NODE_ENV !== 'production') {
     if (typeof fontSize !== 'number') {
@@ -106,12 +119,12 @@ export function createTypography(colors: ThemeColors, typographyInput: ThemeTypo
 
   // All our fonts/line heights should be integer multiples of 2 to prevent issues with alignment
   const variants = {
-    h1: buildVariant(fontWeightRegular, 28, 32, -0.25),
-    h2: buildVariant(fontWeightRegular, 24, 28, 0),
-    h3: buildVariant(fontWeightRegular, 22, 24, 0),
-    h4: buildVariant(fontWeightRegular, 18, 22, 0.25),
-    h5: buildVariant(fontWeightRegular, 16, 22, 0),
-    h6: buildVariant(fontWeightMedium, 14, 22, 0.15),
+    h1: buildVariant(fontWeightRegular, 28, 32, -0.25, { fontFamily: wsFontHeader }),
+    h2: buildVariant(fontWeightRegular, 24, 28, 0, { fontFamily: wsFontHeader }),
+    h3: buildVariant(fontWeightRegular, 22, 24, 0, { fontFamily: wsFontHeader }),
+    h4: buildVariant(fontWeightRegular, 18, 22, 0.25, { fontFamily: wsFontHeader }),
+    h5: buildVariant(fontWeightRegular, 16, 22, 0, { fontFamily: wsFontHeader }),
+    h6: buildVariant(fontWeightMedium, 14, 22, 0.15, { fontFamily: wsFontHeader }),
     body: buildVariant(fontWeightRegular, fontSize, 22, 0.15),
     bodySmall: buildVariant(fontWeightRegular, 12, 18, 0.15),
     code: { ...buildVariant(fontWeightRegular, 14, 16, 0.15), fontFamily: fontFamilyMonospace },
