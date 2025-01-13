@@ -307,6 +307,7 @@ func (hs *HTTPServer) getFrontendSettings(c *contextmodel.ReqContext) (*dtos.Fro
 		},
 
 		WideSkyWhitelabeling: hs.Cfg.WideSkyWhitelabeling,
+		WideSkyTheme:          hs.Cfg.WideSkyTheme,
 	}
 
 	if hs.Cfg.UnifiedAlerting.StateHistory.Enabled {
