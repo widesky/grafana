@@ -1,7 +1,7 @@
-export { createTheme } from './createTheme';
+export { createTheme, CustomColors } from './createTheme';
 export { getThemeById, getBuiltInThemes, type ThemeRegistryItem } from './registry';
 export type { NewThemeOptions } from './createTheme';
-export type { ThemeRichColor, GrafanaTheme2 } from './types';
+export type { ThemeRichColor, GrafanaTheme2, WideSkyCustomTheme } from './types';
 export type { ThemeColors } from './createColors';
 export type { ThemeBreakpoints, ThemeBreakpointsKey } from './breakpoints';
 export type { ThemeShadows } from './createShadows';

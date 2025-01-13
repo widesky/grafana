@@ -3,6 +3,7 @@ import { ThemeVisualizationColors } from '../themes';
 export enum GrafanaThemeType {
   Light = 'light',
   Dark = 'dark',
+  WideSky = 'WideSky',
 }
 
 export interface GrafanaThemeCommons {

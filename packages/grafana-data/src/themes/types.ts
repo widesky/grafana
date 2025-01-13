@@ -59,3 +59,48 @@ export interface ThemeRichColor {
 export type DeepPartial<T> = {
   [P in keyof T]?: DeepPartial<T[P]>;
 };
+
+export type BrandGradient = {
+  colorA: string;
+  colorB: string;
+  all: string;
+};
+
+export type WideSkyCustomTheme = {
+  name: string;
+  basedOff: 'dark' | 'light';
+  baseColor: string;
+  borderColor: string;
+
+  fontHeader: string;
+  fontBody: string;
+
+  horizontal: BrandGradient;
+  vertical: BrandGradient;
+
+  primary: ThemeRichColor;
+  secondary: ThemeRichColor;
+  info: ThemeRichColor;
+  success: ThemeRichColor;
+  warning: ThemeRichColor;
+  error: ThemeRichColor;
+
+  textPrimary: string;
+  textSecondary: string;
+  textDisabled: string;
+  textLink: string;
+
+  backgroundCanvas: string;
+  backgroundPrimary: string;
+  backgroundSecondary: string;
+  backgroundNavBar: string;
+
+  borderWeak: string;
+  borderMedium: string;
+  borderStrong: string;
+
+  actionHover: string;
+  actionFocus: string;
+  actionSelected: string;
+  actionDisabledBackground: string;
+};

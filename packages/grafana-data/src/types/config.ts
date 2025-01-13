@@ -1,6 +1,6 @@
 import { SystemDateFormatSettings } from '../datetime';
 import { MapLayerOptions } from '../geo/layer';
-import { GrafanaTheme2 } from '../themes';
+import { GrafanaTheme2, WideSkyCustomTheme } from '../themes';
 
 import { DataSourceInstanceSettings } from './datasource';
 import { FeatureToggles } from './featureToggles.gen';
@@ -143,6 +143,7 @@ export interface BootData {
   assets: {
     light: string;
     dark: string;
+    WideSky: string;
   };
 }
 
@@ -242,6 +243,7 @@ export interface GrafanaConfig {
 
   // WideSky
   wideSkyWhitelabeling?: WideSkyWhitelabeling;
+  wideSkyTheme?: WideSkyCustomTheme;
 }
 
 export interface SqlConnectionLimits {

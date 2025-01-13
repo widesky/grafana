@@ -19,6 +19,8 @@ import {
   AngularMeta,
   WideSkyWhitelabeling,
   colorManipulator,
+  CustomColors,
+  WideSkyCustomTheme,
 } from '@grafana/data';
 
 export interface AzureSettings {
@@ -238,6 +240,8 @@ export class GrafanaBootConfig implements GrafanaConfig {
     templateVariableHelpLink: 'https://grafana.com/docs/grafana/latest/variables/',
   };
 
+  wideSkyTheme?: WideSkyCustomTheme;
+
   constructor(options: GrafanaBootConfig) {
     this.bootData = options.bootData;
 
@@ -276,6 +280,9 @@ export class GrafanaBootConfig implements GrafanaConfig {
     if (this.featureToggles.disableAngular) {
       this.angularSupportEnabled = false;
     }
+
+    // Must be set before 'getThemeById'
+    CustomColors.wideSkyTheme = options.wideSkyTheme;
 
     // Creating theme after applying feature toggle overrides in case we need to toggle anything
     this.theme2 = getThemeById(this.bootData.user.theme);
