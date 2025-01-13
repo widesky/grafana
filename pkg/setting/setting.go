@@ -530,6 +530,7 @@ type Cfg struct {
 
 	// WideSky
 	WideSkyWhitelabeling *WideSkyWhitelabelingSettings
+	WideSkyTheme         *WideSkyThemeSettings
 }
 
 // AddChangePasswordLink returns if login form is disabled or not since
@@ -1297,6 +1298,7 @@ func (cfg *Cfg) parseINIFile(iniFile *ini.File) error {
 	cfg.ScopesListDashboardsURL = scopesSection.Key("list_dashboards_endpoint").MustString("")
 
 	cfg.readWideSkyWhitelabeling()
+	cfg.readWideSkyTheme()
 
 	navlink := iniFile.Section("navlink")
 	cfg.StarredEnabled = navlink.Key("starred_enabled").MustBool(true)

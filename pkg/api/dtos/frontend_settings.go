@@ -275,4 +275,5 @@ type FrontendSettingsDTO struct {
 
 	// WideSky
 	WideSkyWhitelabeling *setting.WideSkyWhitelabelingSettings `json:"wideSkyWhitelabeling,omitempty"`
+	WideSkyTheme          *setting.WideSkyThemeSettings         `json:"wideSkyTheme,omitempty"`
 }

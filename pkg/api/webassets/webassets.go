@@ -19,9 +19,10 @@ type ManifestInfo struct {
 	Integrity string `json:"integrity,omitempty"`
 
 	// The known entrypoints
-	App   *EntryPointInfo `json:"app,omitempty"`
-	Dark  *EntryPointInfo `json:"dark,omitempty"`
-	Light *EntryPointInfo `json:"light,omitempty"`
+	App     *EntryPointInfo `json:"app,omitempty"`
+	Dark    *EntryPointInfo `json:"dark,omitempty"`
+	Light   *EntryPointInfo `json:"light,omitempty"`
+	WideSky *EntryPointInfo `json:"WideSky,omitempty"`
 }
 
 type EntryPointInfo struct {
@@ -118,6 +119,9 @@ func readWebAssets(r io.Reader) (*dtos.EntryPointAssets, error) {
 	if entryPoints.Light == nil || len(entryPoints.Light.Assets.CSS) == 0 {
 		return nil, fmt.Errorf("missing light entry")
 	}
+	if entryPoints.WideSky == nil || len(entryPoints.WideSky.Assets.CSS) == 0 {
+		return nil, fmt.Errorf("missing widesky entry")
+	}
 
 	entryPointJSAssets := make([]dtos.EntryPointAsset, 0)
 	for _, entry := range entryPoints.App.Assets.JS {
@@ -131,5 +135,6 @@ func readWebAssets(r io.Reader) (*dtos.EntryPointAssets, error) {
 		JSFiles: entryPointJSAssets,
 		Dark:    entryPoints.Dark.Assets.CSS[0],
 		Light:   entryPoints.Light.Assets.CSS[0],
+		WideSky: entryPoints.WideSky.Assets.CSS[0],
 	}, nil
 }

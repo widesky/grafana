@@ -44,6 +44,7 @@ type EntryPointAssets struct {
 	JSFiles            []EntryPointAsset `json:"jsFiles"`
 	Dark               string            `json:"dark"`
 	Light              string            `json:"light"`
+	WideSky            string            `json:"WideSky"`
 }
 
 type EntryPointAsset struct {
@@ -58,6 +59,7 @@ func (a *EntryPointAssets) SetContentDeliveryURL(prefix string) {
 	a.ContentDeliveryURL = prefix
 	a.Dark = prefix + a.Dark
 	a.Light = prefix + a.Light
+	a.WideSky = prefix + a.WideSky
 	for i, p := range a.JSFiles {
 		a.JSFiles[i].FilePath = prefix + p.FilePath
 	}
