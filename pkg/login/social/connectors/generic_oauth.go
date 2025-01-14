@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/mail"
 	"strconv"
+	"strings"
 
 	"golang.org/x/oauth2"
 
@@ -26,6 +27,8 @@ const (
 	nameAttributePathKey    = "name_attribute_path"
 	loginAttributePathKey   = "login_attribute_path"
 	idTokenAttributeNameKey = "id_token_attribute_name" // #nosec G101 not a hardcoded credential
+	teamAttributePathKey    = "team_attribute_path"
+	teamAssignmentMapKey    = "team_assignment_map"
 )
 
 var ExtraGenericOAuthSettingKeys = map[string]ExtraKeyInfo{
@@ -34,6 +37,8 @@ var ExtraGenericOAuthSettingKeys = map[string]ExtraKeyInfo{
 	idTokenAttributeNameKey: {Type: String},
 	teamIdsKey:              {Type: String},
 	allowedOrganizationsKey: {Type: String},
+	teamAttributePathKey:    {Type: String},
+	teamAssignmentMapKey:    {Type: String},
 }
 
 var _ social.SocialConnector = (*SocialGenericOAuth)(nil)
@@ -50,6 +55,8 @@ type SocialGenericOAuth struct {
 	groupsAttributePath  string
 	idTokenAttributeName string
 	teamIdsAttributePath string
+	teamAttributePath    string
+	teamAssignmentMap    []string
 	teamIds              []string
 }
 
@@ -63,6 +70,8 @@ func NewGenericOAuthProvider(info *social.OAuthInfo, cfg *setting.Cfg, ssoSettin
 		groupsAttributePath:  info.GroupsAttributePath,
 		loginAttributePath:   info.Extra[loginAttributePathKey],
 		idTokenAttributeName: info.Extra[idTokenAttributeNameKey],
+		teamAttributePath:    info.Extra[teamAttributePathKey],
+		teamAssignmentMap:    util.SplitString(info.Extra[teamAssignmentMapKey]),
 		teamIdsAttributePath: info.TeamIdsAttributePath,
 		teamIds:              util.SplitString(info.Extra[teamIdsKey]),
 		allowedOrganizations: util.SplitString(info.Extra[allowedOrganizationsKey]),
@@ -131,6 +140,8 @@ func (s *SocialGenericOAuth) Reload(ctx context.Context, settings ssoModels.SSOS
 	s.groupsAttributePath = newInfo.GroupsAttributePath
 	s.loginAttributePath = newInfo.Extra[loginAttributePathKey]
 	s.idTokenAttributeName = newInfo.Extra[idTokenAttributeNameKey]
+	s.teamAttributePath = newInfo.Extra[teamAttributePathKey]
+	s.teamAssignmentMap = util.SplitString(newInfo.Extra[teamAssignmentMapKey])
 	s.teamIdsAttributePath = newInfo.TeamIdsAttributePath
 	s.teamIds = util.SplitString(newInfo.Extra[teamIdsKey])
 	s.allowedOrganizations = util.SplitString(newInfo.Extra[allowedOrganizationsKey])
@@ -262,6 +273,15 @@ func (s *SocialGenericOAuth) UserInfo(ctx context.Context, client *http.Client, 
 				if s.info.AllowAssignGrafanaAdmin {
 					userInfo.IsGrafanaAdmin = &grafanaAdmin
 				}
+			}
+		}
+
+		if len(userInfo.Access) == 0 {
+			access, err := s.extractAccess(data)
+			if err != nil {
+				s.log.Warn("Failed to extract access", "err", err)
+			} else {
+				userInfo.Access = access
 			}
 		}
 
@@ -466,6 +486,35 @@ func (s *SocialGenericOAuth) extractGroups(data *UserInfoJson) ([]string, error)
 	return util.SearchJSONForStringSliceAttr(s.groupsAttributePath, data.rawJSON)
 }
 
+func (s *SocialGenericOAuth) extractAccess(data *UserInfoJson) ([]string, error) {
+	if s.teamAttributePath == "" {
+		return []string{}, nil
+	}
+
+	assignedTeams, err := util.SearchJSONForStringSliceAttr(s.teamAttributePath, data.rawJSON)
+
+	prefixes := make(map[string]struct{})
+	for _, prefix := range assignedTeams {
+		prefixes[prefix] = struct{}{}
+	}
+
+	// Filter s.teamAssignmentMap
+	var teams []string
+	for _, item := range s.teamAssignmentMap {
+		parts := strings.SplitN(item, ":", 4) // Split item by ':'
+		if len(parts) < 2 {
+			continue // Skip invalid items
+		}
+
+		// Check if the first part matches a prefix in assignedTeams
+		if _, exists := prefixes[parts[0]]; exists {
+			teams = append(teams, strings.Join(parts[1:], ":")) // Keep the rest of the string
+		}
+	}
+
+	return teams, err
+}
+
 func (s *SocialGenericOAuth) fetchPrivateEmail(ctx context.Context, client *http.Client) (string, error) {
 	type Record struct {
 		Email       string `json:"email"`
@@ -614,6 +663,8 @@ func (s *SocialGenericOAuth) SupportBundleContent(bf *bytes.Buffer) error {
 	bf.WriteString(fmt.Sprintf("team_ids_attribute_path = %s\n", s.teamIdsAttributePath))
 	bf.WriteString(fmt.Sprintf("team_ids = %v\n", s.teamIds))
 	bf.WriteString(fmt.Sprintf("allowed_organizations = %v\n", s.allowedOrganizations))
+	bf.WriteString(fmt.Sprintf("team_attribute_path = %s\n", s.teamAttributePath))
+	bf.WriteString(fmt.Sprintf("team_assignment_map = %v\n", s.teamAssignmentMap))
 	bf.WriteString("```\n\n")
 
 	return s.SocialBase.getBaseSupportBundleContent(bf)

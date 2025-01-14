@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"golang.org/x/oauth2"
@@ -170,6 +171,19 @@ func (c *OAuth) Authenticate(ctx context.Context, r *authn.Request) (*authn.Iden
 		return userInfo.Role, userInfo.IsGrafanaAdmin, nil
 	})
 
+	// Add users orgs to the Identity so they can be synced
+	for _, access := range userInfo.Access {
+		accessParts := strings.SplitN(access, ":", 3)
+		orgID, err := strconv.ParseInt(accessParts[0], 10, 64)
+
+		if err != nil {
+			c.log.FromContext(ctx).Error("Provided org id is not valid", "err", err)
+			return nil, errOAuthUserInfo.Errorf("provided org id is not valid")
+		}
+
+		orgRoles[orgID] = userInfo.Role
+	}
+
 	lookupParams := login.UserLookupParams{}
 	allowInsecureEmailLookup := c.settingsProviderSvc.KeyValue("auth", "oauth_allow_insecure_email_lookup").MustBool(false)
 	if allowInsecureEmailLookup {
@@ -186,6 +200,7 @@ func (c *OAuth) Authenticate(ctx context.Context, r *authn.Request) (*authn.Iden
 		Groups:          userInfo.Groups,
 		OAuthToken:      token,
 		OrgRoles:        orgRoles,
+		Access:          userInfo.Access,
 		ClientParams: authn.ClientParams{
 			SyncUser:        true,
 			SyncTeams:       true,

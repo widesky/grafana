@@ -73,6 +73,9 @@ type Identity struct {
 	// idP Groups that the entity is a member of. This is only populated if the
 	// identity provider supports groups.
 	Groups []string
+
+	// Array of strings where "<org_uid>:<team_uid>:<team_role>"
+	Access []string
 	// OAuthToken is the OAuth token used to authenticate the entity.
 	OAuthToken *oauth2.Token
 	// SessionToken is the session token used to authenticate the entity.
