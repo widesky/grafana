@@ -77,13 +77,32 @@ if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then
   done
 fi
 
-exec grafana server                                         \
+# Start the Grafana server in the background
+grafana server                                              \
   --homepath="$GF_PATHS_HOME"                               \
   --config="$GF_PATHS_CONFIG"                               \
   --packaging=docker                                        \
   "$@"                                                      \
-  cfg:default.log.mode="console"                            \
+  cfg:default.log.mode="file"                               \
   cfg:default.paths.data="$GF_PATHS_DATA"                   \
   cfg:default.paths.logs="$GF_PATHS_LOGS"                   \
   cfg:default.paths.plugins="$GF_PATHS_PLUGINS"             \
-  cfg:default.paths.provisioning="$GF_PATHS_PROVISIONING"
+  cfg:default.paths.provisioning="$GF_PATHS_PROVISIONING" &
+
+# Wait for the server to be ready by monitoring the log output
+echo "Waiting for Grafana server to start..."
+until grep -m 1 "HTTP Server Listen" $GF_PATHS_LOGS/grafana.log > /dev/null 2>&1; do
+  sleep 1
+done
+echo "Grafana server started"
+
+# Run the Sass generator script
+node generateSassVariableFiles.js
+
+echo "Grafana now running, log file: $GF_PATHS_LOGS/grafana.log"
+
+# Wait for Grafana server to stop
+wait -n
+
+# Exit with the status of the Grafana server
+exit $?
