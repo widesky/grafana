@@ -16,18 +16,19 @@ import (
 	"github.com/grafana/grafana/pkg/setting"
 )
 
-func TargetCommand(version, commit, buildBranch, buildstamp string) *cli.Command {
+func TargetCommand(version, commit, buildBranch, buildstamp string, wideSkyVersion string) *cli.Command {
 	return &cli.Command{
 		Name:  "target",
 		Usage: "target specific grafana dskit services",
 		Flags: commonFlags,
 		Action: func(context *cli.Context) error {
 			return RunTargetServer(ServerOptions{
-				Version:     version,
-				Commit:      commit,
-				BuildBranch: buildBranch,
-				BuildStamp:  buildstamp,
-				Context:     context,
+				Version:        version,
+				Commit:         commit,
+				BuildBranch:    buildBranch,
+				BuildStamp:     buildstamp,
+				Context:        context,
+				WideSkyVersion: wideSkyVersion,
 			})
 		},
 	}

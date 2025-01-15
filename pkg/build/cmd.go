@@ -222,6 +222,11 @@ func ldflags(opts BuildOpts) (string, error) {
 		commitSha = v
 	}
 
+	var wideSkyVersion string
+	if v := os.Getenv("WIDESKY_VERSION"); v != "" {
+		wideSkyVersion = v
+	}
+
 	var enterpriseCommitSha string
 	if opts.enterprise {
 		enterpriseCommitSha = getGitEnterpriseSha()
@@ -238,6 +243,7 @@ func ldflags(opts BuildOpts) (string, error) {
 	b.WriteString("-w")
 	b.WriteString(fmt.Sprintf(" -X main.version=%s", opts.version))
 	b.WriteString(fmt.Sprintf(" -X main.commit=%s", commitSha))
+	b.WriteString(fmt.Sprintf(" -X main.wideSkyVersion=%s", wideSkyVersion))
 	if enterpriseCommitSha != "" {
 		b.WriteString(fmt.Sprintf(" -X main.enterpriseCommit=%s", enterpriseCommitSha))
 	}

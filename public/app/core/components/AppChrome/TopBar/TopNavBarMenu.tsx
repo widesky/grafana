@@ -27,7 +27,16 @@ export function TopNavBarMenu({ node: nodePlain }: TopNavBarMenuProps) {
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div onClick={(e) => e.stopPropagation()} className={styles.header}>
           <div>{node.text}</div>
-          {node.subTitle && <div className={styles.subTitle}>{node.subTitle}</div>}
+          {node.subTitle && (
+            <div className={styles.subTitle}>
+              {node.subTitle.split('\\r\\n').map((line, index, arr) => (
+                <React.Fragment key={index}>
+                  {line}
+                  {index < arr.length - 1 && <br />}
+                </React.Fragment>
+              ))}
+            </div>
+          )}
         </div>
       }
     >

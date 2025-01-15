@@ -24,4 +24,5 @@ func SetBuildInfo(opts ServerOptions) {
 	setting.BuildBranch = opts.BuildBranch
 	setting.IsEnterprise = extensions.IsEnterprise
 	setting.Packaging = validPackaging(Packaging)
+	setting.WideSkyVersion = opts.WideSkyVersion
 }

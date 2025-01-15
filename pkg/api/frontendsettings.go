@@ -154,7 +154,7 @@ func (hs *HTTPServer) getFrontendSettings(c *contextmodel.ReqContext) (*dtos.Fro
 	commit := setting.BuildCommit
 	commitShort := getShortCommitHash(setting.BuildCommit, 10)
 	buildstamp := setting.BuildStamp
-	versionString := fmt.Sprintf(`%s v%s (%s)`, setting.ApplicationName, version, commitShort)
+	versionString := fmt.Sprintf(`%s v%s (%s)\r\nImage %s`, setting.ApplicationName, version, commitShort, setting.WideSkyVersion)
 
 	if hideVersion {
 		version = ""

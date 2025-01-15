@@ -70,6 +70,7 @@ var (
 	BuildBranch           string
 	BuildStamp            int64
 	IsEnterprise          bool
+	WideSkyVersion        string
 
 	// packaging
 	Packaging = "unknown"

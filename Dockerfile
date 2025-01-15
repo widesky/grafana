@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 ARG BASE_IMAGE=alpine:3.19.1
 ARG JS_IMAGE=node:20-alpine
 ARG JS_PLATFORM=linux/amd64
@@ -14,11 +12,12 @@ ENV NODE_OPTIONS=--max_old_space_size=8000
 
 WORKDIR /tmp/grafana
 
-COPY package.json yarn.lock .yarnrc.yml ./
+COPY package.json project.json nx.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 COPY packages packages
 COPY plugins-bundled plugins-bundled
 COPY public public
+COPY LICENSE ./
 
 RUN apk add --no-cache make build-base python3
 
@@ -32,10 +31,13 @@ COPY emails emails
 ENV NODE_ENV production
 RUN yarn build
 
+RUN yarn esbuild --target=es6 ./scripts/cli/generateSassVariableFiles.ts --bundle --platform=node --outfile=./scripts/cli/generateSassVariableFiles.js --tsconfig=./scripts/cli/tsconfig.json
+
 FROM ${GO_IMAGE} as go-builder
 
 ARG COMMIT_SHA=""
 ARG BUILD_BRANCH=""
+ARG WIDESKY_VERSION=""
 ARG GO_BUILD_TAGS="oss"
 ARG WIRE_TAGS="oss"
 ARG BINGO="true"
@@ -57,6 +59,8 @@ COPY .bingo .bingo
 COPY pkg/util/xorm/go.* pkg/util/xorm/
 COPY pkg/apiserver/go.* pkg/apiserver/
 COPY pkg/apimachinery/go.* pkg/apimachinery/
+COPY pkg/build/go.* pkg/build/
+COPY pkg/build/wire/go.* pkg/build/wire/
 COPY pkg/promlib/go.* pkg/promlib/
 
 RUN go mod download
@@ -80,6 +84,7 @@ COPY LICENSE ./
 
 ENV COMMIT_SHA=${COMMIT_SHA}
 ENV BUILD_BRANCH=${BUILD_BRANCH}
+ENV WIDESKY_VERSION=${WIDESKY_VERSION}
 
 RUN make build-go GO_BUILD_TAGS=${GO_BUILD_TAGS} WIRE_TAGS=${WIRE_TAGS}
 
@@ -118,12 +123,12 @@ WORKDIR $GF_PATHS_HOME
 
 # Install dependencies
 RUN if grep -i -q alpine /etc/issue; then \
-      apk add --no-cache ca-certificates bash curl tzdata musl-utils && \
+      apk add --no-cache ca-certificates bash curl tzdata musl-utils nodejs && \
       apk info -vv | sort; \
     elif grep -i -q ubuntu /etc/issue; then \
       DEBIAN_FRONTEND=noninteractive && \
       apt-get update && \
-      apt-get install -y ca-certificates curl tzdata musl && \
+      apt-get install -y ca-certificates curl tzdata musl nodejs  && \
       apt-get autoremove -y && \
       rm -rf /var/lib/apt/lists/*; \
     else \
@@ -178,7 +183,19 @@ RUN if [ ! $(getent group "$GF_GID") ]; then \
 
 COPY --from=go-src /tmp/grafana/bin/grafana* /tmp/grafana/bin/*/grafana* ./bin/
 COPY --from=js-src /tmp/grafana/public ./public
+COPY --from=js-src /tmp/grafana/node_modules/react-grid-layout/css/styles.css ./node_modules/react-grid-layout/css/styles.css
+COPY --from=js-src /tmp/grafana/node_modules/react-resizable/css/styles.css ./node_modules/react-resizable/css/styles.css
+COPY --from=js-src /tmp/grafana/node_modules/rc-drawer/assets/index.css ./node_modules/rc-drawer/assets/index.css
+COPY --from=js-src /tmp/grafana/node_modules/rc-time-picker/assets/index.css ./node_modules/rc-time-picker/assets/index.css
+COPY --from=js-src /tmp/grafana/node_modules/rc-slider/assets/index.css ./node_modules/rc-slider/assets/index.css
+COPY --from=js-src /tmp/grafana/node_modules/uplot/dist/uPlot.min.css ./node_modules/uplot/dist/uPlot.min.css
+COPY --from=js-src /tmp/grafana/packages/grafana-ui ./node_modules/@grafana/ui
+COPY --from=js-src /tmp/grafana/scripts/cli/generateSassVariableFiles.js .
 COPY --from=go-src /tmp/grafana/LICENSE ./
+
+RUN chmod -R 777 generateSassVariableFiles.js
+RUN chmod -R 777 /usr/share/grafana/public/sass
+RUN chmod -R 777 /usr/share/grafana/public/build/*.css
 
 EXPOSE 3000
 

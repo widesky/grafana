@@ -31,9 +31,10 @@ type ServerOptions struct {
 	BuildBranch      string
 	BuildStamp       string
 	Context          *cli.Context
+	WideSkyVersion   string
 }
 
-func ServerCommand(version, commit, enterpriseCommit, buildBranch, buildstamp string) *cli.Command {
+func ServerCommand(version, commit, enterpriseCommit, buildBranch, buildstamp string, wideSkyVersion string) *cli.Command {
 	return &cli.Command{
 		Name:  "server",
 		Usage: "run the grafana server",
@@ -46,9 +47,10 @@ func ServerCommand(version, commit, enterpriseCommit, buildBranch, buildstamp st
 				BuildBranch:      buildBranch,
 				BuildStamp:       buildstamp,
 				Context:          context,
+				WideSkyVersion:   wideSkyVersion,
 			})
 		},
-		Subcommands: []*cli.Command{TargetCommand(version, commit, buildBranch, buildstamp)},
+		Subcommands: []*cli.Command{TargetCommand(version, commit, buildBranch, buildstamp, wideSkyVersion)},
 	}
 }
 
