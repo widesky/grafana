@@ -2,21 +2,17 @@ import { css } from '@emotion/css';
 import React from 'react';
 
 import { GrafanaTheme2 } from '@grafana/data';
+import { config } from '@grafana/runtime';
 import { useStyles2 } from '@grafana/ui';
 
-const helpOptions = [
-  { value: 0, label: 'Documentation', href: 'https://grafana.com/docs/grafana/latest' },
-  { value: 1, label: 'Tutorials', href: 'https://grafana.com/tutorials' },
-  { value: 2, label: 'Community', href: 'https://community.grafana.com' },
-  { value: 3, label: 'Public Slack', href: 'http://slack.grafana.com' },
-];
+const helpOptions = config.wideSkyWhitelabeling.helpOptions;
 
 export const WelcomeBanner = () => {
   const styles = useStyles2(getStyles);
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Welcome to Grafana</h1>
+      <h1 className={styles.title}>Welcome to {config.wideSkyWhitelabeling.applicationName}</h1>
       <div className={styles.help}>
         <h3 className={styles.helpText}>Need help?</h3>
         <div className={styles.helpLinks}>
@@ -25,8 +21,8 @@ export const WelcomeBanner = () => {
               <a
                 key={`${option.label}-${index}`}
                 className={styles.helpLink}
-                href={`${option.href}?utm_source=grafana_gettingstarted`}
-              >
+                href={option.href}
+                >
                 {option.label}
               </a>
             );

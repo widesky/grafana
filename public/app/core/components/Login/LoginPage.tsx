@@ -1,5 +1,5 @@
 // Libraries
-import { css } from '@emotion/css';
+import { css, cx } from '@emotion/css';
 import React from 'react';
 
 // Components
@@ -12,13 +12,14 @@ import { t, Trans } from 'app/core/internationalization';
 import { ChangePassword } from '../ForgottenPassword/ChangePassword';
 
 import LoginCtrl from './LoginCtrl';
-import { LoginForm } from './LoginForm';
+import { LoginForm, getStyles as getSharedStyles } from './LoginForm';
 import { LoginLayout, InnerBox } from './LoginLayout';
 import { LoginServiceButtons } from './LoginServiceButtons';
 import { UserSignup } from './UserSignup';
 
 export const LoginPage = () => {
   const styles = useStyles2(getStyles);
+  const sharedStyles = useStyles2(getSharedStyles);
   document.title = Branding.AppTitle;
 
   return (
@@ -50,7 +51,7 @@ export const LoginPage = () => {
                   <HorizontalGroup justify="flex-end">
                     {!config.auth.disableLogin && (
                       <LinkButton
-                        className={styles.forgottenPassword}
+                        className={cx(styles.forgottenPassword, sharedStyles.linkButton)}
                         fill="text"
                         href={`${config.appSubUrl}/user/password/send-reset-email`}
                       >

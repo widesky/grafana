@@ -12,6 +12,7 @@ const getNotFoundModel = (): NavModel => {
     icon: 'exclamation-triangle',
     subTitle: '404 Error',
     url: 'not-found',
+    hideFromBreadcrumbs: true,
   };
 
   return {
