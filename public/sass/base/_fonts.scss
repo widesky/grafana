@@ -48,3 +48,67 @@ it may take less space than multiple static weights.
   font-display: swap;
   src: url('#{$font-file-path}/inter/Inter-Medium.woff2') format('woff2');
 }
+
+// custom FTS font using a file
+// Note: font-weight 400 or 500 indicates the "boldness" of the text. If the font file has variations of the same text
+// (e.g. this, light, medium, regular, semi bold, bold), assign the font file of your choice to font-weight's 400 and
+// 500 keeping in mind 400 is considered normal and 700 is considered bold.
+//@font-face {
+//  font-family: '<fontName>';
+//  src: url(#{$font-file-path}/<fontName>/<fontFile>) format('<fontFormat>');
+//  font-weight: 400;
+//  font-style: normal;
+//  font-display: swap;
+//}
+//@font-face {
+//  font-family: '<fontName>';
+//  src: url(#{$font-file-path}/<fontName>/<fontFile>) format('<fontFormat>');
+//  font-weight: 500;
+//  font-style: normal;
+//  font-display: swap;
+//}
+
+@font-face {
+  font-family: 'MuseoSansRounded';
+  src: url(#{$font-file-path}/MuseoSans/MuseoSansRounded-300.otf) format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MuseoSansRounded';
+  src: url(#{$font-file-path}/MuseoSans/MuseoSansRounded-500.otf) format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WS_THEME_FONT_1_FAMILY_NAME';
+  src: url(#{$font-file-path}/WS_THEME_FONT_1_FILE_PATH_400) format('WS_THEME_FONT_1_FILE_TYPE_400');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'WS_THEME_FONT_1_FAMILY_NAME';
+  src: url(#{$font-file-path}/WS_THEME_FONT_1_FILE_PATH_500) format('WS_THEME_FONT_1_FILE_TYPE_500');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'WS_THEME_FONT_2_FAMILY_NAME';
+  src: url(#{$font-file-path}/WS_THEME_FONT_2_FILE_PATH_400) format('`WS_THEME_FONT_2_FILE_TYPE_400');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'WS_THEME_FONT_2_FAMILY_NAME';
+  src: url(#{$font-file-path}/WS_THEME_FONT_2_FILE_PATH_500) format('WS_THEME_FONT_2_FILE_TYPE_500');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}

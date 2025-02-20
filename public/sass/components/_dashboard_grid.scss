@@ -85,6 +85,14 @@
   }
 }
 
+.theme-WideSky {
+  .react-grid-item > .react-resizable-handle::after {
+    border-right: 2px solid $text-color;
+    border-bottom: 2px solid $text-color;
+    opacity: 0.75;
+  }
+}
+
 // Hack for preventing panel menu overlapping.
 .react-grid-item.resizing.panel,
 .react-grid-item.panel.dropdown-menu-open,
