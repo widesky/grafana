@@ -45,7 +45,8 @@ export type {
   GrafanaConfig,
   BuildInfo,
   LicenseInfo,
-  WideSkyWhitelabeling
+  WideSkyWhitelabeling,
+  WideSkyProvisioner,
 } from './config';
 export type { FeatureToggles } from './featureToggles.gen';
 export * from './alerts';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { SelectableValue } from '@grafana/data';
-import { locationService } from '@grafana/runtime';
+import { config, locationService } from '@grafana/runtime';
 import { useTheme2 } from '@grafana/ui';
 import { useMediaQueryChange } from 'app/core/hooks/useMediaQueryChange';
 import { contextSrv } from 'app/core/services/context_srv';
@@ -41,6 +41,10 @@ export function OrganizationSwitcher() {
   });
 
   if (orgs?.length <= 1) {
+    return null;
+  }
+
+  if (config.featureToggles.wsInternationalization && !contextSrv.isGrafanaAdmin) {
     return null;
   }
 

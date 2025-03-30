@@ -178,4 +178,6 @@ export interface FeatureToggles {
   usePrometheusFrontendPackage?: boolean;
   oauthRequireSubClaim?: boolean;
   prometheusAzureOverrideAudience?: boolean;
+  wsInternationalization?: boolean;
+  wsProvisioner?: boolean;
 }

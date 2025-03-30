@@ -244,6 +244,7 @@ export interface GrafanaConfig {
   // WideSky
   wideSkyWhitelabeling?: WideSkyWhitelabeling;
   wideSkyTheme?: WideSkyCustomTheme;
+  wideSkyProvisioner: WideSkyProvisioner;
 }
 
 export interface SqlConnectionLimits {
@@ -347,4 +348,9 @@ export interface WideSkyWhitelabeling {
   entityNotFoundLink: string;
   entityNotFoundLinkText: string;
   templateVariableHelpLink: string;
+}
+
+export interface WideSkyProvisioner {
+  primaryOrg: number;
+  languages: { [code: string]: string };
 }
