@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/mail"
 	"strconv"
+	"strings"
 
 	"golang.org/x/oauth2"
 
@@ -26,6 +27,7 @@ const (
 	nameAttributePathKey    = "name_attribute_path"
 	loginAttributePathKey   = "login_attribute_path"
 	idTokenAttributeNameKey = "id_token_attribute_name" // #nosec G101 not a hardcoded credential
+	teamAttributePathKey    = "team_attribute_path"
 )
 
 var ExtraGenericOAuthSettingKeys = map[string]ExtraKeyInfo{
@@ -34,6 +36,7 @@ var ExtraGenericOAuthSettingKeys = map[string]ExtraKeyInfo{
 	idTokenAttributeNameKey: {Type: String},
 	teamIdsKey:              {Type: String},
 	allowedOrganizationsKey: {Type: String},
+	teamAttributePathKey:    {Type: String},
 }
 
 var _ social.SocialConnector = (*SocialGenericOAuth)(nil)
@@ -50,6 +53,7 @@ type SocialGenericOAuth struct {
 	groupsAttributePath  string
 	idTokenAttributeName string
 	teamIdsAttributePath string
+	teamAttributePath    string
 	teamIds              []string
 }
 
@@ -63,6 +67,7 @@ func NewGenericOAuthProvider(info *social.OAuthInfo, cfg *setting.Cfg, ssoSettin
 		groupsAttributePath:  info.GroupsAttributePath,
 		loginAttributePath:   info.Extra[loginAttributePathKey],
 		idTokenAttributeName: info.Extra[idTokenAttributeNameKey],
+		teamAttributePath:    info.Extra[teamAttributePathKey],
 		teamIdsAttributePath: info.TeamIdsAttributePath,
 		teamIds:              util.SplitString(info.Extra[teamIdsKey]),
 		allowedOrganizations: util.SplitString(info.Extra[allowedOrganizationsKey]),
@@ -131,6 +136,7 @@ func (s *SocialGenericOAuth) Reload(ctx context.Context, settings ssoModels.SSOS
 	s.groupsAttributePath = newInfo.GroupsAttributePath
 	s.loginAttributePath = newInfo.Extra[loginAttributePathKey]
 	s.idTokenAttributeName = newInfo.Extra[idTokenAttributeNameKey]
+	s.teamAttributePath = newInfo.Extra[teamAttributePathKey]
 	s.teamIdsAttributePath = newInfo.TeamIdsAttributePath
 	s.teamIds = util.SplitString(newInfo.Extra[teamIdsKey])
 	s.allowedOrganizations = util.SplitString(newInfo.Extra[allowedOrganizationsKey])
@@ -262,6 +268,15 @@ func (s *SocialGenericOAuth) UserInfo(ctx context.Context, client *http.Client, 
 				if s.info.AllowAssignGrafanaAdmin {
 					userInfo.IsGrafanaAdmin = &grafanaAdmin
 				}
+			}
+		}
+
+		if len(userInfo.Access) == 0 {
+			access, err := s.extractAccess(data)
+			if err != nil {
+				s.log.Warn("Failed to extract access", "err", err)
+			} else {
+				userInfo.Access = access
 			}
 		}
 
@@ -466,6 +481,46 @@ func (s *SocialGenericOAuth) extractGroups(data *UserInfoJson) ([]string, error)
 	return util.SearchJSONForStringSliceAttr(s.groupsAttributePath, data.rawJSON)
 }
 
+func (s *SocialGenericOAuth) extractAccess(data *UserInfoJson) ([]social.TeamPermissionAliased, error) {
+	if s.teamAttributePath == "" {
+		s.log.Warn("Skipping team assignment: `team_attribute_path` is not assigned")
+		return []social.TeamPermissionAliased{}, nil
+	}
+
+	assignedTeams, err := util.SearchJSONForStringSliceAttr(s.teamAttributePath, data.rawJSON)
+
+	if err != nil {
+		return []social.TeamPermissionAliased{}, err
+	}
+
+	var teams []social.TeamPermissionAliased
+	for _, item := range assignedTeams {
+		parts := strings.Split(item, ":")
+		if len(parts) == 2 {
+			parts = append(parts, "Member")
+		}
+
+		if len(parts) != 3 {
+			s.log.Warn("Skipping team entry: invalid format", "item", item, "reason", "expected format Org Name:Team Name:Team Role (optional)")
+			continue
+		}
+
+		role := parts[2]
+		if role != "Member" && role != "Admin" {
+			s.log.Warn("Skipping team entry: unknown role", "item", item, "role", role, "reason", "role must be Member, or Admin")
+			continue
+		}
+
+		teams = append(teams, social.TeamPermissionAliased{
+			OrgName:  parts[0],
+			TeamName: parts[1],
+			Role:     role,
+		})
+	}
+
+	return teams, nil
+}
+
 func (s *SocialGenericOAuth) fetchPrivateEmail(ctx context.Context, client *http.Client) (string, error) {
 	type Record struct {
 		Email       string `json:"email"`
@@ -614,6 +669,7 @@ func (s *SocialGenericOAuth) SupportBundleContent(bf *bytes.Buffer) error {
 	bf.WriteString(fmt.Sprintf("team_ids_attribute_path = %s\n", s.teamIdsAttributePath))
 	bf.WriteString(fmt.Sprintf("team_ids = %v\n", s.teamIds))
 	bf.WriteString(fmt.Sprintf("allowed_organizations = %v\n", s.allowedOrganizations))
+	bf.WriteString(fmt.Sprintf("team_attribute_path = %s\n", s.teamAttributePath))
 	bf.WriteString("```\n\n")
 
 	return s.SocialBase.getBaseSupportBundleContent(bf)

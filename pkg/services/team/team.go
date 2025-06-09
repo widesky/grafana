@@ -12,6 +12,7 @@ type Service interface {
 	DeleteTeam(ctx context.Context, cmd *DeleteTeamCommand) error
 	SearchTeams(ctx context.Context, query *SearchTeamsQuery) (SearchTeamQueryResult, error)
 	GetTeamByID(ctx context.Context, query *GetTeamByIDQuery) (*TeamDTO, error)
+	GetTeamByName(ctx context.Context, query *GetTeamByNameQuery) (*TeamDTO, error)
 	GetTeamsByUser(ctx context.Context, query *GetTeamsByUserQuery) ([]*TeamDTO, error)
 	GetTeamIDsByUser(ctx context.Context, query *GetTeamIDsByUserQuery) ([]int64, error)
 	AddTeamMember(ctx context.Context, userID, orgID, teamID int64, isExternal bool, permission dashboardaccess.PermissionType) error

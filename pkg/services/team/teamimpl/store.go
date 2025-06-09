@@ -23,6 +23,7 @@ type store interface {
 	Delete(ctx context.Context, cmd *team.DeleteTeamCommand) error
 	Search(ctx context.Context, query *team.SearchTeamsQuery) (team.SearchTeamQueryResult, error)
 	GetByID(ctx context.Context, query *team.GetTeamByIDQuery) (*team.TeamDTO, error)
+	GetByName(ctx context.Context, query *team.GetTeamByNameQuery) (*team.TeamDTO, error)
 	GetByUser(ctx context.Context, query *team.GetTeamsByUserQuery) ([]*team.TeamDTO, error)
 	GetIDsByUser(ctx context.Context, query *team.GetTeamIDsByUserQuery) ([]int64, error)
 	RemoveUsersMemberships(ctx context.Context, userID int64) error
@@ -304,6 +305,35 @@ func (ss *xormStore) GetByID(ctx context.Context, query *team.GetTeamByIDQuery) 
 		return nil, err
 	}
 	return queryResult, nil
+}
+
+func (ss *xormStore) GetByName(ctx context.Context, query *team.GetTeamByNameQuery) (*team.TeamDTO, error) {
+	var queryResult *team.TeamDTO
+
+	err := ss.db.WithDbSession(ctx, func(sess *db.Session) error {
+		var t team.TeamDTO
+
+		exists, err := sess.SQL(`SELECT
+				team.id as id,
+				team.uid,
+				team.org_id,
+				team.name as name,
+				team.email as email
+				FROM team as team WHERE team.org_id = ? and team.name = ?`, query.OrgID, query.Name).Get(&t)
+
+		if err != nil {
+			return err
+		}
+
+		if !exists {
+			return team.ErrTeamNotFound
+		}
+
+		queryResult = &t
+		return nil
+	})
+
+	return queryResult, err
 }
 
 // GetTeamsByUser is used by the Guardian when checking a users' permissions

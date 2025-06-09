@@ -42,6 +42,10 @@ func (s *Service) GetTeamByID(ctx context.Context, query *team.GetTeamByIDQuery)
 	return s.store.GetByID(ctx, query)
 }
 
+func (s *Service) GetTeamByName(ctx context.Context, query *team.GetTeamByNameQuery) (*team.TeamDTO, error) {
+	return s.store.GetByName(ctx, query)
+}
+
 func (s *Service) GetTeamsByUser(ctx context.Context, query *team.GetTeamsByUserQuery) ([]*team.TeamDTO, error) {
 	return s.store.GetByUser(ctx, query)
 }

@@ -20,11 +20,10 @@ func getRoles(cfg *setting.Cfg, extract roleExtractor) (map[int64]org.RoleType, 
 		return orgRoles, nil, nil
 	}
 
-	orgID := int64(1)
 	if cfg.AutoAssignOrg && cfg.AutoAssignOrgId > 0 {
-		orgID = int64(cfg.AutoAssignOrgId)
+		orgID := int64(cfg.AutoAssignOrgId)
+		orgRoles[orgID] = role
 	}
-	orgRoles[orgID] = role
 
 	return orgRoles, isGrafanaAdmin, nil
 }

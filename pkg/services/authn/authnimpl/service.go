@@ -33,6 +33,7 @@ import (
 	"github.com/grafana/grafana/pkg/services/quota"
 	"github.com/grafana/grafana/pkg/services/rendering"
 	"github.com/grafana/grafana/pkg/services/signingkeys"
+	"github.com/grafana/grafana/pkg/services/team"
 	"github.com/grafana/grafana/pkg/services/user"
 	"github.com/grafana/grafana/pkg/setting"
 	"github.com/grafana/grafana/pkg/util/errutil"
@@ -61,7 +62,9 @@ func ProvideIdentitySynchronizer(s *Service) authn.IdentitySynchronizer {
 func ProvideService(
 	cfg *setting.Cfg, tracer tracing.Tracer,
 	orgService org.Service, sessionService auth.UserTokenService,
+	teamService team.Service,
 	accessControlService accesscontrol.Service,
+	acTeamService accesscontrol.TeamPermissionsService,
 	apikeyService apikey.Service, userService user.Service,
 	jwtService auth.JWTVerifierService,
 	usageStats usagestats.Service,
@@ -142,7 +145,7 @@ func ProvideService(
 
 	for name := range socialService.GetOAuthProviders() {
 		clientName := authn.ClientWithPrefix(name)
-		s.RegisterClient(clients.ProvideOAuth(clientName, cfg, oauthTokenService, socialService, settingsProviderService, features))
+		s.RegisterClient(clients.ProvideOAuth(clientName, cfg, oauthTokenService, socialService, settingsProviderService, orgService, teamService, features))
 	}
 
 	// FIXME (jguer): move to User package
@@ -151,6 +154,7 @@ func ProvideService(
 	s.RegisterPostAuthHook(userSyncService.SyncUserHook, 10)
 	s.RegisterPostAuthHook(userSyncService.EnableUserHook, 20)
 	s.RegisterPostAuthHook(orgUserSyncService.SyncOrgRolesHook, 30)
+	s.RegisterPostAuthHook(sync.ProvideTeamSync(teamService, acTeamService).SyncTeamRolesHook, 40)
 	s.RegisterPostAuthHook(userSyncService.SyncLastSeenHook, 130)
 	s.RegisterPostAuthHook(sync.ProvideOAuthTokenSync(oauthTokenService, sessionService, socialService).SyncOauthTokenHook, 60)
 	s.RegisterPostAuthHook(userSyncService.FetchSyncedUserHook, 100)

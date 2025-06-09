@@ -16,12 +16,14 @@ import (
 	"github.com/grafana/grafana/pkg/infra/log"
 	"github.com/grafana/grafana/pkg/login/social"
 	"github.com/grafana/grafana/pkg/login/social/connectors"
+	"github.com/grafana/grafana/pkg/models/roletype"
 	"github.com/grafana/grafana/pkg/services/auth/identity"
 	"github.com/grafana/grafana/pkg/services/authn"
 	"github.com/grafana/grafana/pkg/services/featuremgmt"
 	"github.com/grafana/grafana/pkg/services/login"
 	"github.com/grafana/grafana/pkg/services/oauthtoken"
 	"github.com/grafana/grafana/pkg/services/org"
+	"github.com/grafana/grafana/pkg/services/team"
 	"github.com/grafana/grafana/pkg/setting"
 	"github.com/grafana/grafana/pkg/util/errutil"
 )
@@ -66,12 +68,12 @@ var _ authn.RedirectClient = new(OAuth)
 
 func ProvideOAuth(
 	name string, cfg *setting.Cfg, oauthService oauthtoken.OAuthTokenService,
-	socialService social.Service, settingsProviderService setting.Provider, features featuremgmt.FeatureToggles,
+	socialService social.Service, settingsProviderService setting.Provider, orgService org.Service, teamService team.Service, features featuremgmt.FeatureToggles,
 ) *OAuth {
 	providerName := strings.TrimPrefix(name, "auth.client.")
 	return &OAuth{
 		name, fmt.Sprintf("oauth_%s", providerName), providerName,
-		log.New(name), cfg, settingsProviderService, oauthService, socialService, features,
+		log.New(name), cfg, settingsProviderService, oauthService, socialService, orgService, teamService, features,
 	}
 }
 
@@ -85,6 +87,8 @@ type OAuth struct {
 	settingsProviderSvc setting.Provider
 	oauthService        oauthtoken.OAuthTokenService
 	socialService       social.Service
+	orgService          org.Service
+	teamService         team.Service
 	features            featuremgmt.FeatureToggles
 }
 
@@ -170,6 +174,46 @@ func (c *OAuth) Authenticate(ctx context.Context, r *authn.Request) (*authn.Iden
 		return userInfo.Role, userInfo.IsGrafanaAdmin, nil
 	})
 
+	var userAccess []authn.TeamPermissionIndexed
+	// Add users orgs to the Identity so they can be synced
+	for _, access := range userInfo.Access {
+		orgResult, err := c.orgService.Search(ctx, &org.SearchOrgsQuery{
+			Name: access.OrgName,
+		})
+
+		if err != nil || len(orgResult) == 0 {
+			c.log.FromContext(ctx).Warn("Skipping team entry: unknown org ", "item", access, "Name", access.OrgName)
+			continue
+		}
+
+		orgUID := orgResult[0].ID
+
+		query := &team.GetTeamByNameQuery{
+			Name:  access.TeamName,
+			OrgID: orgUID,
+		}
+
+		teamResult, err := c.teamService.GetTeamByName(ctx, query)
+
+		if err != nil || teamResult == nil {
+			c.log.FromContext(ctx).Warn("Skipping team entry: unknown team ", "item", access, "Name", access.TeamName)
+			continue
+		}
+
+		teamUID := teamResult.ID
+
+		userAccess = append(userAccess, authn.TeamPermissionIndexed{
+			OrgUID:  orgUID,
+			TeamUID: teamUID,
+			Role:    access.Role,
+		})
+		orgRoles[orgUID] = userInfo.Role
+	}
+
+	if len(orgRoles) == 0 {
+		orgRoles[int64(c.cfg.TeamSyncFallbackOrgId)] = roletype.RoleViewer
+	}
+
 	lookupParams := login.UserLookupParams{}
 	allowInsecureEmailLookup := c.settingsProviderSvc.KeyValue("auth", "oauth_allow_insecure_email_lookup").MustBool(false)
 	if allowInsecureEmailLookup {
@@ -186,6 +230,7 @@ func (c *OAuth) Authenticate(ctx context.Context, r *authn.Request) (*authn.Iden
 		Groups:          userInfo.Groups,
 		OAuthToken:      token,
 		OrgRoles:        orgRoles,
+		Access:          userAccess,
 		ClientParams: authn.ClientParams{
 			SyncUser:        true,
 			SyncTeams:       true,

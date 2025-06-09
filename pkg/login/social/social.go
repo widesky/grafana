@@ -98,6 +98,12 @@ func NewOAuthInfo() *OAuthInfo {
 	}
 }
 
+type TeamPermissionAliased struct {
+	OrgName  string
+	TeamName string
+	Role     string
+}
+
 type BasicUserInfo struct {
 	Id             string
 	Name           string
@@ -106,9 +112,10 @@ type BasicUserInfo struct {
 	Role           org.RoleType
 	IsGrafanaAdmin *bool // nil will avoid overriding user's set server admin setting
 	Groups         []string
+	Access         []TeamPermissionAliased
 }
 
 func (b *BasicUserInfo) String() string {
-	return fmt.Sprintf("Id: %s, Name: %s, Email: %s, Login: %s, Role: %s, Groups: %v",
-		b.Id, b.Name, b.Email, b.Login, b.Role, b.Groups)
+	return fmt.Sprintf("Id: %s, Name: %s, Email: %s, Login: %s, Role: %s, Groups: %v, Access: %v",
+		b.Id, b.Name, b.Email, b.Login, b.Role, b.Groups, b.Access)
 }

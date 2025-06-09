@@ -408,6 +408,7 @@ type Cfg struct {
 	ExternalUserMngInfo        string
 	AutoAssignOrg              bool
 	AutoAssignOrgId            int
+	TeamSyncFallbackOrgId      int
 	AutoAssignOrgRole          string
 	LoginDefaultOrgId          int64
 	OAuthSkipOrgRoleUpdateSync bool
@@ -1666,6 +1667,7 @@ func readUserSettings(iniFile *ini.File, cfg *Cfg) error {
 	cfg.AllowUserOrgCreate = users.Key("allow_org_create").MustBool(true)
 	cfg.AutoAssignOrg = users.Key("auto_assign_org").MustBool(true)
 	cfg.AutoAssignOrgId = users.Key("auto_assign_org_id").MustInt(1)
+	cfg.TeamSyncFallbackOrgId = users.Key("team_sync_fallback_org_id").MustInt(1)
 	cfg.LoginDefaultOrgId = users.Key("login_default_org_id").MustInt64(-1)
 	cfg.AutoAssignOrgRole = users.Key("auto_assign_org_role").In(
 		string(roletype.RoleViewer), []string{

@@ -61,6 +61,11 @@ type GetTeamByIDQuery struct {
 	HiddenUsers  map[string]struct{}
 }
 
+type GetTeamByNameQuery struct {
+	OrgID int64
+	Name  string
+}
+
 // FilterIgnoreUser is used in a get / search teams query when the caller does not want to filter teams by user ID / membership
 const FilterIgnoreUser int64 = 0
 
