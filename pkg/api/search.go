@@ -94,6 +94,20 @@ func (hs *HTTPServer) Search(c *contextmodel.ReqContext) response.Response {
 
 	defer c.TimeRequest(metrics.MApiDashboardSearch)
 
+	for i := len(hits) - 1; i >= 0; i-- {
+		// Folders with no UID are in the general scope
+		if hits[i].FolderUID == "" {
+			continue
+		}
+
+		hasDashboardAccess := hs.wideSkyProvisionerService.WideSkyTeamHasAccess(c, hits[i].UID, true)
+		isProvisioned := hs.wideSkyProvisionerService.IsProvisioned(c, hits[i].FolderUID)
+
+		if isProvisioned && !hasDashboardAccess {
+			hits = append(hits[:i], hits[i+1:]...)
+		}
+	}
+
 	return response.JSON(http.StatusOK, hits)
 }
 

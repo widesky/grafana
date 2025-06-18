@@ -74,12 +74,24 @@ func (hs *HTTPServer) GetFolders(c *contextmodel.ReqContext) response.Response {
 			metrics.MFolderIDsAPICount.WithLabelValues(metrics.GetFolders).Inc()
 		}
 
+		for i := len(hits) - 1; i >= 0; i-- {
+			if !hs.wideSkyProvisionerService.WideSkyTeamHasAccess(c, hits[i].UID, false) {
+				hits = append(hits[:i], hits[i+1:]...)
+			}
+		}
+
 		return response.JSON(http.StatusOK, hits)
 	}
 
 	hits, err := hs.searchFolders(c, permission)
 	if err != nil {
 		return apierrors.ToFolderErrorResponse(err)
+	}
+
+	for i := len(hits) - 1; i >= 0; i-- {
+		if !hs.wideSkyProvisionerService.WideSkyTeamHasAccess(c, hits[i].UID, false) {
+			hits = append(hits[:i], hits[i+1:]...)
+		}
 	}
 
 	return response.JSON(http.StatusOK, hits)

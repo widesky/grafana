@@ -21,6 +21,7 @@ import (
 	pref "github.com/grafana/grafana/pkg/services/preference"
 	"github.com/grafana/grafana/pkg/services/star"
 	"github.com/grafana/grafana/pkg/services/supportbundles/supportbundlesimpl"
+	"github.com/grafana/grafana/pkg/services/wideskyprovisioner"
 	"github.com/grafana/grafana/pkg/setting"
 )
 
@@ -41,6 +42,7 @@ type ServiceImpl struct {
 	// Navigation
 	navigationAppConfig     map[string]NavigationAppConfig
 	navigationAppPathConfig map[string]NavigationAppConfig
+	wideSkyProvisioner      wideskyprovisioner.Service
 }
 
 type NavigationAppConfig struct {
@@ -50,7 +52,7 @@ type NavigationAppConfig struct {
 	Icon       string
 }
 
-func ProvideService(cfg *setting.Cfg, accessControl ac.AccessControl, pluginStore pluginstore.Store, pluginSettings pluginsettings.Service, starService star.Service, features featuremgmt.FeatureToggles, dashboardService dashboards.DashboardService, accesscontrolService ac.Service, kvStore kvstore.KVStore, apiKeyService apikey.Service, license licensing.Licensing) navtree.Service {
+func ProvideService(cfg *setting.Cfg, accessControl ac.AccessControl, pluginStore pluginstore.Store, pluginSettings pluginsettings.Service, starService star.Service, features featuremgmt.FeatureToggles, dashboardService dashboards.DashboardService, accesscontrolService ac.Service, kvStore kvstore.KVStore, apiKeyService apikey.Service, license licensing.Licensing, wideSkyProvisioner wideskyprovisioner.Service) navtree.Service {
 	service := &ServiceImpl{
 		cfg:                  cfg,
 		log:                  log.New("navtree service"),
@@ -64,6 +66,7 @@ func ProvideService(cfg *setting.Cfg, accessControl ac.AccessControl, pluginStor
 		kvStore:              kvStore,
 		apiKeyService:        apiKeyService,
 		license:              license,
+		wideSkyProvisioner:   wideSkyProvisioner,
 	}
 
 	service.readNavigationSettings()

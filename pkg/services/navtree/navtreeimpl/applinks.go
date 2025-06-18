@@ -4,15 +4,18 @@ import (
 	"path"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/grafana/grafana/pkg/plugins"
 	ac "github.com/grafana/grafana/pkg/services/accesscontrol"
 	contextmodel "github.com/grafana/grafana/pkg/services/contexthandler/model"
+	"github.com/grafana/grafana/pkg/services/dashboards"
 	"github.com/grafana/grafana/pkg/services/featuremgmt"
 	"github.com/grafana/grafana/pkg/services/navtree"
 	"github.com/grafana/grafana/pkg/services/pluginsintegration/pluginaccesscontrol"
 	"github.com/grafana/grafana/pkg/services/pluginsintegration/pluginsettings"
 	"github.com/grafana/grafana/pkg/services/pluginsintegration/pluginstore"
+	"github.com/grafana/grafana/pkg/services/user"
 	"github.com/grafana/grafana/pkg/util"
 )
 
@@ -66,8 +69,18 @@ func (s *ServiceImpl) addAppLinks(treeRoot *navtree.NavTreeRoot, c *contextmodel
 
 func (s *ServiceImpl) processAppPlugin(plugin pluginstore.Plugin, c *contextmodel.ReqContext, treeRoot *navtree.NavTreeRoot) *navtree.NavLink {
 	hasAccessToInclude := s.hasAccessToInclude(c, plugin.ID)
+	currOrgAlias := getOrgAlias(*c.SignedInUser)
+
+	// WideSky specific code path - extract the orgAlias value from the current organization
+	// then use the defined overrideLabel (optional) value found in the plugin.json
+	// as the label name for the navigation link
+	var pluginName = plugin.Name
+	if value, ok := plugin.OverrideLabel[currOrgAlias]; ok {
+		pluginName = value
+	}
+
 	appLink := &navtree.NavLink{
-		Text:       plugin.Name,
+		Text:       pluginName,
 		Id:         "plugin-page-" + plugin.ID,
 		Img:        plugin.Info.Logos.Small,
 		SubTitle:   plugin.Info.Description,
@@ -77,8 +90,16 @@ func (s *ServiceImpl) processAppPlugin(plugin pluginstore.Plugin, c *contextmode
 		Url:        s.cfg.AppSubURL + "/a/" + plugin.ID,
 	}
 
+	if !s.wideSkyProvisioner.WideSkyTeamHasAccess(c, plugin.ID, false) {
+		return nil
+	}
+
 	for _, include := range plugin.Includes {
 		if !hasAccessToInclude(include) {
+			continue
+		}
+
+		if !s.wideSkyProvisioner.WideSkyTeamHasAccess(c, include.UID, true) {
 			continue
 		}
 
@@ -131,14 +152,31 @@ func (s *ServiceImpl) processAppPlugin(plugin pluginstore.Plugin, c *contextmode
 		}
 
 		if include.Type == "dashboard" && include.AddToNav {
+			// WideSky specific code path - extract the orgAlias value from the current organization
+			// then use the defined overrideLabel (optional) value found in the plugin.json
+			// as the label name for the navigation link
+			var labelValue = include.Name
+			if value, ok := include.OverrideLabel[currOrgAlias]; ok {
+				labelValue = value
+			}
+
 			dboardURL := include.DashboardURLPath()
 			if dboardURL != "" {
-				link := &navtree.NavLink{
-					Url:      path.Join(s.cfg.AppSubURL, dboardURL),
-					Text:     include.Name,
-					PluginID: plugin.ID,
+				_, err := s.dashboardService.GetDashboard(c.Req.Context(), &dashboards.GetDashboardQuery{
+					UID: include.UID,
+				})
+
+				if err == nil {
+					link := &navtree.NavLink{
+						Url:      path.Join(s.cfg.AppSubURL, dboardURL),
+						Text:     labelValue,
+						PluginID: plugin.ID,
+					}
+					if include.DefaultNav && include.AddToNav {
+						appLink.Url = link.Url
+					}
+					appLink.Children = append(appLink.Children, link)
 				}
-				appLink.Children = append(appLink.Children, link)
 			}
 		}
 	}
@@ -348,4 +386,16 @@ func (s *ServiceImpl) readNavigationSettings() {
 
 		s.navigationAppPathConfig[url] = *appCfg
 	}
+}
+
+// WideSky function for extracting the org alias from an org name
+func getOrgAlias(user user.SignedInUser) string {
+	alias := ""
+
+	parts := strings.Split(user.OrgName, "_")
+	if len(parts) > 1 {
+		alias = parts[len(parts)-1]
+	}
+
+	return alias
 }

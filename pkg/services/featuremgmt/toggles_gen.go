@@ -646,4 +646,12 @@ const (
 	// FlagPrometheusAzureOverrideAudience
 	// Deprecated. Allow override default AAD audience for Azure Prometheus endpoint. Enabled by default. This feature should no longer be used and will be removed in the future.
 	FlagPrometheusAzureOverrideAudience = "prometheusAzureOverrideAudience"
+
+	// FlagWsInternationalization
+	// Allow the WideSky provisioner functionality to create and assign organizations and teams based on the configured language assignments.
+	FlagWsInternationalization = "wsInternationalization"
+
+	// FlagWsProvisioner
+	// Allow the WideSky provisioner functionality to create and assign permissions for teams via the api/widesky/permissions endpoints.
+	FlagWsProvisioner = "wsProvisioner"
 )

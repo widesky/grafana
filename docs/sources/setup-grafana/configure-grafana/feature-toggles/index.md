@@ -64,6 +64,8 @@ For more information about feature release stages, refer to [Release life cycle 
 | `enablePluginsTracingByDefault`          | Enable plugin tracing for all external plugins                                                                                                                                                                               | Yes                |
 | `alertingQueryOptimization`              | Optimizes eligible queries in order to reduce load on datasources                                                                                                                                                            |                    |
 | `betterPageScrolling`                    | Removes CustomScrollbar from the UI, relying on native browser scrollbars                                                                                                                                                    | Yes                |
+| `wsInternationalization`                 | Allow the WideSky provisioner functionality to create and assign organizations and teams based on the configured language assignments.                                                                                       | Yes                |
+| `wsProvisioner`                          | Allow the WideSky provisioner functionality to create and assign permissions for teams via the api/widesky/permissions endpoints.                                                                                            | Yes                |
 
 ## Public preview feature toggles
 

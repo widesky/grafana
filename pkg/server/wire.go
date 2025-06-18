@@ -149,6 +149,8 @@ import (
 	"github.com/grafana/grafana/pkg/services/updatechecker"
 	"github.com/grafana/grafana/pkg/services/user"
 	"github.com/grafana/grafana/pkg/services/user/userimpl"
+	"github.com/grafana/grafana/pkg/services/wideskyprovisioner/wideskyprovisionerapi"
+	"github.com/grafana/grafana/pkg/services/wideskyprovisioner/wideskyprovisionerimpl"
 	"github.com/grafana/grafana/pkg/setting"
 	"github.com/grafana/grafana/pkg/tsdb/azuremonitor"
 	cloudmonitoring "github.com/grafana/grafana/pkg/tsdb/cloud-monitoring"
@@ -376,6 +378,9 @@ var wireBasicSet = wire.NewSet(
 	// Kubernetes API server
 	grafanaapiserver.WireSet,
 	apiregistry.WireSet,
+
+	wideskyprovisionerapi.ProvideWideSkyProvisionerAPI,
+	wideskyprovisionerimpl.ProvideService,
 )
 
 var wireSet = wire.NewSet(

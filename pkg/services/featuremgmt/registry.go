@@ -1197,6 +1197,20 @@ var (
 			Owner:       grafanaPartnerPluginsSquad,
 			Expression:  "true", // Enabled by default for now
 		},
+		{
+			Name:        "wsInternationalization",
+			Description: "Allow the WideSky provisioner functionality to create and assign organizations and teams based on the configured language assignments.",
+			Stage:       FeatureStageGeneralAvailability,
+			Owner:       "widesky",
+			Expression:  "true", // enabled by default
+		},
+		{
+			Name:        "wsProvisioner",
+			Description: "Allow the WideSky provisioner functionality to create and assign permissions for teams via the api/widesky/permissions endpoints.",
+			Stage:       FeatureStageGeneralAvailability,
+			Owner:       "widesky",
+			Expression:  "true", // enabled by default
+		},
 	}
 )
 

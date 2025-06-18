@@ -2064,6 +2064,30 @@
         "stage": "deprecated",
         "codeowner": "@grafana/partner-datasources"
       }
+    },
+    {
+      "metadata": {
+        "name": "wsProvisioner",
+        "resourceVersion": "1743239460011",
+        "creationTimestamp": "2025-03-29T09:11:00Z"
+      },
+      "spec": {
+        "description": "Allow the WideSky provisioner functionality to create and assign permissions for teams via the api/widesky/permissions endpoints.",
+        "stage": "GA",
+        "codeowner": "widesky"
+      }
+    },
+    {
+      "metadata": {
+        "name": "wsInternationalization",
+        "resourceVersion": "1743239460011",
+        "creationTimestamp": "2025-03-29T09:11:00Z"
+      },
+      "spec": {
+        "description": "Allow the WideSky provisioner functionality to create and assign organizations and teams based on the configured language assignments.",
+        "stage": "GA",
+        "codeowner": "widesky"
+      }
     }
   ]
 }

@@ -128,6 +128,13 @@ func (hs *HTTPServer) GetDashboard(c *contextmodel.ReqContext) response.Response
 	canAdmin, _ := guardian.CanAdmin()
 	canDelete, _ := guardian.CanDelete()
 
+	hasDashboardAccess := hs.wideSkyProvisionerService.WideSkyTeamHasAccess(c, dash.UID, true)
+	isProvisioned := hs.wideSkyProvisionerService.IsProvisioned(c, dash.FolderUID)
+
+	if isProvisioned && !hasDashboardAccess {
+		return response.Error(http.StatusForbidden, "Access to dashboard is forbidden, contact your WideSky administrator.", errors.New("Cannot access dashboard"))
+	}
+
 	isStarred, err := hs.isDashboardStarredByUser(c, dash.ID)
 	if err != nil {
 		return response.Error(http.StatusInternalServerError, "Error while checking if dashboard was starred by user", err)
@@ -571,8 +578,6 @@ func (hs *HTTPServer) GetHomeDashboard(c *contextmodel.ReqContext) response.Resp
 	if err := jsonParser.Decode(dash.Dashboard); err != nil {
 		return response.Error(http.StatusInternalServerError, "Failed to load home dashboard", err)
 	}
-
-	hs.addGettingStartedPanelToHomeDashboard(c, dash.Dashboard)
 
 	return response.JSON(http.StatusOK, &dash)
 }
