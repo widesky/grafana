@@ -119,7 +119,10 @@ export const getCategories = (): ValueFormatCategory[] => [
   {
     name: 'Currency',
     formats: [
-      { name: 'Dollars ($)', id: 'currencyUSD', fn: currency('$') },
+      { name: 'Dollars ($)', id: 'currency', fn: currency('$') },
+      { name: 'Dollars USD ($)', id: 'currencyUSD', fn: currency('USD$') },
+      { name: 'Dollars AUD ($)', id: 'currencyAUD', fn: currency('AUD$') },
+      { name: 'Dollars NZD ($)', id: 'currencyNZD', fn: currency('NZD$') },
       { name: 'Pounds (£)', id: 'currencyGBP', fn: currency('£') },
       { name: 'Euro (€)', id: 'currencyEUR', fn: currency('€') },
       { name: 'Yen (¥)', id: 'currencyJPY', fn: currency('¥') },
@@ -258,6 +261,8 @@ export const getCategories = (): ValueFormatCategory[] => [
       { name: 'Millihenry (mH)', id: 'mhenry', fn: SIPrefix('H', -1) },
       { name: 'Microhenry (µH)', id: 'µhenry', fn: SIPrefix('H', -2) },
       { name: 'Lumens (Lm)', id: 'lumens', fn: SIPrefix('Lm') },
+      { name: 'Therm (thm)', id: 'therm', fn: toFixedUnit('thm') },
+      { name: 'Ccf natural gas', id: 'ccfng', fn: toFixedUnit('CCF') },
     ],
   },
   {
@@ -428,6 +433,7 @@ export const getCategories = (): ValueFormatCategory[] => [
       { name: 'Normal cubic meter', id: 'Nm3', fn: toFixedUnit('Nm³') },
       { name: 'cubic decimeter', id: 'dm3', fn: toFixedUnit('dm³') },
       { name: 'gallons', id: 'gallons', fn: toFixedUnit('gal') },
+      { name: 'centum cubic feet', id: 'ccf', fn: toFixedUnit('CCF') },
     ],
   },
   {
